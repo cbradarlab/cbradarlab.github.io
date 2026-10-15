@@ -7,6 +7,7 @@ on:
     paths:
       - 'opportunity-radar/update.py'
       - 'opportunity-radar/augment_local.py'
+      - 'opportunity-radar/augment_regions.py'
       - 'opportunity-radar/merge_history.py'
       - 'opportunity-radar/index.html'
       - '.github/workflows/b2b-opportunity-radar.yml'
@@ -38,11 +39,18 @@ jobs:
         run: |
           cd opportunity-radar
           python -c "import update; update.BUILD_MONTHS=0; update.MAX_ARTICLES=8; update.main()"
-      - name: Add latest local-government early signals
+      - name: Add latest Tainan early signals
         env:
           TAINAN_PAGES: '4'
           TAINAN_MAX_ARTICLES: '30'
         run: python opportunity-radar/augment_local.py
+      - name: Add latest Kaohsiung and Taichung early signals
+        env:
+          KAOHSIUNG_PAGES: '4'
+          KAOHSIUNG_MAX_ARTICLES: '30'
+          TAICHUNG_PAGES: '4'
+          TAICHUNG_MAX_ARTICLES: '30'
+        run: python opportunity-radar/augment_regions.py
       - name: Preserve history and dedupe timelines
         run: python opportunity-radar/merge_history.py
       - name: Commit healthy refresh
