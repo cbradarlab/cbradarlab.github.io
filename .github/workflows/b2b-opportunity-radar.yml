@@ -1,0 +1,41 @@
+name: B2B Opportunity Radar Daily Refresh
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'opportunity-radar/update.py'
+      - 'opportunity-radar/index.html'
+      - '.github/workflows/b2b-opportunity-radar.yml'
+  schedule:
+    # 00:20 UTC = 08:20 Taiwan
+    - cron: '20 0 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refresh official opportunity data
+        run: python opportunity-radar/update.py
+      - name: Commit healthy refresh
+        shell: bash
+        run: |
+          git config user.name "opportunity-radar-bot"
+          git config user.email "opportunity-radar-bot@users.noreply.github.com"
+          git add opportunity-radar/events.json opportunity-radar/status.json
+          if git diff --cached --quiet; then
+            echo "No data changes."
+          else
+            git commit -m "data: refresh opportunity radar [skip ci]"
+            git push
+          fi
