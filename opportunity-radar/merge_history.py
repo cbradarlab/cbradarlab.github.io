@@ -9,10 +9,11 @@ import update as core
 ROOT=Path(__file__).resolve().parent
 PREVIOUS=Path('/tmp/opportunity-events-before.json')
 EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'; HISTORY_DAYS=450
-LATE_LOCAL=('啟用','落成','已完工','正式投產','投入營運','開幕')
+REGIONAL_SOURCES=('kaohsiung','taichung','taoyuan','hsinchu')
+LATE_LOCAL=('啟用','落成','已完工','正式投產','投入營運','開幕','揭牌')
 BAD_LOCAL_TOKENS=(
     '方案','基地','園區','供應鏈','能源管理','投資行動','加速投資','公開案件','資料來源','招商',
-    '工業區','科學園區','驗證基地','製造基地','市政府','經發局','經濟發展局','行政院','經濟部',
+    '工業區','科學園區','驗證基地','製造基地','市政府','縣政府','經發局','經濟發展局','行政院','經濟部',
     '高科技產業','產業帶動','在地傳統產業','帶動逾','AI＋CoWoS帶動','大樓','碼頭','土地','專區',
     '廊帶','博覽會','DEMODAY','DEMO DAY','投資補助','補助','甄選','演唱會經濟','農產品加工大樓'
 )
@@ -21,14 +22,14 @@ BAD_LOCAL_EXACT=(
     '先進製造基地','先進設備材料驗證基地','先進設備與材料驗證基地','中小企業方案',
     '中小企業加速投資行動方案','根留台灣企業加速投資行動方案','根留臺灣企業加速投資行動方案'
 )
-BAD_ENDINGS=('擴大','長期','初期','一期','二期','公開案件','橋科','正式')
+BAD_ENDINGS=('擴大','長期','初期','一期','二期','三廠','二廠','公開案件','橋科','正式')
 BAD_REGIONAL_TITLE=(
     '公告度小月','補助申請','自治條例','企業新創組隊','工廠登記家數','一次看','超巨蛋',
     '產業園區盛大動土','園區盛大動土','科技企業新進駐','公開招商','招商甄選','甄選第',
     '投資博覽會','DEMO DAY','DEMODAY','投資補助','補助正式啟動','資產管理專區','三大方案2.0出爐',
-    '三大方案2.0','延長至2027年'
+    '三大方案2.0','延長至2027年','SBIR','審查通過名單','商機媒合大會','設計展'
 )
-REGIONAL_PREFIXES=('封測龍頭','食品龍頭','特用材料供應大廠','半導體供應鏈','氣體大廠','產業龍頭','科技大廠','大廠')
+REGIONAL_PREFIXES=('封測龍頭','食品龍頭','特用材料供應大廠','半導體供應鏈','氣體大廠','產業龍頭','科技大廠','全球大廠','世界級藥廠','大廠')
 TAINAN_DISTRICTS=('中西區','東區','南區','北區','安平區','安南區','永康區','歸仁區','新化區','左鎮區','玉井區','楠西區','南化區','仁德區','關廟區','龍崎區','官田區','麻豆區','佳里區','西港區','七股區','將軍區','學甲區','北門區','新營區','後壁區','白河區','東山區','六甲區','下營區','柳營區','鹽水區','善化區','大內區','山上區','新市區','安定區')
 
 def normalize_company_name(s:str)->str:
@@ -49,7 +50,7 @@ def normalize_regional_name(s:str)->str:
     for p in REGIONAL_PREFIXES:
         if s.startswith(p) and len(s)>len(p)+1:s=s[len(p):]
     s=re.sub(r'(?:百|千|[0-9]+(?:\.[0-9]+)?)億元?$','',s)
-    s=re.sub(r'(?:加碼|擴大|正式)$','',s)
+    s=re.sub(r'(?:加碼|擴大|正式|三廠|二廠)$','',s)
     return s.strip('「」『』()（）,，:：')
 
 def company_core(s:str)->str:
@@ -80,21 +81,22 @@ def priority(e):
     return (manual,explicit,source,legal,e.get('score',0))
 
 def regional_title_corroborated(e,s):
-    if e.get('region_source') not in ('kaohsiung','taichung'):return True
+    if e.get('region_source') not in REGIONAL_SOURCES:return True
     title=str(e.get('title') or '')
     if any(x in title for x in BAD_REGIONAL_TITLE):return False
     title_compact=re.sub(r'[^A-Za-z0-9\u4e00-\u9fff]','',title).lower()
     base=re.sub(r'(?:股份有限公司|有限公司|公司)$','',s)
-    exact=re.sub(r'[^A-Za-z0-9\u4e00-\u9fff]','',base).lower()
-    if not exact:return False
-    if exact in title_compact:return True
-    legal=s.endswith(('股份有限公司','有限公司'))
-    if legal and len(exact)>=2 and exact[:2] in title_compact:return True
+    variants=[base,re.sub(r'(?:企業|工業|科技|實業)$','',base)]
+    variants=[re.sub(r'[^A-Za-z0-9\u4e00-\u9fff]','',x).lower() for x in variants if x]
+    if any(v and v in title_compact for v in variants):return True
+    if s.endswith(('股份有限公司','有限公司')) and variants:
+        v=min(variants,key=len)
+        if len(v)>=2 and title_compact.startswith(v[:2]):return True
     return False
 
 def valid_local_company(e):
     if not e.get('local_source'):return True
-    regional=e.get('region_source') in ('kaohsiung','taichung')
+    regional=e.get('region_source') in REGIONAL_SOURCES
     s=normalize_regional_name(e.get('company','')) if regional else normalize_company_name(e.get('company',''))
     if not (2<=len(s)<=28):return False
     if not re.search(r'[A-Za-z\u4e00-\u9fff]',s):return False
@@ -112,7 +114,7 @@ def actionable(e):
     return True
 
 def normalize(e):
-    if e.get('region_source') in ('kaohsiung','taichung'):e['company']=normalize_regional_name(e.get('company',''))
+    if e.get('region_source') in REGIONAL_SOURCES:e['company']=normalize_regional_name(e.get('company',''))
     else:e['company']=normalize_company_name(e.get('company',''))
     if e.get('city')=='台南':
         blob=' '.join([str(e.get('district','')),str(e.get('title','')),str(e.get('stage',''))])
@@ -144,12 +146,14 @@ def merge():
     status['total_event_count']=len(kept);status['unique_company_count']=len({company_core(e.get('company','')) for e in kept if company_core(e.get('company',''))})
     status['total_auto_event_count']=sum(1 for e in kept if e.get('auto'));status['total_manual_event_count']=sum(1 for e in kept if not e.get('auto'))
     status['local_event_count']=sum(1 for e in kept if e.get('local_source'))
-    status['tainan_local_event_count']=sum(1 for e in kept if e.get('local_source') and e.get('region_source') not in ('kaohsiung','taichung') and e.get('city')=='台南')
+    status['tainan_local_event_count']=sum(1 for e in kept if e.get('local_source') and e.get('region_source') not in REGIONAL_SOURCES and e.get('city')=='台南')
     status['kaohsiung_local_event_count']=sum(1 for e in kept if e.get('region_source')=='kaohsiung')
     status['taichung_local_event_count']=sum(1 for e in kept if e.get('region_source')=='taichung')
-    status['history_preservation']='ON_450D';status['timeline_dedupe']='SAME_COMPANY_WITHIN_3D';status['company_name_cleanup']='STRICT_REGIONAL_EVENT_TYPE_AND_HEADLINE_V3'
+    status['taoyuan_local_event_count']=sum(1 for e in kept if e.get('region_source')=='taoyuan')
+    status['hsinchu_local_event_count']=sum(1 for e in kept if e.get('region_source')=='hsinchu')
+    status['history_preservation']='ON_450D';status['timeline_dedupe']='SAME_COMPANY_WITHIN_3D';status['company_name_cleanup']='STRICT_REGIONAL_EVENT_TYPE_AND_HEADLINE_V4'
     STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
     now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)));core.render_topics(kept,now.isoformat(timespec='minutes'))
-    print(json.dumps({'events':len(kept),'unique_companies':status['unique_company_count'],'auto':status['total_auto_event_count'],'local':status['local_event_count'],'kaohsiung':status['kaohsiung_local_event_count'],'taichung':status['taichung_local_event_count']},ensure_ascii=False))
+    print(json.dumps({'events':len(kept),'unique_companies':status['unique_company_count'],'auto':status['total_auto_event_count'],'local':status['local_event_count'],'kaohsiung':status['kaohsiung_local_event_count'],'taichung':status['taichung_local_event_count'],'taoyuan':status['taoyuan_local_event_count'],'hsinchu':status['hsinchu_local_event_count']},ensure_ascii=False))
 
 if __name__=='__main__':merge()
