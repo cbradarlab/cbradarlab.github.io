@@ -58,6 +58,46 @@
     "auto": false
   },
   {
+    "company": "並安排飛鴻文化股份有限公司",
+    "date": "2026-10-06",
+    "city": "台南",
+    "district": "",
+    "amount": 0,
+    "stage": "企業投資｜地方政府公開",
+    "industry": "地方建廠/擴產早期訊號",
+    "explicit": [],
+    "explicit_evidence": {},
+    "inferred": [],
+    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
+    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8840290",
+    "source_type": "臺南市經發局｜投資/建廠新聞",
+    "score": 70,
+    "id": "8c1d4477150ba80a",
+    "auto": true,
+    "local_source": true,
+    "title": "投資臺南布局未來 南市府10/6說明會助企業掌握政策資源"
+  },
+  {
+    "company": "范剛覺總經理及南益鋼構股份有限公司",
+    "date": "2026-10-06",
+    "city": "台南",
+    "district": "",
+    "amount": 0,
+    "stage": "企業投資｜地方政府公開",
+    "industry": "地方建廠/擴產早期訊號",
+    "explicit": [],
+    "explicit_evidence": {},
+    "inferred": [],
+    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
+    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8840290",
+    "source_type": "臺南市經發局｜投資/建廠新聞",
+    "score": 70,
+    "id": "f0958863d76e7498",
+    "auto": true,
+    "local_source": true,
+    "title": "投資臺南布局未來 南市府10/6說明會助企業掌握政策資源"
+  },
+  {
     "company": "中鋼鋁業",
     "date": "2026-10-01",
     "city": "高雄",
@@ -123,282 +163,6 @@
     "auto": false
   },
   {
-    "company": "亞帝歐光電",
-    "date": "2026-08-21",
-    "city": "桃園",
-    "district": "新屋",
-    "amount": 11.2,
-    "stage": "智慧化新廠",
-    "industry": "LED / 光電",
-    "explicit": [
-      "感測器",
-      "自動控制/PLC",
-      "智慧倉儲",
-      "能源管理",
-      "太陽能"
-    ],
-    "explicit_evidence": {
-      "感測器": [
-        "感測設備"
-      ],
-      "自動控制/PLC": [
-        "自動化控制"
-      ],
-      "智慧倉儲": [
-        "智慧倉儲"
-      ],
-      "能源管理": [
-        "能源管理"
-      ],
-      "太陽能": [
-        "太陽能"
-      ]
-    },
-    "inferred": [
-      "MES/製程追溯",
-      "弱電"
-    ],
-    "contact": "公司公開聯絡路徑可查",
-    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351423cht?lang=cht&newsNum=11351423",
-    "source_type": "投資臺灣三大方案",
-    "score": 97,
-    "id": "6078512626518530",
-    "auto": false
-  },
-  {
-    "company": "精湛交通工業",
-    "date": "2026-08-06",
-    "city": "台南",
-    "district": "七股",
-    "amount": 5.1,
-    "stage": "新廠 / 智慧製造",
-    "industry": "汽車車燈",
-    "explicit": [
-      "機器手臂",
-      "機器視覺/AOI",
-      "MES/製程追溯",
-      "能源管理",
-      "太陽能"
-    ],
-    "explicit_evidence": {
-      "機器手臂": [
-        "智能機械手臂"
-      ],
-      "機器視覺/AOI": [
-        "多功能視覺線上配光機"
-      ],
-      "MES/製程追溯": [
-        "資訊系統",
-        "生產履歷",
-        "製程追溯"
-      ],
-      "能源管理": [
-        "能源管理"
-      ],
-      "太陽能": [
-        "太陽能"
-      ]
-    },
-    "inferred": [],
-    "contact": "公司公開電話/網站可查",
-    "source": "https://www.moea.gov.tw/Mns/populace/news/EpaperDetail.aspx?volume=20260806",
-    "source_type": "經濟部官方新聞",
-    "score": 99,
-    "id": "5f43977529169560",
-    "auto": false
-  },
-  {
-    "company": "璨揚企業",
-    "date": "2026-08-03",
-    "city": "台南",
-    "district": "七股",
-    "amount": 10.0,
-    "stage": "新廠已動土",
-    "industry": "商用車燈",
-    "explicit": [
-      "智慧倉儲"
-    ],
-    "explicit_evidence": {
-      "智慧倉儲": [
-        "自動倉儲"
-      ]
-    },
-    "inferred": [
-      "機器手臂",
-      "弱電",
-      "消防"
-    ],
-    "contact": "公司公開聯絡路徑可查",
-    "source": "https://www.tainan.gov.tw/News_Content.aspx?n=13370&s=8828498",
-    "source_type": "台南市政府官方新聞",
-    "score": 92,
-    "id": "e5c2293a7059f727",
-    "auto": false
-  },
-  {
-    "company": "急便鮮食品",
-    "date": "2026-07-03",
-    "city": "台南",
-    "district": "七股",
-    "amount": 4.2,
-    "stage": "智慧化新廠",
-    "industry": "冷凍調理食品",
-    "explicit": [
-      "自動化設備",
-      "智慧倉儲",
-      "冷鏈",
-      "太陽能"
-    ],
-    "explicit_evidence": {
-      "自動化設備": [
-        "全自動化生產設備"
-      ],
-      "智慧倉儲": [
-        "智慧冷凍倉儲"
-      ],
-      "冷鏈": [
-        "智慧冷凍倉儲"
-      ],
-      "太陽能": [
-        "太陽能"
-      ]
-    },
-    "inferred": [
-      "食品機械",
-      "弱電"
-    ],
-    "contact": "公司公開聯絡路徑可查",
-    "source": "https://www.moea.gov.tw/Mns/populace/news/EpaperDetail.aspx?volume=20260703",
-    "source_type": "經濟部官方新聞",
-    "score": 96,
-    "id": "721c0d205c91d057",
-    "auto": false
-  },
-  {
-    "company": "南益鋼構",
-    "date": "2026-06-12",
-    "city": "台南",
-    "district": "七股",
-    "amount": 8.1,
-    "stage": "智慧化鋼構新廠",
-    "industry": "鋼構加工",
-    "explicit": [
-      "自動化設備",
-      "雷射設備",
-      "機器視覺/AOI",
-      "太陽能",
-      "能源管理"
-    ],
-    "explicit_evidence": {
-      "自動化設備": [
-        "鋼構自動化設備"
-      ],
-      "雷射設備": [
-        "高能雷射銲接"
-      ],
-      "機器視覺/AOI": [
-        "AI影像辨識"
-      ],
-      "太陽能": [
-        "太陽能"
-      ],
-      "能源管理": [
-        "能源管理"
-      ]
-    },
-    "inferred": [
-      "空壓機",
-      "MES/製程追溯",
-      "弱電"
-    ],
-    "contact": "公司公開聯絡路徑可查",
-    "source": "https://www.moea.gov.tw/Mns/populace/news/EpaperDetail.aspx?volume=20260612",
-    "source_type": "經濟部官方新聞",
-    "score": 98,
-    "id": "429cf7bdb9484626",
-    "auto": false
-  },
-  {
-    "company": "台灣集廣科技",
-    "date": "2026-04-17",
-    "city": "高雄",
-    "district": "楠梓",
-    "amount": 1.67,
-    "stage": "擴大投資 / 建置",
-    "industry": "半導體檢測",
-    "explicit": [
-      "無塵室",
-      "自動化設備",
-      "機器視覺/AOI",
-      "空壓機",
-      "冰水主機/空調",
-      "純水/水處理"
-    ],
-    "explicit_evidence": {
-      "無塵室": [
-        "無塵室"
-      ],
-      "自動化設備": [
-        "自動化設備"
-      ],
-      "機器視覺/AOI": [
-        "AI智慧檢測"
-      ],
-      "空壓機": [
-        "變頻空壓機"
-      ],
-      "冰水主機/空調": [
-        "節能空調"
-      ],
-      "純水/水處理": [
-        "純水系統"
-      ]
-    },
-    "inferred": [
-      "弱電",
-      "能源管理"
-    ],
-    "contact": "公司公開聯絡路徑可查",
-    "source": "https://www.moea.gov.tw/mns/populace/news/News.aspx?kind=1&menu_id=40&news_id=122432",
-    "source_type": "經濟部官方新聞",
-    "score": 98,
-    "id": "8be0bd647fc5cb51",
-    "auto": false
-  },
-  {
-    "company": "總盈汽車",
-    "date": "2024-10-07",
-    "city": "台南",
-    "district": "",
-    "amount": 12.5,
-    "stage": "五廠綠能新建",
-    "industry": "大型客車 / 電動車",
-    "explicit": [
-      "自動化設備",
-      "太陽能"
-    ],
-    "explicit_evidence": {
-      "自動化設備": [
-        "自動化製造設備"
-      ],
-      "太陽能": [
-        "太陽能"
-      ]
-    },
-    "inferred": [
-      "MES/製程追溯",
-      "機器手臂",
-      "弱電",
-      "能源管理"
-    ],
-    "contact": "公司公開聯絡路徑可查",
-    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8696659",
-    "source_type": "台南市政府官方新聞",
-    "score": 92,
-    "id": "40b354b627b04325",
-    "auto": false
-  },
-  {
     "company": "明治科技",
     "date": "2026-09-24",
     "city": "新北",
@@ -453,6 +217,49 @@
     "score": 87,
     "id": "4894d3c938ed7832",
     "auto": true
+  },
+  {
+    "company": "強新工業股份有限公司",
+    "date": "2026-09-24",
+    "city": "台南",
+    "district": "",
+    "amount": 6.9,
+    "stage": "新廠/建廠投資｜地方政府公開",
+    "industry": "地方建廠/擴產早期訊號",
+    "explicit": [],
+    "explicit_evidence": {},
+    "inferred": [
+      "消防/弱電",
+      "冰水主機/空調"
+    ],
+    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
+    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8838866",
+    "source_type": "臺南市經發局｜投資/建廠新聞",
+    "score": 73,
+    "id": "6ea29dedaa89e6e8",
+    "auto": true,
+    "local_source": true,
+    "title": "強新工業於台南擴大投資6.9億元 滿足半導體客戶建廠需求"
+  },
+  {
+    "company": "及吉利康有限公司",
+    "date": "2026-09-21",
+    "city": "台南",
+    "district": "",
+    "amount": 6.9,
+    "stage": "企業投資｜地方政府公開",
+    "industry": "地方建廠/擴產早期訊號",
+    "explicit": [],
+    "explicit_evidence": {},
+    "inferred": [],
+    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
+    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8837883",
+    "source_type": "臺南市經發局｜投資/建廠新聞",
+    "score": 73,
+    "id": "c85c99c06f113227",
+    "auto": true,
+    "local_source": true,
+    "title": "臺南再添2家企業投資6.9億元 黃偉哲：擴大在地布局強化產業發展量能"
   },
   {
     "company": "中龍鋼鐵",
@@ -706,6 +513,83 @@
     "auto": true
   },
   {
+    "company": "善誠企業股份有限公司",
+    "date": "2026-08-28",
+    "city": "台南",
+    "district": "台南六甲區",
+    "amount": 2.5,
+    "stage": "擴廠/擴產｜地方政府公開",
+    "industry": "地方建廠/擴產早期訊號",
+    "explicit": [
+      "太陽能",
+      "自動化設備",
+      "RFID"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ],
+      "自動化設備": [
+        "自動化設備"
+      ],
+      "RFID": [
+        "RFID"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
+    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8833360",
+    "source_type": "臺南市經發局｜投資/建廠新聞",
+    "score": 78,
+    "id": "4a8c5b6cace89233",
+    "auto": true,
+    "local_source": true,
+    "title": "善誠企業於台南六甲區 投資2.5億元擴大布局臺南"
+  },
+  {
+    "company": "亞帝歐光電",
+    "date": "2026-08-21",
+    "city": "桃園",
+    "district": "新屋",
+    "amount": 11.2,
+    "stage": "智慧化新廠",
+    "industry": "LED / 光電",
+    "explicit": [
+      "感測器",
+      "自動控制/PLC",
+      "智慧倉儲",
+      "能源管理",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "感測器": [
+        "感測設備"
+      ],
+      "自動控制/PLC": [
+        "自動化控制"
+      ],
+      "智慧倉儲": [
+        "智慧倉儲"
+      ],
+      "能源管理": [
+        "能源管理"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [
+      "MES/製程追溯",
+      "弱電"
+    ],
+    "contact": "公司公開聯絡路徑可查",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351423cht?lang=cht&newsNum=11351423",
+    "source_type": "投資臺灣三大方案",
+    "score": 97,
+    "id": "6078512626518530",
+    "auto": false
+  },
+  {
     "company": "永進興不銹鋼",
     "date": "2026-08-21",
     "city": "台中",
@@ -839,5 +723,261 @@
     "score": 84,
     "id": "a2cc6bc607f2a396",
     "auto": true
+  },
+  {
+    "company": "包括東陽實業、黑橋牌、精湛交通工業股份有限公司",
+    "date": "2026-08-18",
+    "city": "台南",
+    "district": "科技工業區",
+    "amount": 140.0,
+    "stage": "新廠/建廠投資｜地方政府公開",
+    "industry": "地方建廠/擴產早期訊號",
+    "explicit": [],
+    "explicit_evidence": {},
+    "inferred": [
+      "消防/弱電",
+      "冰水主機/空調"
+    ],
+    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
+    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8831178",
+    "source_type": "臺南市經發局｜投資/建廠新聞",
+    "score": 75,
+    "id": "52eaebefcf3a9e9f",
+    "auto": true,
+    "local_source": true,
+    "title": "企業佈局臺南再添投資據點 七股科技工業區9.8公頃產業用地標租售齊發"
+  },
+  {
+    "company": "精湛交通工業",
+    "date": "2026-08-06",
+    "city": "台南",
+    "district": "七股",
+    "amount": 5.1,
+    "stage": "新廠 / 智慧製造",
+    "industry": "汽車車燈",
+    "explicit": [
+      "機器手臂",
+      "機器視覺/AOI",
+      "MES/製程追溯",
+      "能源管理",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "機器手臂": [
+        "智能機械手臂"
+      ],
+      "機器視覺/AOI": [
+        "多功能視覺線上配光機"
+      ],
+      "MES/製程追溯": [
+        "資訊系統",
+        "生產履歷",
+        "製程追溯"
+      ],
+      "能源管理": [
+        "能源管理"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司公開電話/網站可查",
+    "source": "https://www.moea.gov.tw/Mns/populace/news/EpaperDetail.aspx?volume=20260806",
+    "source_type": "經濟部官方新聞",
+    "score": 99,
+    "id": "5f43977529169560",
+    "auto": false
+  },
+  {
+    "company": "璨揚企業",
+    "date": "2026-08-03",
+    "city": "台南",
+    "district": "七股",
+    "amount": 10.0,
+    "stage": "新廠已動土",
+    "industry": "商用車燈",
+    "explicit": [
+      "智慧倉儲"
+    ],
+    "explicit_evidence": {
+      "智慧倉儲": [
+        "自動倉儲"
+      ]
+    },
+    "inferred": [
+      "機器手臂",
+      "弱電",
+      "消防"
+    ],
+    "contact": "公司公開聯絡路徑可查",
+    "source": "https://www.tainan.gov.tw/News_Content.aspx?n=13370&s=8828498",
+    "source_type": "台南市政府官方新聞",
+    "score": 92,
+    "id": "e5c2293a7059f727",
+    "auto": false
+  },
+  {
+    "company": "急便鮮食品",
+    "date": "2026-07-03",
+    "city": "台南",
+    "district": "七股",
+    "amount": 4.2,
+    "stage": "智慧化新廠",
+    "industry": "冷凍調理食品",
+    "explicit": [
+      "自動化設備",
+      "智慧倉儲",
+      "冷鏈",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "自動化設備": [
+        "全自動化生產設備"
+      ],
+      "智慧倉儲": [
+        "智慧冷凍倉儲"
+      ],
+      "冷鏈": [
+        "智慧冷凍倉儲"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [
+      "食品機械",
+      "弱電"
+    ],
+    "contact": "公司公開聯絡路徑可查",
+    "source": "https://www.moea.gov.tw/Mns/populace/news/EpaperDetail.aspx?volume=20260703",
+    "source_type": "經濟部官方新聞",
+    "score": 96,
+    "id": "721c0d205c91d057",
+    "auto": false
+  },
+  {
+    "company": "南益鋼構",
+    "date": "2026-06-12",
+    "city": "台南",
+    "district": "七股",
+    "amount": 8.1,
+    "stage": "智慧化鋼構新廠",
+    "industry": "鋼構加工",
+    "explicit": [
+      "自動化設備",
+      "雷射設備",
+      "機器視覺/AOI",
+      "太陽能",
+      "能源管理"
+    ],
+    "explicit_evidence": {
+      "自動化設備": [
+        "鋼構自動化設備"
+      ],
+      "雷射設備": [
+        "高能雷射銲接"
+      ],
+      "機器視覺/AOI": [
+        "AI影像辨識"
+      ],
+      "太陽能": [
+        "太陽能"
+      ],
+      "能源管理": [
+        "能源管理"
+      ]
+    },
+    "inferred": [
+      "空壓機",
+      "MES/製程追溯",
+      "弱電"
+    ],
+    "contact": "公司公開聯絡路徑可查",
+    "source": "https://www.moea.gov.tw/Mns/populace/news/EpaperDetail.aspx?volume=20260612",
+    "source_type": "經濟部官方新聞",
+    "score": 98,
+    "id": "429cf7bdb9484626",
+    "auto": false
+  },
+  {
+    "company": "台灣集廣科技",
+    "date": "2026-04-17",
+    "city": "高雄",
+    "district": "楠梓",
+    "amount": 1.67,
+    "stage": "擴大投資 / 建置",
+    "industry": "半導體檢測",
+    "explicit": [
+      "無塵室",
+      "自動化設備",
+      "機器視覺/AOI",
+      "空壓機",
+      "冰水主機/空調",
+      "純水/水處理"
+    ],
+    "explicit_evidence": {
+      "無塵室": [
+        "無塵室"
+      ],
+      "自動化設備": [
+        "自動化設備"
+      ],
+      "機器視覺/AOI": [
+        "AI智慧檢測"
+      ],
+      "空壓機": [
+        "變頻空壓機"
+      ],
+      "冰水主機/空調": [
+        "節能空調"
+      ],
+      "純水/水處理": [
+        "純水系統"
+      ]
+    },
+    "inferred": [
+      "弱電",
+      "能源管理"
+    ],
+    "contact": "公司公開聯絡路徑可查",
+    "source": "https://www.moea.gov.tw/mns/populace/news/News.aspx?kind=1&menu_id=40&news_id=122432",
+    "source_type": "經濟部官方新聞",
+    "score": 98,
+    "id": "8be0bd647fc5cb51",
+    "auto": false
+  },
+  {
+    "company": "總盈汽車",
+    "date": "2024-10-07",
+    "city": "台南",
+    "district": "",
+    "amount": 12.5,
+    "stage": "五廠綠能新建",
+    "industry": "大型客車 / 電動車",
+    "explicit": [
+      "自動化設備",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "自動化設備": [
+        "自動化製造設備"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [
+      "MES/製程追溯",
+      "機器手臂",
+      "弱電",
+      "能源管理"
+    ],
+    "contact": "公司公開聯絡路徑可查",
+    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8696659",
+    "source_type": "台南市政府官方新聞",
+    "score": 92,
+    "id": "40b354b627b04325",
+    "auto": false
   }
 ]
