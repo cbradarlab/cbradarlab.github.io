@@ -1,0 +1,45 @@
+{
+  "version": "SEARCH_RULE_OVERRIDES_V1",
+  "intent_profile_overrides": {
+    "manpower": "staffing_v2",
+    "aps": "planning_supply_v2",
+    "security_service": "new_site_ops_v2",
+    "cleaning_service": "new_site_ops_v2",
+    "uniform": "new_site_ops_v2",
+    "ppe": "new_site_ops_v2",
+    "energy_storage": "storage_project_v2",
+    "ems": "ems_project_v2"
+  },
+  "profiles": {
+    "staffing_v2": {
+      "rules": [
+        {"level":"B","blob_any":["招募","增聘","新增就業","就業機會","人力","員工","作業員","技術員"]},
+        {"level":"C","stage_any":["進駐","投入營運","啟用","量產","投產"]}
+      ]
+    },
+    "planning_supply_v2": {
+      "rules": [
+        {"level":"B","blob_any":["排程","APS","SCM","供應鏈","訂單","生產管理"]},
+        {"level":"C","stage_any":["產線升級","新增產線","擴充產能"],"blob_any":["數位化","智慧製造","排程","生產管理","供應鏈","ERP","MES"]}
+      ]
+    },
+    "new_site_ops_v2": {
+      "rules": [
+        {"level":"B","stage_any":["進駐","投入營運","啟用","量產","投產"]},
+        {"level":"C","stage_any":["新廠","建廠","設廠"],"blob_any":["量產","投產","營運","招募","員工","進駐","啟用"]}
+      ]
+    },
+    "storage_project_v2": {
+      "rules": [
+        {"level":"B","blob_any":["儲能","ESS","電池儲能","微電網"]},
+        {"level":"C","stage_any":["新廠","擴廠","產線升級"],"blob_any":["能源管理","備援電力","再生能源","綠能"]}
+      ]
+    },
+    "ems_project_v2": {
+      "rules": [
+        {"level":"B","blob_any":["能源管理","EMS","電力監控","智慧電表","需量控制","節能管理"]},
+        {"level":"C","stage_any":["智慧化","產線升級","新廠","擴廠"],"blob_any":["節能","能源","淨零","低碳"]}
+      ]
+    }
+  }
+}
