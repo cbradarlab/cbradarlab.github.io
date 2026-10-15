@@ -160,10 +160,10 @@ def flatten_strings(x):
     elif x is not None:out.append(str(x))
     return out
 
-def buildlic_rows(month:dt.date,term:str):
+def buildlic_rows(month:dt.date):
     allrows=[]
     for p in range(BUILD_MAX_PAGES):
-        params={'d':'OPENDATA','c':'BUILDLIC','Start':str(p*100+1),'執照類別':'建造執照','發照日期':roc_month(month),'樓層概要.樓層用途':f'.*{term}.*'}
+        params={'d':'OPENDATA','c':'BUILDLIC','Start':str(p*100+1),'執照類別':'建造執照','發照日期':roc_month(month)}
         url=BUILDLIC_URL+'?'+urllib.parse.urlencode(params)
         raw=fetch(url); obj=json.loads(raw)
         rows=obj.get('data',[]) if isinstance(obj,dict) else (obj if isinstance(obj,list) else [])
@@ -222,29 +222,27 @@ def permit_inferred(uses):
 def buildlic_events(now):
     events=[]; seen=set(); queries=0; failures=0; rawrows=0
     for month in recent_months(now,BUILD_MONTHS):
-        for term in BUILD_TERMS:
-            try:rows=buildlic_rows(month,term); queries+=1
-            except Exception as e:
-                failures+=1; print('WARN BUILDLIC',roc_month(month),term,repr(e),file=sys.stderr); continue
-            rawrows+=len(rows)
-            for row in rows:
-                comp=clean_company(row.get('起造人代表人',''))
-                if len(comp)<3 or not any(t in comp for t in CORP_TOKENS) or any(t in comp for t in DEV_TOKENS):continue
-                uses=permit_uses(row)
-                if not uses:continue
-                lic=str(row.get('核發執照字號') or row.get('_id') or '')
-                date=roc_date(row.get('發照日期')) or month.isoformat()
-                key=(comp,lic,date)
-                if key in seen:continue
-                seen.add(key)
-                start=roc_date(row.get('實際開工日期')); area=permit_area(row); inf=permit_inferred(uses)
-                stage=('已開工' if start else '建造執照已核發')+'｜'+'／'.join(uses[:3])
-                score=68+(5 if start else 0)+(3 if area>=5000 else 0)+(3 if area>=15000 else 0)
-                contact='起造公司已識別'
-                contractor=str(row.get('承造人') or '').strip()
-                if contractor:contact+=f'｜承造人：{contractor}'
-                source=BUILDLIC_DOC
-                events.append({'company':comp,'date':start or date,'city':permit_city(row),'district':permit_district(row),'amount':0,'stage':stage,'industry':'工業建築早期訊號','explicit':[],'explicit_evidence':{},'inferred':inf,'contact':contact,'source':source,'source_type':'全國建管 OpenData｜建造執照','score':min(88,score),'id':event_id(comp,date,'BUILDLIC:'+lic),'auto':True,'permit_no':lic,'floor_area_m2':area,'permit_date':date,'start_date':start,'building_uses':uses})
+        try:rows=buildlic_rows(month); queries+=1
+        except Exception as e:
+            failures+=1; print('WARN BUILDLIC',roc_month(month),repr(e),file=sys.stderr); continue
+        rawrows+=len(rows)
+        for row in rows:
+            comp=clean_company(row.get('起造人代表人',''))
+            if len(comp)<3 or not any(t in comp for t in CORP_TOKENS) or any(t in comp for t in DEV_TOKENS):continue
+            uses=permit_uses(row)
+            if not uses:continue
+            lic=str(row.get('核發執照字號') or row.get('_id') or '')
+            date=roc_date(row.get('發照日期')) or month.isoformat()
+            key=(comp,lic,date)
+            if key in seen:continue
+            seen.add(key)
+            start=roc_date(row.get('實際開工日期')); area=permit_area(row); inf=permit_inferred(uses)
+            stage=('已開工' if start else '建造執照已核發')+'｜'+'／'.join(uses[:3])
+            score=68+(5 if start else 0)+(3 if area>=5000 else 0)+(3 if area>=15000 else 0)
+            contact='起造公司已識別'
+            contractor=str(row.get('承造人') or '').strip()
+            if contractor:contact+=f'｜承造人：{contractor}'
+            events.append({'company':comp,'date':start or date,'city':permit_city(row),'district':permit_district(row),'amount':0,'stage':stage,'industry':'工業建築早期訊號','explicit':[],'explicit_evidence':{},'inferred':inf,'contact':contact,'source':BUILDLIC_DOC,'source_type':'全國建管 OpenData｜建造執照','score':min(88,score),'id':event_id(comp,date,'BUILDLIC:'+lic),'auto':True,'permit_no':lic,'floor_area_m2':area,'permit_date':date,'start_date':start,'building_uses':uses})
     return events,{'buildlic_queries':queries,'buildlic_failures':failures,'buildlic_raw_rows':rawrows,'buildlic_event_count':len(events)}
 
 def render_topics(events, updated):
