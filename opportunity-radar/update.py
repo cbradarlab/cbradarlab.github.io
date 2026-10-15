@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Zero-cost public-data updater for B2B Opportunity Radar.
-Standard library only. Parses company-level paragraphs, dedupes events, and builds a small set of substantive SEO topic pages.
+Standard library only. Multi-source: Invest Taiwan purchase-intent news +
+national building-permit early signals. Keeps explicit vs inferred demand separate.
 """
 from __future__ import annotations
 import datetime as dt, hashlib, html, json, re, sys, urllib.parse, urllib.request
@@ -11,9 +12,12 @@ ROOT=Path(__file__).resolve().parent
 EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'; TOPIC_DIR=ROOT/'topics'
 LIST_URL='https://investtaiwan.nat.gov.tw/threeMajorNewsPageList'
 BASE='https://investtaiwan.nat.gov.tw/'
+BUILDLIC_URL='https://building-apply.publicwork.ntpc.gov.tw/opendata/OpenDataSearchUrl.do'
+BUILDLIC_DOC='https://building-apply.publicwork.ntpc.gov.tw/opendata/docs/a1.html'
 SITE='https://cbradarlab.github.io/opportunity-radar/'
-UA='Mozilla/5.0 OpportunityRadar/0.7 (+https://cbradarlab.github.io/opportunity-radar/)'
+UA='Mozilla/5.0 OpportunityRadar/0.8 (+https://cbradarlab.github.io/opportunity-radar/)'
 MAX_ARTICLES=8; STALE_DAYS=21; HTTP_TIMEOUT=12
+BUILD_MONTHS=2; BUILD_MAX_PAGES=3; BUILD_TERMS=('工廠','廠房','倉庫')
 
 RULES={
 '空壓機':['空壓機','空壓系統','壓縮空氣'],
@@ -44,6 +48,9 @@ TOPICS={
 }
 BLACK_PREFIX=('投資臺灣事務所','截至目前','後續尚有','本次投資','新廠','新產線','該公司','此次投資','資料來源','新聞發言人')
 COMPANY_START=re.compile(r'^([^，。；：\s]{2,24}?)(?=為|深耕|成立於|成立|創立|主要|專注|隸屬|是|以)')
+CORP_TOKENS=('股份有限公司','有限公司','公司','科技','工業','企業','實業','電子','材料','化學','製造','食品','物流','生技','能源','精密','機械','光電','電機')
+DEV_TOKENS=('建設有限公司','建設股份有限公司','營造有限公司','營造股份有限公司','開發建設')
+CITY_NAMES=('基隆市','台北市','臺北市','新北市','桃園市','新竹市','新竹縣','苗栗縣','台中市','臺中市','彰化縣','南投縣','雲林縣','嘉義市','嘉義縣','台南市','臺南市','高雄市','屏東縣','宜蘭縣','花蓮縣','台東縣','臺東縣','澎湖縣','金門縣','連江縣')
 
 def fetch(url:str)->str:
     req=urllib.request.Request(url,headers={'User-Agent':UA,'Accept-Language':'zh-TW,zh;q=0.9'})
@@ -112,9 +119,9 @@ def amount_billion(t:str):
 
 def guess_city(t:str):
     found=[]
-    for c in ['基隆','台北','臺北','新北','桃園','新竹','苗栗','台中','臺中','彰化','南投','雲林','嘉義','台南','臺南','高雄','屏東','宜蘭','花蓮','台東','臺東','澎湖']:
+    for c in CITY_NAMES:
         if c in t:
-            n=c.replace('臺','台')
+            n=c.replace('臺','台').replace('市','').replace('縣','')
             if n not in found:found.append(n)
     return '/'.join(found[:2])
 
@@ -122,8 +129,123 @@ def event_id(company,date,source):return hashlib.sha1(f'{company}|{date}|{source
 def load_events():
     try:return json.loads(EVENTS.read_text(encoding='utf-8'))
     except Exception:return []
-
 def h(s):return html.escape(str(s or ''),quote=True)
+
+def roc_month(d:dt.date)->str:return f'{d.year-1911:03d}年{d.month:02d}月'
+def recent_months(now:dt.datetime,n:int):
+    y,m=now.year,now.month; out=[]
+    for _ in range(n):
+        out.append(dt.date(y,m,1)); m-=1
+        if m==0:y-=1;m=12
+    return out
+
+def roc_date(v)->str:
+    s=re.sub(r'\D','',str(v or ''))
+    if len(s)>=7:
+        try:
+            y=int(s[:3])+1911; m=int(s[3:5]); d=int(s[5:7]); return f'{y:04d}-{m:02d}-{d:02d}'
+        except Exception:return ''
+    m=re.search(r'(\d{2,3})年(\d{1,2})月(\d{1,2})日?',str(v or ''))
+    if m:
+        try:return f'{int(m.group(1))+1911:04d}-{int(m.group(2)):02d}-{int(m.group(3)):02d}'
+        except Exception:return ''
+    return ''
+
+def flatten_strings(x):
+    out=[]
+    if isinstance(x,dict):
+        for v in x.values():out.extend(flatten_strings(v))
+    elif isinstance(x,list):
+        for v in x:out.extend(flatten_strings(v))
+    elif x is not None:out.append(str(x))
+    return out
+
+def buildlic_rows(month:dt.date,term:str):
+    allrows=[]
+    for p in range(BUILD_MAX_PAGES):
+        params={'d':'OPENDATA','c':'BUILDLIC','Start':str(p*100+1),'執照類別':'建造執照','發照日期':roc_month(month),'樓層概要.樓層用途':f'.*{term}.*'}
+        url=BUILDLIC_URL+'?'+urllib.parse.urlencode(params)
+        raw=fetch(url); obj=json.loads(raw)
+        rows=obj.get('data',[]) if isinstance(obj,dict) else (obj if isinstance(obj,list) else [])
+        if not isinstance(rows,list):rows=[]
+        allrows.extend(x for x in rows if isinstance(x,dict))
+        if len(rows)<100:break
+    return allrows
+
+def clean_company(v:str)->str:
+    s=re.sub(r'\s+','',str(v or '')).strip('：:，,；;')
+    s=re.sub(r'(?:負責人|代表人)[：:].*$','',s)
+    s=re.sub(r'^\([A-Z]\d+\)|^[A-Z]\d+[.、]?','',s)
+    return s.strip('「」()（）')
+
+def permit_city(row):
+    txt=' '.join(flatten_strings(row))
+    for c in CITY_NAMES:
+        if c in txt:return c.replace('臺','台').replace('市','').replace('縣','')
+    return ''
+
+def permit_district(row):
+    for key in ('門牌','地號'):
+        xs=row.get(key) or []
+        if isinstance(xs,dict):xs=[xs]
+        if isinstance(xs,list):
+            for x in xs:
+                if isinstance(x,dict) and x.get('行政區'):return str(x.get('行政區'))
+    return ''
+
+def permit_uses(row):
+    xs=row.get('樓層概要') or []
+    if isinstance(xs,dict):xs=[xs]
+    vals=[]
+    if isinstance(xs,list):
+        for x in xs:
+            if isinstance(x,dict):
+                v=str(x.get('樓層用途') or '')
+                if v and any(t in v for t in BUILD_TERMS):vals.append(v)
+    return list(dict.fromkeys(vals))
+
+def permit_area(row):
+    for k in ('總樓地板面積','建築面積','基地面積'):
+        v=str(row.get(k) or '').replace(',','')
+        m=re.search(r'[0-9]+(?:\.[0-9]+)?',v)
+        if m:
+            try:return float(m.group(0))
+            except Exception:pass
+    return 0.0
+
+def permit_inferred(uses):
+    text=' '.join(uses); out=['消防/弱電']
+    if '工廠' in text or '廠房' in text:out+=['冰水主機/空調','空壓機']
+    if '倉庫' in text:out+=['智慧倉儲']
+    return list(dict.fromkeys(out))
+
+def buildlic_events(now):
+    events=[]; seen=set(); queries=0; failures=0; rawrows=0
+    for month in recent_months(now,BUILD_MONTHS):
+        for term in BUILD_TERMS:
+            try:rows=buildlic_rows(month,term); queries+=1
+            except Exception as e:
+                failures+=1; print('WARN BUILDLIC',roc_month(month),term,repr(e),file=sys.stderr); continue
+            rawrows+=len(rows)
+            for row in rows:
+                comp=clean_company(row.get('起造人代表人',''))
+                if len(comp)<3 or not any(t in comp for t in CORP_TOKENS) or any(t in comp for t in DEV_TOKENS):continue
+                uses=permit_uses(row)
+                if not uses:continue
+                lic=str(row.get('核發執照字號') or row.get('_id') or '')
+                date=roc_date(row.get('發照日期')) or month.isoformat()
+                key=(comp,lic,date)
+                if key in seen:continue
+                seen.add(key)
+                start=roc_date(row.get('實際開工日期')); area=permit_area(row); inf=permit_inferred(uses)
+                stage=('已開工' if start else '建造執照已核發')+'｜'+'／'.join(uses[:3])
+                score=68+(5 if start else 0)+(3 if area>=5000 else 0)+(3 if area>=15000 else 0)
+                contact='起造公司已識別'
+                contractor=str(row.get('承造人') or '').strip()
+                if contractor:contact+=f'｜承造人：{contractor}'
+                source=BUILDLIC_DOC
+                events.append({'company':comp,'date':start or date,'city':permit_city(row),'district':permit_district(row),'amount':0,'stage':stage,'industry':'工業建築早期訊號','explicit':[],'explicit_evidence':{},'inferred':inf,'contact':contact,'source':source,'source_type':'全國建管 OpenData｜建造執照','score':min(88,score),'id':event_id(comp,date,'BUILDLIC:'+lic),'auto':True,'permit_no':lic,'floor_area_m2':area,'permit_date':date,'start_date':start,'building_uses':uses})
+    return events,{'buildlic_queries':queries,'buildlic_failures':failures,'buildlic_raw_rows':rawrows,'buildlic_event_count':len(events)}
 
 def render_topics(events, updated):
     TOPIC_DIR.mkdir(exist_ok=True)
@@ -146,7 +268,7 @@ def main():
     dates=re.findall(r'20\d{2}-\d{2}-\d{2}',list_text); latest=max(dates) if dates else ''
     links=article_links(list_html)
     if not links:raise RuntimeError('No official article links discovered')
-    autos=[]; failures=0; checked=0; paragraphs=0
+    invest=[]; failures=0; checked=0; paragraphs=0
     for url in links:
         try:
             raw=fetch(url); checked+=1; article_text=plain_text(raw); date=extract_date(article_text,latest)
@@ -155,25 +277,32 @@ def main():
                 if not needs:continue
                 amt=amount_billion(seg); city=guess_city(seg)
                 score=min(99,82+min(12,len(needs)*2)+(3 if amt>=5 else 0)+(2 if amt>=20 else 0))
-                autos.append({'company':comp,'date':date,'city':city,'district':'','amount':amt,'stage':'官方投資/擴產公告','industry':'','explicit':list(needs.keys()),'explicit_evidence':needs,'inferred':[],'contact':'公司名稱已識別｜公開聯絡資料可再補','source':url,'source_type':'投資臺灣三大方案｜自動抓取','score':score,'id':event_id(comp,date,url),'auto':True})
+                invest.append({'company':comp,'date':date,'city':city,'district':'','amount':amt,'stage':'官方投資/擴產公告','industry':'','explicit':list(needs.keys()),'explicit_evidence':needs,'inferred':[],'contact':'公司名稱已識別｜公開聯絡資料可再補','source':url,'source_type':'投資臺灣三大方案｜自動抓取','score':score,'id':event_id(comp,date,url),'auto':True})
         except Exception as e:
             failures+=1; print('WARN',url,repr(e),file=sys.stderr)
     if checked==0:raise RuntimeError('All official articles failed')
     if paragraphs==0:raise RuntimeError('Official pages fetched but company paragraphs were not detected')
-    if not autos:raise RuntimeError('Company paragraphs detected but no purchase-intent events parsed')
+    if not invest:raise RuntimeError('Company paragraphs detected but no purchase-intent events parsed')
     if not latest:raise RuntimeError('Latest official date missing')
     age=(now.date()-dt.date.fromisoformat(latest)).days
     if age>STALE_DAYS:raise RuntimeError(f'Official source stale: latest={latest}, age={age}d')
+
+    permits,pstats=buildlic_events(now)
     manual=[e for e in load_events() if not e.get('auto')]
     manual_ids={e.get('id') for e in manual if e.get('id')}
-    byid={e['id']:e for e in autos if e.get('id') and e.get('id') not in manual_ids}
-    if len(byid)>paragraphs:raise RuntimeError('Parser regression: more auto events than company paragraphs')
+    all_auto=invest+permits
+    byid={e['id']:e for e in all_auto if e.get('id') and e.get('id') not in manual_ids}
+    if len({e['id'] for e in invest if e.get('id')})>paragraphs:raise RuntimeError('Parser regression: more investment events than company paragraphs')
     merged=manual+sorted(byid.values(),key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True)
     ids=[e.get('id') for e in merged if e.get('id')]
     if len(ids)!=len(set(ids)):raise RuntimeError('Duplicate event IDs after merge')
     EVENTS.write_text(json.dumps(merged,ensure_ascii=False,indent=2),encoding='utf-8')
     render_topics(merged,now.isoformat(timespec='minutes'))
-    status={'updated_at':now.isoformat(timespec='seconds'),'source_status':'PASS_LIVE_REFRESH_UNIQUE_COMPANY_EVENTS','latest_source_date':latest,'articles_checked':checked,'article_failures':failures,'company_paragraphs_checked':paragraphs,'auto_event_count':len(byid),'seed_event_count':len(manual),'total_event_count':len(merged),'seo_topic_pages':len(TOPICS),'warnings':[],'data_cost_ntd':0,'ai_api_required':False}
+    unique_companies=len({re.sub(r'\s+','',e.get('company','')) for e in merged if e.get('company')})
+    warnings=[]
+    if pstats['buildlic_queries']==0 or pstats['buildlic_event_count']==0:warnings.append('BUILDLIC_NO_EVENTS')
+    if pstats['buildlic_failures']>0:warnings.append(f"BUILDLIC_FAILURES={pstats['buildlic_failures']}")
+    status={'updated_at':now.isoformat(timespec='seconds'),'source_status':'PASS_MULTI_SOURCE_LIVE_REFRESH','latest_source_date':latest,'articles_checked':checked,'article_failures':failures,'company_paragraphs_checked':paragraphs,'investment_auto_event_count':len({e['id'] for e in invest if e.get('id')}),'buildlic_event_count':pstats['buildlic_event_count'],'auto_event_count':len(byid),'seed_event_count':len(manual),'total_event_count':len(merged),'unique_company_count':unique_companies,'seo_topic_pages':len(TOPICS),'warnings':warnings,'data_cost_ntd':0,'ai_api_required':False,**pstats}
     STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(status,ensure_ascii=False))
 
