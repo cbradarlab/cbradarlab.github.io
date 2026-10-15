@@ -1,11 +1,12 @@
 {
-  "updated_at": "2026-10-15T12:16:38+08:00",
-  "source_status": "PASS_LIVE_REFRESH_HEALTHY",
+  "updated_at": "2026-10-15T12:19:16+08:00",
+  "source_status": "PASS_LIVE_REFRESH_COMPANY_PARAGRAPH",
   "latest_source_date": "2026-10-08",
   "articles_checked": 8,
   "article_failures": 0,
-  "auto_event_count": 40,
-  "total_event_count": 51,
+  "company_paragraphs_checked": 21,
+  "auto_event_count": 20,
+  "total_event_count": 31,
   "warnings": [],
   "data_cost_ntd": 0,
   "ai_api_required": false
