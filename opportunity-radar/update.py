@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parent
 EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'
 LIST_URL='https://investtaiwan.nat.gov.tw/threeMajorNewsPageList'
 BASE='https://investtaiwan.nat.gov.tw/'
-UA='Mozilla/5.0 OpportunityRadar/0.5 (+https://cbradarlab.github.io/opportunity-radar/)'
+UA='Mozilla/5.0 OpportunityRadar/0.6 (+https://cbradarlab.github.io/opportunity-radar/)'
 MAX_ARTICLES=8; STALE_DAYS=21; HTTP_TIMEOUT=12
 
 RULES={
@@ -98,8 +98,16 @@ def detail_paragraphs(raw:str):
     return out
 
 def amount_billion(t:str):
-    ms=re.findall(r'(?:總?投資(?:金額)?|投資金額|斥資|加碼)[^。；，]{0,24}?([0-9]+(?:\.[0-9]+)?)\s*億',t)
-    return float(ms[0]) if ms else 0
+    # Company-paragraph only. Supports common official wording such as
+    # 投資約5.1億元 / 總投資金額約10億元 / 總金額約10.2億元.
+    pats=[
+        r'(?:總?投資(?:金額)?|投資金額|本案投資金額|總金額|斥資|加碼)[^。；，]{0,28}?([0-9]+(?:\.[0-9]+)?)\s*億',
+        r'([0-9]+(?:\.[0-9]+)?)\s*億(?:元)?(?:投資|建廠|擴廠|擴產)'
+    ]
+    for pat in pats:
+        ms=re.findall(pat,t)
+        if ms:return float(ms[0])
+    return 0
 
 def guess_city(t:str):
     found=[]
@@ -138,11 +146,17 @@ def main():
     if not latest:raise RuntimeError('Latest official date missing')
     age=(now.date()-dt.date.fromisoformat(latest)).days
     if age>STALE_DAYS:raise RuntimeError(f'Official source stale: latest={latest}, age={age}d')
+
     manual=[e for e in load_events() if not e.get('auto')]
-    byid={e['id']:e for e in autos if e.get('id')}
+    manual_ids={e.get('id') for e in manual if e.get('id')}
+    byid={e['id']:e for e in autos if e.get('id') and e.get('id') not in manual_ids}
+    if len(byid)>paragraphs:raise RuntimeError('Parser regression: more auto events than company paragraphs')
     merged=manual+sorted(byid.values(),key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True)
+    ids=[e.get('id') for e in merged if e.get('id')]
+    if len(ids)!=len(set(ids)):raise RuntimeError('Duplicate event IDs after merge')
+
     EVENTS.write_text(json.dumps(merged,ensure_ascii=False,indent=2),encoding='utf-8')
-    status={'updated_at':now.isoformat(timespec='seconds'),'source_status':'PASS_LIVE_REFRESH_COMPANY_PARAGRAPH','latest_source_date':latest,'articles_checked':checked,'article_failures':failures,'company_paragraphs_checked':paragraphs,'auto_event_count':len(byid),'total_event_count':len(merged),'warnings':[],'data_cost_ntd':0,'ai_api_required':False}
+    status={'updated_at':now.isoformat(timespec='seconds'),'source_status':'PASS_LIVE_REFRESH_UNIQUE_COMPANY_EVENTS','latest_source_date':latest,'articles_checked':checked,'article_failures':failures,'company_paragraphs_checked':paragraphs,'auto_event_count':len(byid),'seed_event_count':len(manual),'total_event_count':len(merged),'warnings':[],'data_cost_ntd':0,'ai_api_required':False}
     STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(status,ensure_ascii=False))
 
