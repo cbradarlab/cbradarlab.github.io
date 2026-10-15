@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""High-confidence Kaohsiung + Taichung opportunity signals.
+"""High-confidence regional opportunity signals.
 Rule: the headline identifies the commercial actor; article body only corroborates it.
 Prefer fewer clean leads over inflated counts.
 """
@@ -14,13 +14,15 @@ ROOT=Path(__file__).resolve().parent
 EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'
 SOURCES={
  'kaohsiung':{'city':'高雄','pages':int(os.environ.get('KAOHSIUNG_PAGES','2')),'max_articles':int(os.environ.get('KAOHSIUNG_MAX_ARTICLES','12')),'list':'https://invest.kcg.gov.tw/News.aspx?n=8CE973AC5F6EE514&sms=D7173346CB507235&PageSize=20&page={page}','base':'https://invest.kcg.gov.tw/','source_type':'高雄招商網｜產業新聞'},
- 'taichung':{'city':'台中','pages':int(os.environ.get('TAICHUNG_PAGES','2')),'max_articles':int(os.environ.get('TAICHUNG_MAX_ARTICLES','12')),'list':'https://www.economic.taichung.gov.tw/2590629/Lpsimplelist?PageSize=20&page={page}','base':'https://www.economic.taichung.gov.tw/','source_type':'臺中市經發局｜招商新聞'}
+ 'taichung':{'city':'台中','pages':int(os.environ.get('TAICHUNG_PAGES','2')),'max_articles':int(os.environ.get('TAICHUNG_MAX_ARTICLES','12')),'list':'https://www.economic.taichung.gov.tw/2590629/Lpsimplelist?PageSize=20&page={page}','base':'https://www.economic.taichung.gov.tw/','source_type':'臺中市經發局｜招商新聞'},
+ 'taoyuan':{'city':'桃園','pages':int(os.environ.get('TAOYUAN_PAGES','2')),'max_articles':int(os.environ.get('TAOYUAN_MAX_ARTICLES','12')),'list':'https://invest.tycg.gov.tw/News.aspx?n=798&sms=8160&PageSize=20&page={page}','base':'https://invest.tycg.gov.tw/','source_type':'桃園投資通｜重要訊息'},
+ 'hsinchu':{'city':'新竹縣','pages':int(os.environ.get('HSINCHU_PAGES','1')),'max_articles':int(os.environ.get('HSINCHU_MAX_ARTICLES','12')),'list':'https://www.hsinchu.gov.tw/News.aspx?n=153&sms=8603&PageSize=200&page={page}','base':'https://www.hsinchu.gov.tw/','source_type':'新竹縣政府｜縣府新聞'}
 }
-TITLE_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','興建','擴產','加碼','產線','廠房','進駐','落地生產')
-TITLE_REJECT=('說明會','論壇','招商會','招商說明','產業用地','標售','標租','徵才','就業博覽','全台每','六都','工廠投資破','成果發表','會展中心','轉運中心','遊客中心','捷運','社宅','產業園區盛大動土','園區動土')
-LATE_KEYS=('啟用','落成','完工','正式投產','投入營運','開幕')
-BAD_NAME_TOKENS=('方案','基地','園區','供應鏈','能源管理','投資行動','加速投資','公開案件','資料來源','招商','工業區','科學園區','驗證基地','製造基地','市政府','經發局','經濟發展局','行政院','經濟部')
-ACTION_SUFFIX=('擴大','長期','初期','一期','二期','新廠','建廠','設廠','擴廠','擴產','投資')
+TITLE_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','興建','擴產','加碼','產線','廠房','進駐','落地生產','擴充產能')
+TITLE_REJECT=('說明會','論壇','招商會','招商說明','產業用地','標售','標租','徵才','就業博覽','全台每','六都','工廠投資破','成果發表','會展中心','轉運中心','遊客中心','捷運','社宅','產業園區盛大動土','園區動土','SBIR','補助計畫','審查通過名單','商機媒合大會','設計展','博覽會')
+LATE_KEYS=('啟用','落成','完工','正式投產','投入營運','開幕','揭牌')
+BAD_NAME_TOKENS=('方案','基地','園區','供應鏈','能源管理','投資行動','加速投資','公開案件','資料來源','招商','工業區','科學園區','驗證基地','製造基地','市政府','縣政府','經發局','經濟發展局','行政院','經濟部')
+ACTION_SUFFIX=('擴大','長期','初期','一期','二期','三廠','二廠','新廠','建廠','設廠','擴廠','擴產','投資')
 LEGAL_RE=re.compile(r'([^\s，。；：：「」()（）]{2,40}?(?:股份有限公司|有限公司))')
 QUOTE_RE=re.compile(r'[「『]([^」』]{2,24})[」』]')
 
@@ -40,7 +42,10 @@ def discover_links(name,cfg):
             href=html.unescape(m.group(1)); title=norm_title(m.group(2))
             if name=='kaohsiung':
                 if 'News_Content.aspx' not in href or 's=' not in href:continue
-            elif not (re.search(r'/\d+/post(?:\?|$)',href) or 'News_Content.aspx' in href):continue
+            elif name=='taichung':
+                if not (re.search(r'/\d+/post(?:\?|$)',href) or 'News_Content.aspx' in href):continue
+            else:
+                if 'News_Content.aspx' not in href or 's=' not in href:continue
             if not title_ok(title):continue
             item=(urllib.parse.urljoin(cfg['base'],href),title)
             if item not in found:found.append(item)
@@ -61,8 +66,7 @@ def clean_company(s):
         if marker in s:s=s.rsplit(marker,1)[-1]
     for marker in ('大廠','供應鏈'):
         if marker in s:s=s.rsplit(marker,1)[-1]
-    # Headline often appends geography after the brand: 達興材料高雄橋頭一期 -> 達興材料.
-    for geo in ('高雄','台中','臺中','中科','橋頭','楠梓','仁武'):
+    for geo in ('高雄','台中','臺中','中科','橋頭','楠梓','仁武','桃園','平鎮','中壢','龜山','蘆竹','大園','觀音','新竹','竹縣','竹北','湖口','新豐','寶山','竹東'):
         pos=s.find(geo)
         if pos>=2:s=s[:pos]
     for suf in ACTION_SUFFIX:
@@ -76,11 +80,9 @@ def clean_company(s):
 def title_candidates(title):
     t=re.sub(r'^\s*\d+\s*','',title)
     out=[]
-    # The actor immediately before a concrete spending/build action is the strongest headline signal.
-    for m in re.finditer(r'([A-Za-z0-9\u4e00-\u9fff＋+\-]{2,28}?)(?=(?:砸|斥資|再投資|投資|擴產|擴廠|擴大投資|新廠|動土|進駐|於高雄|於台中|於臺中|中科設新廠))',t):
+    for m in re.finditer(r'([A-Za-z0-9\u4e00-\u9fff＋+\-]{2,28}?)(?=(?:砸|斥資|再投資|投資|擴產|擴廠|擴大投資|新廠|動土|進駐|於高雄|於台中|於臺中|於桃園|於新竹|中科設新廠|竹北設廠|湖口設廠))',t):
         x=clean_company(m.group(1))
         if x:out.append(x)
-    # Headline beginning can itself be the brand: 聯華林德百億元擴產...
     m=re.match(r'([A-Za-z0-9\u4e00-\u9fff＋+\-]{2,18}?)(?=(?:百億|千億|\d+(?:\.\d+)?億|擴產|擴廠|投資|新廠|動土|進駐))',t)
     if m:
         x=clean_company(m.group(1));
@@ -97,16 +99,18 @@ def corroborated_candidates(page,title):
     for m in QUOTE_RE.finditer(page):
         x=clean_company(m.group(1))
         if x:quoted.append(x)
-    # Legal/body candidates are allowed only when their normalized brand is visibly in the headline.
+    title_core=company_core(title)
     for x in legal+quoted:
         c=company_core(x)
-        if c and c in company_core(title):out.append(x)
-    # Headline-derived short names must also be mentioned in body text.
+        if c and c in title_core:out.append(x)
+        elif x.endswith(('股份有限公司','有限公司')):
+            short=re.sub(r'(?:股份有限公司|有限公司)$','',x)
+            short=re.sub(r'(?:企業|工業|科技|實業)$','',short)
+            if len(short)>=2 and short in title:out.append(x)
     page_core=company_core(page)
     for x in headline:
         c=company_core(x)
         if c and len(c)>=2 and c in page_core:out.append(x)
-    # For same core prefer a legal full name; otherwise shorter clean display name.
     best={}
     for x in out:
         c=company_core(x)
@@ -165,11 +169,11 @@ def main():
             added.append(e)
         all_added.extend(added);stats[name]={'pages_checked':pages_ok,'candidate_articles':len(links),'articles_checked':checked,'article_failures':failures,'new_event_count':len(added)}
     merged=events+all_added;merged.sort(key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True);EVENTS.write_text(json.dumps(merged,ensure_ascii=False,indent=2),encoding='utf-8')
-    now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)));core.render_topics(merged,now.isoformat(timespec='minutes'));status['updated_at']=now.isoformat(timespec='seconds');status['regional_sources']='KAOHSIUNG_TAICHUNG_OFFICIAL'
+    now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)));core.render_topics(merged,now.isoformat(timespec='minutes'));status['updated_at']=now.isoformat(timespec='seconds');status['regional_sources']='KAOHSIUNG_TAICHUNG_TAOYUAN_HSINCHU_OFFICIAL'
     for name,st in stats.items():
         for k,v in st.items():status[f'{name}_{k}']=v
     status['regional_local_new_event_count']=len(all_added);status['total_event_count']=len(merged);status['unique_company_count']=len({company_core(e.get('company','')) for e in merged if company_core(e.get('company',''))})
-    warnings=[w for w in status.get('warnings',[]) if not str(w).startswith(('KAOHSIUNG_','TAICHUNG_'))]
+    warnings=[w for w in status.get('warnings',[]) if not str(w).startswith(('KAOHSIUNG_','TAICHUNG_','TAOYUAN_','HSINCHU_'))]
     for name,st in stats.items():
         if st['article_failures']:warnings.append(f"{name.upper()}_FAILURES={st['article_failures']}")
         if st['pages_checked']==0:warnings.append(f'{name.upper()}_LIST_UNAVAILABLE')
