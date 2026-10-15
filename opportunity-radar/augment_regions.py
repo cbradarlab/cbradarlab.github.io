@@ -25,15 +25,13 @@ BAD_NAME_TOKENS=('方案','基地','園區','供應鏈','能源管理','投資�
 ACTION_SUFFIX=('擴大','長期','初期','一期','二期','三廠','二廠','新廠','建廠','設廠','擴廠','擴產','投資')
 LEGAL_RE=re.compile(r'([^\s，。；：：「」()（）]{2,40}?(?:股份有限公司|有限公司))')
 QUOTE_RE=re.compile(r'[「『]([^」』]{2,24})[」』]')
+TITLE_FALLBACK_ACTIONS=('動土','開工','新廠','建廠','設廠','擴廠','擴產')
 
 
 def norm_title(s):return re.sub(r'\s+',' ',core.plain_text(s)).strip()
 def company_core(s):return local.company_core(s)
 
 def region_fetch(name,url):
-    # The Hsinchu county host intermittently resolves to an unreachable IPv6 path
-    # from GitHub-hosted Azure runners. Force IPv4 only for that source so the
-    # already-stable regional lanes remain untouched.
     if name!='hsinchu':return core.fetch(url)
     p=subprocess.run(
         ['curl','-4','-L','--silent','--show-error','--fail','--max-time','10',
@@ -46,6 +44,16 @@ def region_fetch(name,url):
 
 def title_ok(title):
     return bool(title and any(k in title for k in TITLE_KEYS) and not any(k in title for k in TITLE_REJECT) and not any(k in title for k in LATE_KEYS))
+
+def row_date_hint(raw,start,end):
+    left=raw.rfind('<tr',0,start); right=raw.find('</tr>',end)
+    if left>=0 and right>=0:ctx=core.plain_text(raw[left:right+5])
+    else:ctx=core.plain_text(raw[max(0,start-500):min(len(raw),end+200)])
+    m=re.search(r'(?<!\d)(20\d{2})[-/.](\d{1,2})[-/.](\d{1,2})(?!\d)',ctx)
+    if m:return f'{int(m.group(1)):04d}-{int(m.group(2)):02d}-{int(m.group(3)):02d}'
+    m=re.search(r'(?<!\d)(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})(?!\d)',ctx)
+    if m and 90<=int(m.group(1))<=200:return f'{int(m.group(1))+1911:04d}-{int(m.group(2)):02d}-{int(m.group(3)):02d}'
+    return ''
 
 def discover_links(name,cfg):
     found=[]; pages_ok=0
@@ -61,7 +69,7 @@ def discover_links(name,cfg):
             else:
                 if 'News_Content.aspx' not in href or 's=' not in href:continue
             if not title_ok(title):continue
-            item=(urllib.parse.urljoin(cfg['base'],href),title)
+            item=(urllib.parse.urljoin(cfg['base'],href),title,row_date_hint(raw,m.start(),m.end()))
             if item not in found:found.append(item)
             if len(found)>=cfg['max_articles']:return found,pages_ok
     return found,pages_ok
@@ -99,7 +107,7 @@ def title_candidates(title):
         if x:out.append(x)
     m=re.match(r'([A-Za-z0-9\u4e00-\u9fff＋+\-]{2,18}?)(?=(?:百億|千億|\d+(?:\.\d+)?億|擴產|擴廠|投資|新廠|動土|進駐))',t)
     if m:
-        x=clean_company(m.group(1));
+        x=clean_company(m.group(1))
         if x:out.append(x)
     return list(dict.fromkeys(out))
 
@@ -127,8 +135,7 @@ def corroborated_candidates(page,title):
         if c and len(c)>=2 and c in page_core:out.append(x)
     best={}
     for x in out:
-        c=company_core(x)
-        old=best.get(c)
+        c=company_core(x); old=best.get(c)
         if old is None:best[c]=x;continue
         xlegal=x.endswith(('股份有限公司','有限公司')); olegal=old.endswith(('股份有限公司','有限公司'))
         if xlegal and not olegal:best[c]=x
@@ -165,33 +172,56 @@ def extract_events(name,cfg,url,title):
         if any(k in blob for k in ('動土','開工')):score+=5
         if amt>=5:score+=3
         if amt>=20:score+=2
-        out.append({'company':comp,'date':date,'city':cfg['city'],'district':local.district(blob),'amount':amt,'stage':stage_of(blob),'industry':'地方建廠/擴產早期訊號','explicit':list(needs.keys()),'explicit_evidence':needs,'inferred':inf,'contact':'公司名稱已識別｜可再接公開公司聯絡資料','source':url,'source_type':cfg['source_type'],'score':min(95,score),'id':core.event_id(comp,date,url),'auto':True,'local_source':True,'region_source':name,'title':title})
+        out.append({'company':comp,'date':date,'city':cfg['city'],'district':local.district(blob),'amount':amt,'stage':stage_of(blob),'industry':'地方建廠/擴產早期訊號','explicit':list(needs.keys()),'explicit_evidence':needs,'inferred':inf,'contact':'公司名稱已識別｜可再接公開公司聯絡資料','source':url,'source_type':cfg['source_type'],'score':min(95,score),'id':core.event_id(comp,date,url),'auto':True,'local_source':True,'region_source':name,'title':title,'evidence_level':'OFFICIAL_ARTICLE'})
     return out
+
+def title_fallback_event(name,cfg,url,title,date_hint):
+    if name!='taoyuan' or not date_hint:return None
+    if not any(k in title for k in TITLE_FALLBACK_ACTIONS):return None
+    comps=title_candidates(title)
+    if len(comps)!=1:return None
+    amt=core.amount_billion(title)
+    if amt<=0:return None
+    comp=comps[0]; inf=inferred_of(title); score=75
+    if any(k in title for k in ('動土','開工')):score+=3
+    if amt>=20:score+=2
+    return {'company':comp,'date':date_hint,'city':cfg['city'],'district':local.district(title),'amount':amt,'stage':stage_of(title),'industry':'地方建廠/擴產早期訊號','explicit':[],'explicit_evidence':{},'inferred':inf,'contact':'公司名稱由官方列表標題確認｜公開聯絡資料可再補','source':url,'source_type':cfg['source_type']+'｜官方列表標題確認','score':score,'id':core.event_id(comp,date_hint,url),'auto':True,'local_source':True,'region_source':name,'title':title,'evidence_level':'OFFICIAL_LIST_TITLE_ONLY','article_fetch_degraded':True}
 
 def main():
     events=json.loads(EVENTS.read_text(encoding='utf-8')); status=json.loads(STATUS.read_text(encoding='utf-8'))
     all_added=[]; stats={}
     for name,cfg in SOURCES.items():
-        links,pages_ok=discover_links(name,cfg); checked=0; failures=0; found=[]
-        for url,title in links:
+        links,pages_ok=discover_links(name,cfg); checked=0; failures=0; fallbacks=0; found=[]
+        for url,title,date_hint in links:
             try:found.extend(extract_events(name,cfg,url,title));checked+=1
-            except Exception as e:failures+=1;print('WARN REGION_ARTICLE',name,url,repr(e))
+            except Exception as e:
+                fb=title_fallback_event(name,cfg,url,title,date_hint)
+                if fb:
+                    found.append(fb);checked+=1;fallbacks+=1
+                    print('INFO REGION_TITLE_FALLBACK',name,url,fb['company'],fb['date'])
+                else:
+                    failures+=1;print('WARN REGION_ARTICLE',name,url,repr(e))
         added=[]
         for e in sorted(found,key=lambda x:(x.get('date',''),x.get('score',0)),reverse=True):
             if local.is_near_duplicate(e,events+all_added+added):continue
             if e.get('id') in {x.get('id') for x in events+all_added+added}:continue
             added.append(e)
-        all_added.extend(added);stats[name]={'pages_checked':pages_ok,'candidate_articles':len(links),'articles_checked':checked,'article_failures':failures,'new_event_count':len(added)}
+        all_added.extend(added)
+        stats[name]={'pages_checked':pages_ok,'candidate_articles':len(links),'articles_checked':checked,'article_failures':failures,'title_fallback_count':fallbacks,'new_event_count':len(added)}
     merged=events+all_added;merged.sort(key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True);EVENTS.write_text(json.dumps(merged,ensure_ascii=False,indent=2),encoding='utf-8')
-    now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)));core.render_topics(merged,now.isoformat(timespec='minutes'));status['updated_at']=now.isoformat(timespec='seconds');status['regional_sources']='KAOHSIUNG_TAICHUNG_TAOYUAN_HSINCHU_OFFICIAL'
+    now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)));core.render_topics(merged,now.isoformat(timespec='minutes'));status['updated_at']=now.isoformat(timespec='seconds')
+    hsinchu_disabled=SOURCES['hsinchu']['pages']==0
+    status['regional_sources']='KAOHSIUNG_TAICHUNG_TAOYUAN_DAILY__HSINCHU_SHADOW_DISABLED' if hsinchu_disabled else 'KAOHSIUNG_TAICHUNG_TAOYUAN_HSINCHU_OFFICIAL'
+    status['hsinchu_mode']='SHADOW_DISABLED_DAILY_NETWORK_ROUTE' if hsinchu_disabled else 'LIVE_TEST'
+    status['taoyuan_mode']='DAILY_LATEST_PAGE' if SOURCES['taoyuan']['pages']==1 else f"BACKFILL_{SOURCES['taoyuan']['pages']}P"
     for name,st in stats.items():
         for k,v in st.items():status[f'{name}_{k}']=v
     status['regional_local_new_event_count']=len(all_added);status['total_event_count']=len(merged);status['unique_company_count']=len({company_core(e.get('company','')) for e in merged if company_core(e.get('company',''))})
     warnings=[w for w in status.get('warnings',[]) if not str(w).startswith(('KAOHSIUNG_','TAICHUNG_','TAOYUAN_','HSINCHU_'))]
     for name,st in stats.items():
         if st['article_failures']:warnings.append(f"{name.upper()}_FAILURES={st['article_failures']}")
-        if st['pages_checked']==0:warnings.append(f'{name.upper()}_LIST_UNAVAILABLE')
+        if st['pages_checked']==0 and SOURCES[name]['pages']>0:warnings.append(f'{name.upper()}_LIST_UNAVAILABLE')
     status['warnings']=warnings;STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
-    print(json.dumps({'regional_added':len(all_added),'regions':stats,'total':len(merged)},ensure_ascii=False))
+    print(json.dumps({'regional_added':len(all_added),'regions':stats,'total':len(merged),'hsinchu_mode':status['hsinchu_mode'],'taoyuan_mode':status['taoyuan_mode']},ensure_ascii=False))
 
 if __name__=='__main__':main()
