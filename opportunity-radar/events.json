@@ -608,6 +608,66 @@
     "auto": true
   },
   {
+    "company": "金豐盛食品",
+    "date": "2026-08-14",
+    "city": "雲林",
+    "district": "",
+    "amount": 6.4,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "能源管理",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "能源管理": [
+        "能源監管"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351422cht?lang=cht&newsNum=11351422",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "b7d5194f5d1463e5",
+    "auto": true
+  },
+  {
+    "company": "高聖紙器",
+    "date": "2026-08-14",
+    "city": "桃園",
+    "district": "",
+    "amount": 3.2,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "智慧倉儲",
+      "設備聯網/IIoT",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "智慧倉儲": [
+        "智慧倉儲"
+      ],
+      "設備聯網/IIoT": [
+        "物聯網"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351422cht?lang=cht&newsNum=11351422",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 88,
+    "id": "6938eff996c9f34a",
+    "auto": true
+  },
+  {
     "company": "精湛交通工業",
     "date": "2026-08-06",
     "city": "台南",
@@ -650,6 +710,30 @@
     "auto": false
   },
   {
+    "company": "全智科技",
+    "date": "2026-08-06",
+    "city": "",
+    "district": "",
+    "amount": 60.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "設備聯網/IIoT"
+    ],
+    "explicit_evidence": {
+      "設備聯網/IIoT": [
+        "物聯網"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351421cht?lang=cht&newsNum=11351421",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "abf6388431fee4dc",
+    "auto": true
+  },
+  {
     "company": "璨揚企業",
     "date": "2026-08-03",
     "city": "台南",
@@ -676,6 +760,241 @@
     "score": 92,
     "id": "e5c2293a7059f727",
     "auto": false
+  },
+  {
+    "company": "欣銓科技",
+    "date": "2026-07-31",
+    "city": "",
+    "district": "",
+    "amount": 285.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "冰水主機/空調",
+      "機器視覺/AOI",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "冰水主機/空調": [
+        "冰水主機",
+        "節能空調"
+      ],
+      "機器視覺/AOI": [
+        "影像辨識"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351420cht?lang=cht&newsNum=11351420",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 93,
+    "id": "50cf1c1bc1c9baa3",
+    "auto": true
+  },
+  {
+    "company": "富統食品",
+    "date": "2026-07-31",
+    "city": "屏東",
+    "district": "",
+    "amount": 3.3,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "冷鏈",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "冷鏈": [
+        "冷鏈"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351420cht?lang=cht&newsNum=11351420",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "2e149bc1f611d4b4",
+    "auto": true
+  },
+  {
+    "company": "聯華林德氣體工業",
+    "date": "2026-07-24",
+    "city": "",
+    "district": "",
+    "amount": 113.8,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "MES/製程追溯",
+      "能源管理"
+    ],
+    "explicit_evidence": {
+      "MES/製程追溯": [
+        "生產管理系統"
+      ],
+      "能源管理": [
+        "能源管理"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351419cht?lang=cht&newsNum=11351419",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 91,
+    "id": "3bbe99addc6ea016",
+    "auto": true
+  },
+  {
+    "company": "台灣櫻花",
+    "date": "2026-07-24",
+    "city": "",
+    "district": "",
+    "amount": 10.3,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "MES/製程追溯",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "MES/製程追溯": [
+        "MES"
+      ],
+      "自動化設備": [
+        "自動化生產"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351419cht?lang=cht&newsNum=11351419",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "e615685ef68ada5b",
+    "auto": true
+  },
+  {
+    "company": "貫理工業",
+    "date": "2026-07-17",
+    "city": "桃園",
+    "district": "",
+    "amount": 19.6,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "能源管理",
+      "太陽能",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "能源管理": [
+        "能源管理",
+        "能源管理系統"
+      ],
+      "太陽能": [
+        "太陽能"
+      ],
+      "自動化設備": [
+        "自動化生產"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351418cht?lang=cht&newsNum=11351418",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 91,
+    "id": "8472e7d47a659281",
+    "auto": true
+  },
+  {
+    "company": "合億國際企業",
+    "date": "2026-07-17",
+    "city": "嘉義",
+    "district": "",
+    "amount": 2.3,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "機器視覺/AOI",
+      "太陽能",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "機器視覺/AOI": [
+        "AOI"
+      ],
+      "太陽能": [
+        "太陽能"
+      ],
+      "自動化設備": [
+        "自動化生產"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351418cht?lang=cht&newsNum=11351418",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 88,
+    "id": "02ee3a4a1e17f54c",
+    "auto": true
+  },
+  {
+    "company": "伽億",
+    "date": "2026-07-17",
+    "city": "屏東",
+    "district": "",
+    "amount": 10.8,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351418cht?lang=cht&newsNum=11351418",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "b208e7e01f0accd5",
+    "auto": true
+  },
+  {
+    "company": "利汎科技",
+    "date": "2026-07-17",
+    "city": "",
+    "district": "",
+    "amount": 2.7,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "機器視覺/AOI",
+      "能源管理"
+    ],
+    "explicit_evidence": {
+      "機器視覺/AOI": [
+        "AOI"
+      ],
+      "能源管理": [
+        "能源管理",
+        "能源管理系統"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351418cht?lang=cht&newsNum=11351418",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "89403d480990f4f6",
+    "auto": true
   },
   {
     "company": "急便鮮食品",
@@ -715,6 +1034,208 @@
     "score": 96,
     "id": "721c0d205c91d057",
     "auto": false
+  },
+  {
+    "company": "祥美食品",
+    "date": "2026-07-03",
+    "city": "高雄",
+    "district": "",
+    "amount": 20.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "冷鏈",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "冷鏈": [
+        "低溫物流",
+        "冷鏈"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351417cht?lang=cht&newsNum=11351417",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 91,
+    "id": "c22cad780aa05efa",
+    "auto": true
+  },
+  {
+    "company": "高健雷射精機",
+    "date": "2026-07-03",
+    "city": "",
+    "district": "",
+    "amount": 10.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351417cht?lang=cht&newsNum=11351417",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "4777adb1378a10a6",
+    "auto": true
+  },
+  {
+    "company": "玄煌第一畜牧場」創辦人",
+    "date": "2026-07-03",
+    "city": "桃園",
+    "district": "",
+    "amount": 5.3,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "純水/水處理"
+    ],
+    "explicit_evidence": {
+      "純水/水處理": [
+        "廢水處理",
+        "水處理"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351417cht?lang=cht&newsNum=11351417",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "b41974b02b7a955c",
+    "auto": true
+  },
+  {
+    "company": "生合生物科技",
+    "date": "2026-07-03",
+    "city": "",
+    "district": "",
+    "amount": 0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351417cht?lang=cht&newsNum=11351417",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "fc8555f2a31f037b",
+    "auto": true
+  },
+  {
+    "company": "高都汽車",
+    "date": "2026-06-26",
+    "city": "屏東",
+    "district": "",
+    "amount": 13.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351416cht?lang=cht&newsNum=11351416",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "212c9131698d51d7",
+    "auto": true
+  },
+  {
+    "company": "瑞賢實業",
+    "date": "2026-06-26",
+    "city": "台南",
+    "district": "",
+    "amount": 2.4,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "機器手臂",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "機器手臂": [
+        "機械手臂"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351416cht?lang=cht&newsNum=11351416",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "c3ef79d39bc6f1fb",
+    "auto": true
+  },
+  {
+    "company": "汎銓科技",
+    "date": "2026-06-17",
+    "city": "",
+    "district": "",
+    "amount": 15.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "冰水主機/空調"
+    ],
+    "explicit_evidence": {
+      "冰水主機/空調": [
+        "冰水主機"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351415cht?lang=cht&newsNum=11351415",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "737f6ff578c7ce3f",
+    "auto": true
+  },
+  {
+    "company": "專業工業過濾大廠「宅興實業",
+    "date": "2026-06-17",
+    "city": "彰化",
+    "district": "",
+    "amount": 0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351415cht?lang=cht&newsNum=11351415",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "d98c1dc8fb6b0e8b",
+    "auto": true
   },
   {
     "company": "南益鋼構",
@@ -761,27 +1282,501 @@
     "auto": false
   },
   {
-    "company": "工豐企業股份有限公司",
+    "company": "弘陽生技",
+    "date": "2026-06-12",
+    "city": "雲林",
+    "district": "",
+    "amount": 5.5,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "設備聯網/IIoT",
+      "感測器",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "設備聯網/IIoT": [
+        "物聯網"
+      ],
+      "感測器": [
+        "感測設備"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351414cht?lang=cht&newsNum=11351414",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 91,
+    "id": "8c058b89f9a1ee71",
+    "auto": true
+  },
+  {
+    "company": "弘潔科技",
+    "date": "2026-06-12",
+    "city": "",
+    "district": "",
+    "amount": 23.8,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351414cht?lang=cht&newsNum=11351414",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "3b38b301b7025e90",
+    "auto": true
+  },
+  {
+    "company": "華城重電(股)公司",
+    "date": "2026-06-05",
+    "city": "",
+    "district": "",
+    "amount": 35.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "MES/製程追溯",
+      "設備聯網/IIoT",
+      "能源管理"
+    ],
+    "explicit_evidence": {
+      "MES/製程追溯": [
+        "MES"
+      ],
+      "設備聯網/IIoT": [
+        "物聯網"
+      ],
+      "能源管理": [
+        "能源管理",
+        "能源管理系統"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351413cht?lang=cht&newsNum=11351413",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 93,
+    "id": "a9f6a8d5049df9bc",
+    "auto": true
+  },
+  {
+    "company": "矽格聯測",
+    "date": "2026-06-05",
+    "city": "",
+    "district": "",
+    "amount": 40.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "無塵室"
+    ],
+    "explicit_evidence": {
+      "無塵室": [
+        "無塵室"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351413cht?lang=cht&newsNum=11351413",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "13c6046f7ddcdcf3",
+    "auto": true
+  },
+  {
+    "company": "環球晶圓股份有限公司",
+    "date": "2026-06-05",
+    "city": "",
+    "district": "",
+    "amount": 0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "能源管理",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "能源管理": [
+        "能源管理"
+      ],
+      "自動化設備": [
+        "智慧設備"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351413cht?lang=cht&newsNum=11351413",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "fdc93405e5c8bc36",
+    "auto": true
+  },
+  {
+    "company": "健豪印刷長期",
+    "date": "2026-06-05",
+    "city": "台中",
+    "district": "",
+    "amount": 0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "智慧倉儲",
+      "機器視覺/AOI"
+    ],
+    "explicit_evidence": {
+      "智慧倉儲": [
+        "自動倉儲"
+      ],
+      "機器視覺/AOI": [
+        "影像辨識",
+        "AI影像辨識"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351413cht?lang=cht&newsNum=11351413",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "eb06a332e9d3cf93",
+    "auto": true
+  },
+  {
+    "company": "以曜公司",
+    "date": "2026-05-29",
+    "city": "",
+    "district": "",
+    "amount": 5.2,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "冷鏈",
+      "太陽能",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "冷鏈": [
+        "冷鏈"
+      ],
+      "太陽能": [
+        "太陽能"
+      ],
+      "自動化設備": [
+        "自動化生產"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351412cht?lang=cht&newsNum=11351412",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 91,
+    "id": "e3d65d08f2b3e0cc",
+    "auto": true
+  },
+  {
+    "company": "微程式資訊",
+    "date": "2026-05-29",
+    "city": "台中",
+    "district": "",
+    "amount": 0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "設備聯網/IIoT",
+      "感測器",
+      "能源管理",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "設備聯網/IIoT": [
+        "物聯網"
+      ],
+      "感測器": [
+        "感測設備"
+      ],
+      "能源管理": [
+        "能源管理"
+      ],
+      "自動化設備": [
+        "智慧設備"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351412cht?lang=cht&newsNum=11351412",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 90,
+    "id": "a775a13801b10a54",
+    "auto": true
+  },
+  {
+    "company": "菱生精密",
+    "date": "2026-05-29",
+    "city": "台中",
+    "district": "",
+    "amount": 6.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽光電"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351412cht?lang=cht&newsNum=11351412",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "e370d5890e345d4c",
+    "auto": true
+  },
+  {
+    "company": "華旭先進",
+    "date": "2026-05-15",
+    "city": "",
+    "district": "",
+    "amount": 0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "MES/製程追溯",
+      "儲能"
+    ],
+    "explicit_evidence": {
+      "MES/製程追溯": [
+        "生產履歷"
+      ],
+      "儲能": [
+        "儲能",
+        "儲能系統"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351410cht?lang=cht&newsNum=11351410",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "e35d28858c2be7a9",
+    "auto": true
+  },
+  {
+    "company": "固安特精工",
+    "date": "2026-05-15",
+    "city": "",
+    "district": "",
+    "amount": 1.1,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351410cht?lang=cht&newsNum=11351410",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "e83532ea0644243b",
+    "auto": true
+  },
+  {
+    "company": "龍德機械工業",
+    "date": "2026-05-15",
+    "city": "",
+    "district": "",
+    "amount": 3.5,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351410cht?lang=cht&newsNum=11351410",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "5916b2f50401392b",
+    "auto": true
+  },
+  {
+    "company": "中國砂輪",
+    "date": "2026-05-08",
+    "city": "",
+    "district": "",
+    "amount": 22.3,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351409cht?lang=cht&newsNum=11351409",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "c5c0a36e71f26270",
+    "auto": true
+  },
+  {
+    "company": "工豐企業",
     "date": "2026-05-08",
     "city": "台南",
-    "district": "元於官田區",
+    "district": "",
     "amount": 19.6,
-    "stage": "已落成/完工｜地方政府公開",
-    "industry": "地方建廠/擴產早期訊號",
-    "explicit": [],
-    "explicit_evidence": {},
-    "inferred": [
-      "消防/弱電",
-      "冰水主機/空調"
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
     ],
-    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
-    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8813081",
-    "source_type": "臺南市經發局｜投資/建廠新聞",
-    "score": 73,
-    "id": "b9c91e34204ab98b",
-    "auto": true,
-    "local_source": true,
-    "title": "看好臺南投資環境 工豐企業等2家公司擴大投資布局"
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽光電"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351409cht?lang=cht&newsNum=11351409",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "36518e523b04f5bc",
+    "auto": true
+  },
+  {
+    "company": "偉兒達初期",
+    "date": "2026-05-08",
+    "city": "",
+    "district": "",
+    "amount": 4.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "能源管理",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "能源管理": [
+        "能源管理",
+        "能源管理系統"
+      ],
+      "太陽能": [
+        "太陽光電"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351409cht?lang=cht&newsNum=11351409",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "a88de18906f6cada",
+    "auto": true
+  },
+  {
+    "company": "永欣益",
+    "date": "2026-05-08",
+    "city": "",
+    "district": "",
+    "amount": 4.9,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "智慧倉儲",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "智慧倉儲": [
+        "自動化倉儲"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351409cht?lang=cht&newsNum=11351409",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "5294c71ca87e605c",
+    "auto": true
+  },
+  {
+    "company": "台灣微轉",
+    "date": "2026-05-08",
+    "city": "",
+    "district": "",
+    "amount": 2.3,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "機器視覺/AOI"
+    ],
+    "explicit_evidence": {
+      "機器視覺/AOI": [
+        "影像辨識",
+        "AI影像辨識"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351409cht?lang=cht&newsNum=11351409",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "66fe929488b52871",
+    "auto": true
+  },
+  {
+    "company": "和頌企業長期",
+    "date": "2026-04-24",
+    "city": "高雄",
+    "district": "",
+    "amount": 2.1,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能",
+      "無塵室"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽光電"
+      ],
+      "無塵室": [
+        "無塵室"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351408cht?lang=cht&newsNum=11351408",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "6d355cd9ba105ee8",
+    "auto": true
   },
   {
     "company": "台灣集廣科技",
@@ -831,59 +1826,663 @@
     "auto": false
   },
   {
-    "company": "彩宸生活事業股份有限公司",
-    "date": "2026-03-13",
-    "city": "台南",
-    "district": "南市永康區",
-    "amount": 6.0,
-    "stage": "新廠/建廠投資｜地方政府公開",
-    "industry": "地方建廠/擴產早期訊號",
-    "explicit": [],
-    "explicit_evidence": {},
-    "inferred": [
-      "消防/弱電",
-      "冰水主機/空調"
+    "company": "國精化學",
+    "date": "2026-04-10",
+    "city": "",
+    "district": "",
+    "amount": 16.5,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "冰水主機/空調",
+      "智慧倉儲",
+      "設備聯網/IIoT"
     ],
-    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
-    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8802314",
-    "source_type": "臺南市經發局｜投資/建廠新聞",
-    "score": 73,
-    "id": "8400ff1d4ffbbe54",
-    "auto": true,
-    "local_source": true,
-    "title": "馬修嚴選臺南新廠啟用 6億投資打造健康永續新里程碑"
+    "explicit_evidence": {
+      "冰水主機/空調": [
+        "冰水主機"
+      ],
+      "智慧倉儲": [
+        "智慧倉儲"
+      ],
+      "設備聯網/IIoT": [
+        "物聯網"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351406cht?lang=cht&newsNum=11351406",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 91,
+    "id": "9026c3a89f718390",
+    "auto": true
   },
   {
-    "company": "總盈汽車",
-    "date": "2024-10-07",
-    "city": "台南",
+    "company": "維勝鋼鐵",
+    "date": "2026-04-10",
+    "city": "",
     "district": "",
-    "amount": 12.5,
-    "stage": "五廠綠能新建",
-    "industry": "大型客車 / 電動車",
+    "amount": 34.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
     "explicit": [
-      "自動化設備",
       "太陽能"
     ],
     "explicit_evidence": {
-      "自動化設備": [
-        "自動化製造設備"
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351406cht?lang=cht&newsNum=11351406",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "4ae793ece5b446b4",
+    "auto": true
+  },
+  {
+    "company": "台灣第一生化科技",
+    "date": "2026-03-27",
+    "city": "",
+    "district": "",
+    "amount": 36.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351404cht?lang=cht&newsNum=11351404",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "cd72a38386806812",
+    "auto": true
+  },
+  {
+    "company": "豐喜食品",
+    "date": "2026-03-27",
+    "city": "",
+    "district": "",
+    "amount": 1.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351404cht?lang=cht&newsNum=11351404",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "7bd31a624d194925",
+    "auto": true
+  },
+  {
+    "company": "聚和國際",
+    "date": "2026-03-19",
+    "city": "",
+    "district": "",
+    "amount": 45.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "能源管理"
+    ],
+    "explicit_evidence": {
+      "能源管理": [
+        "能源管理",
+        "能源管理系統"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351403cht?lang=cht&newsNum=11351403",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "e3e894f1b6591d27",
+    "auto": true
+  },
+  {
+    "company": "宏驎",
+    "date": "2026-03-19",
+    "city": "",
+    "district": "",
+    "amount": 1.69,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "設備聯網/IIoT",
+      "能源管理"
+    ],
+    "explicit_evidence": {
+      "設備聯網/IIoT": [
+        "物聯網"
+      ],
+      "能源管理": [
+        "能源管理",
+        "能源管理系統"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351403cht?lang=cht&newsNum=11351403",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "2b56299172dca8f5",
+    "auto": true
+  },
+  {
+    "company": "久祐實業",
+    "date": "2026-03-19",
+    "city": "",
+    "district": "",
+    "amount": 3.5,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351403cht?lang=cht&newsNum=11351403",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "50927bd12cd4dc38",
+    "auto": true
+  },
+  {
+    "company": "羽禾食品長期",
+    "date": "2026-03-13",
+    "city": "",
+    "district": "",
+    "amount": 1.25,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "冰水主機/空調",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "冰水主機/空調": [
+        "節能空調"
+      ],
+      "太陽能": [
+        "太陽光電"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351402cht?lang=cht&newsNum=11351402",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 86,
+    "id": "23fa4ce4b1bffed4",
+    "auto": true
+  },
+  {
+    "company": "嘉鴻遊艇",
+    "date": "2026-02-26",
+    "city": "",
+    "district": "",
+    "amount": 0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽光電"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351401cht?lang=cht&newsNum=11351401",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "63e15e9210f48728",
+    "auto": true
+  },
+  {
+    "company": "河洛企業",
+    "date": "2026-02-06",
+    "city": "",
+    "district": "",
+    "amount": 31.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "智慧倉儲",
+      "冷鏈",
+      "能源管理",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "智慧倉儲": [
+        "自動化倉儲"
+      ],
+      "冷鏈": [
+        "冷鏈"
+      ],
+      "能源管理": [
+        "能源管理"
       ],
       "太陽能": [
         "太陽能"
       ]
     },
-    "inferred": [
-      "MES/製程追溯",
-      "機器手臂",
-      "弱電",
-      "能源管理"
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351400cht?lang=cht&newsNum=11351400",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 95,
+    "id": "ded7fcdaf6412a39",
+    "auto": true
+  },
+  {
+    "company": "大豐環保科技",
+    "date": "2026-02-06",
+    "city": "",
+    "district": "",
+    "amount": 5.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "空壓機",
+      "自動化設備"
     ],
-    "contact": "公司公開聯絡路徑可查",
-    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8696659",
-    "source_type": "台南市政府官方新聞",
-    "score": 92,
-    "id": "40b354b627b04325",
-    "auto": false
+    "explicit_evidence": {
+      "空壓機": [
+        "空壓機"
+      ],
+      "自動化設備": [
+        "自動化設備"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351400cht?lang=cht&newsNum=11351400",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "351f8fb376e14685",
+    "auto": true
+  },
+  {
+    "company": "合錩國際",
+    "date": "2026-02-06",
+    "city": "",
+    "district": "",
+    "amount": 1.2,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "空壓機",
+      "設備聯網/IIoT",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "空壓機": [
+        "空壓機"
+      ],
+      "設備聯網/IIoT": [
+        "設備聯網"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351400cht?lang=cht&newsNum=11351400",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 88,
+    "id": "96805625f37e7b8a",
+    "auto": true
+  },
+  {
+    "company": "佰鼎科技",
+    "date": "2026-01-30",
+    "city": "",
+    "district": "",
+    "amount": 80.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ],
+      "自動化設備": [
+        "自動化生產"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351399cht?lang=cht&newsNum=11351399",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 91,
+    "id": "30f88a83f90b992a",
+    "auto": true
+  },
+  {
+    "company": "拓緯股份有限公司",
+    "date": "2026-01-30",
+    "city": "",
+    "district": "",
+    "amount": 14.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "能源管理",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "能源管理": [
+        "智慧電表"
+      ],
+      "自動化設備": [
+        "自動化設備"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351399cht?lang=cht&newsNum=11351399",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "5222b5c5d46ac84b",
+    "auto": true
+  },
+  {
+    "company": "力成科技",
+    "date": "2026-01-23",
+    "city": "",
+    "district": "",
+    "amount": 443.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "機器視覺/AOI",
+      "能源管理",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "機器視覺/AOI": [
+        "視覺檢測"
+      ],
+      "能源管理": [
+        "能源管理",
+        "能源管理系統"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351398cht?lang=cht&newsNum=11351398",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 93,
+    "id": "c121ccb51f0ede0b",
+    "auto": true
+  },
+  {
+    "company": "台塑大金精密化學係由台塑工業與日商大金工業合資",
+    "date": "2026-01-23",
+    "city": "",
+    "district": "",
+    "amount": 19.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "感測器",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "感測器": [
+        "感測器"
+      ],
+      "太陽能": [
+        "太陽光電"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351398cht?lang=cht&newsNum=11351398",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 89,
+    "id": "105f8126f22b8910",
+    "auto": true
+  },
+  {
+    "company": "寶嘉誠工業(PARKSON)",
+    "date": "2026-01-09",
+    "city": "",
+    "district": "",
+    "amount": 7.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "智慧倉儲",
+      "太陽能",
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "智慧倉儲": [
+        "自動化倉儲"
+      ],
+      "太陽能": [
+        "太陽能"
+      ],
+      "自動化設備": [
+        "自動化生產"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351397cht?lang=cht&newsNum=11351397",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 91,
+    "id": "9af07b5cdc1892c3",
+    "auto": true
+  },
+  {
+    "company": "全維工業長期",
+    "date": "2026-01-09",
+    "city": "",
+    "district": "",
+    "amount": 4.5,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "機器視覺/AOI",
+      "感測器",
+      "能源管理",
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "機器視覺/AOI": [
+        "影像辨識"
+      ],
+      "感測器": [
+        "感測器"
+      ],
+      "能源管理": [
+        "能源管理",
+        "能源管理系統"
+      ],
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351397cht?lang=cht&newsNum=11351397",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 90,
+    "id": "4fd7fc37fac92028",
+    "auto": true
+  },
+  {
+    "company": "晟銘電子",
+    "date": "2026-01-02",
+    "city": "",
+    "district": "",
+    "amount": 9.7,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351396cht?lang=cht&newsNum=11351396",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "1f9f82c5312c16dd",
+    "auto": true
+  },
+  {
+    "company": "佳鼎創新",
+    "date": "2025-12-26",
+    "city": "",
+    "district": "",
+    "amount": 2.98,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "自動化設備"
+    ],
+    "explicit_evidence": {
+      "自動化設備": [
+        "自動化設備"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351395cht?lang=cht&newsNum=11351395",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "0baff77bb455cf4f",
+    "auto": true
+  },
+  {
+    "company": "美琪瑪國際",
+    "date": "2025-12-19",
+    "city": "",
+    "district": "",
+    "amount": 0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351394cht?lang=cht&newsNum=11351394",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "c341fcdf18026dea",
+    "auto": true
+  },
+  {
+    "company": "友證",
+    "date": "2025-12-19",
+    "city": "",
+    "district": "",
+    "amount": 1.7,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "自動控制/PLC"
+    ],
+    "explicit_evidence": {
+      "自動控制/PLC": [
+        "自動化控制"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351394cht?lang=cht&newsNum=11351394",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "d042df62825dc113",
+    "auto": true
+  },
+  {
+    "company": "茂迅系統工程",
+    "date": "2025-12-12",
+    "city": "",
+    "district": "",
+    "amount": 4.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351393cht?lang=cht&newsNum=11351393",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 84,
+    "id": "4ff46dbfb9cf3511",
+    "auto": true
+  },
+  {
+    "company": "成偉食品",
+    "date": "2025-11-28",
+    "city": "",
+    "district": "",
+    "amount": 10.0,
+    "stage": "官方投資/擴產公告",
+    "industry": "",
+    "explicit": [
+      "太陽能"
+    ],
+    "explicit_evidence": {
+      "太陽能": [
+        "太陽能"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜公開聯絡資料可再補",
+    "source": "https://investtaiwan.nat.gov.tw/threeMajorNewsPage11351391cht?lang=cht&newsNum=11351391",
+    "source_type": "投資臺灣三大方案｜自動抓取",
+    "score": 87,
+    "id": "35ef896dbf2603ad",
+    "auto": true
   }
 ]
