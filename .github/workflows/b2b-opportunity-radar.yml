@@ -6,6 +6,7 @@ on:
     branches: [ main ]
     paths:
       - 'opportunity-radar/update.py'
+      - 'opportunity-radar/augment_local.py'
       - 'opportunity-radar/index.html'
       - '.github/workflows/b2b-opportunity-radar.yml'
   schedule:
@@ -29,8 +30,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Refresh official opportunity data
+      - name: Refresh central official opportunity data
         run: python opportunity-radar/update.py
+      - name: Add local-government early signals
+        run: python opportunity-radar/augment_local.py
       - name: Commit healthy refresh
         shell: bash
         run: |
