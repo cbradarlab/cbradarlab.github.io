@@ -179,29 +179,6 @@
     "auto": true
   },
   {
-    "company": "強新工業股份有限公司",
-    "date": "2026-09-24",
-    "city": "台南",
-    "district": "",
-    "amount": 6.9,
-    "stage": "新廠/建廠投資｜地方政府公開",
-    "industry": "地方建廠/擴產早期訊號",
-    "explicit": [],
-    "explicit_evidence": {},
-    "inferred": [
-      "消防/弱電",
-      "冰水主機/空調"
-    ],
-    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
-    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8838866",
-    "source_type": "臺南市經發局｜投資/建廠新聞",
-    "score": 73,
-    "id": "6ea29dedaa89e6e8",
-    "auto": true,
-    "local_source": true,
-    "title": "強新工業於台南擴大投資6.9億元 滿足半導體客戶建廠需求"
-  },
-  {
     "company": "中龍鋼鐵",
     "date": "2026-09-18",
     "city": "",
@@ -453,40 +430,6 @@
     "auto": true
   },
   {
-    "company": "善誠企業股份有限公司",
-    "date": "2026-08-28",
-    "city": "台南",
-    "district": "台南六甲區",
-    "amount": 2.5,
-    "stage": "擴廠/擴產｜地方政府公開",
-    "industry": "地方建廠/擴產早期訊號",
-    "explicit": [
-      "太陽能",
-      "自動化設備",
-      "RFID"
-    ],
-    "explicit_evidence": {
-      "太陽能": [
-        "太陽能"
-      ],
-      "自動化設備": [
-        "自動化設備"
-      ],
-      "RFID": [
-        "RFID"
-      ]
-    },
-    "inferred": [],
-    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
-    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8833360",
-    "source_type": "臺南市經發局｜投資/建廠新聞",
-    "score": 78,
-    "id": "4a8c5b6cace89233",
-    "auto": true,
-    "local_source": true,
-    "title": "善誠企業於台南六甲區 投資2.5億元擴大布局臺南"
-  },
-  {
     "company": "亞帝歐光電",
     "date": "2026-08-21",
     "city": "桃園",
@@ -663,29 +606,6 @@
     "score": 84,
     "id": "a2cc6bc607f2a396",
     "auto": true
-  },
-  {
-    "company": "東陽實業、黑橋牌、精湛交通工業股份有限公司",
-    "date": "2026-08-18",
-    "city": "台南",
-    "district": "科技工業區",
-    "amount": 140.0,
-    "stage": "新廠/建廠投資｜地方政府公開",
-    "industry": "地方建廠/擴產早期訊號",
-    "explicit": [],
-    "explicit_evidence": {},
-    "inferred": [
-      "消防/弱電",
-      "冰水主機/空調"
-    ],
-    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
-    "source": "https://economic.tainan.gov.tw/News_Content.aspx?n=5140&s=8831178",
-    "source_type": "臺南市經發局｜投資/建廠新聞",
-    "score": 75,
-    "id": "54a3ef418746ea29",
-    "auto": true,
-    "local_source": true,
-    "title": "企業佈局臺南再添投資據點 七股科技工業區9.8公頃產業用地標租售齊發"
   },
   {
     "company": "精湛交通工業",
