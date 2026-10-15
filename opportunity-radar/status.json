@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-15T12:02:03+08:00",
-  "source_status": "READY_LIVE_DEPLOY_PENDING_FIRST_ACTION",
+  "updated_at": "2026-10-15T12:15:48+08:00",
+  "source_status": "PASS_LIVE_REFRESH_HEALTHY",
   "latest_source_date": "2026-10-08",
-  "articles_checked": 0,
+  "articles_checked": 8,
   "article_failures": 0,
-  "auto_event_count": 0,
-  "total_event_count": 11,
+  "auto_event_count": 40,
+  "total_event_count": 51,
   "warnings": [],
   "data_cost_ntd": 0,
   "ai_api_required": false
