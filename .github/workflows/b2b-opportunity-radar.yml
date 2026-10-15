@@ -41,8 +41,8 @@ jobs:
           python -c "import update; update.BUILD_MONTHS=0; update.MAX_ARTICLES=8; update.main()"
       - name: Add latest Tainan early signals
         env:
-          TAINAN_PAGES: '4'
-          TAINAN_MAX_ARTICLES: '30'
+          TAINAN_PAGES: '2'
+          TAINAN_MAX_ARTICLES: '12'
         run: python opportunity-radar/augment_local.py
       - name: Add latest Kaohsiung and Taichung early signals
         env:
