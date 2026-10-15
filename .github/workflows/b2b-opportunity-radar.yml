@@ -30,12 +30,17 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Preserve prior local history
+        run: cp opportunity-radar/events.json /tmp/opportunity-events-before.json
       - name: Refresh central official opportunity data
         shell: bash
         run: |
           cd opportunity-radar
           python -c "import update; update.BUILD_MONTHS=0; update.main()"
-      - name: Add local-government early signals
+      - name: Backfill local-government early signals
+        env:
+          TAINAN_PAGES: '12'
+          TAINAN_MAX_ARTICLES: '80'
         run: python opportunity-radar/augment_local.py
       - name: Commit healthy refresh
         shell: bash
