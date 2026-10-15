@@ -11,6 +11,7 @@ on:
       - 'opportunity-radar/merge_history.py'
       - 'opportunity-radar/index.html'
       - 'opportunity-radar/product_catalog.json'
+      - 'opportunity-radar/intent_rules.json'
       - 'opportunity-radar/catalog_gate.py'
       - '.github/workflows/b2b-opportunity-radar.yml'
   schedule:
