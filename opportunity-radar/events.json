@@ -457,7 +457,7 @@
   {
     "company": "中龍鋼鐵",
     "date": "2026-09-18",
-    "city": "台中",
+    "city": "",
     "district": "",
     "amount": 0,
     "stage": "官方投資/擴產公告",
@@ -481,7 +481,7 @@
   {
     "company": "納滿企業",
     "date": "2026-09-11",
-    "city": "嘉義",
+    "city": "",
     "district": "",
     "amount": 2.3,
     "stage": "官方投資/擴產公告",
@@ -518,7 +518,7 @@
   {
     "company": "益森彩藝",
     "date": "2026-09-11",
-    "city": "嘉義",
+    "city": "",
     "district": "",
     "amount": 14.6,
     "stage": "官方投資/擴產公告",
@@ -651,7 +651,7 @@
   {
     "company": "台北港國際通運",
     "date": "2026-08-28",
-    "city": "台北",
+    "city": "",
     "district": "",
     "amount": 3.8,
     "stage": "官方投資/擴產公告",

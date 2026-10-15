@@ -1,15 +1,24 @@
 {
-  "updated_at": "2026-10-15T12:26:11+08:00",
-  "source_status": "PASS_LIVE_REFRESH_UNIQUE_COMPANY_EVENTS",
+  "updated_at": "2026-10-15T12:48:58+08:00",
+  "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH",
   "latest_source_date": "2026-10-08",
   "articles_checked": 8,
   "article_failures": 0,
   "company_paragraphs_checked": 21,
+  "investment_auto_event_count": 20,
+  "buildlic_event_count": 0,
   "auto_event_count": 15,
   "seed_event_count": 11,
   "total_event_count": 26,
+  "unique_company_count": 26,
   "seo_topic_pages": 5,
-  "warnings": [],
+  "warnings": [
+    "BUILDLIC_NO_EVENTS",
+    "BUILDLIC_FAILURES=4"
+  ],
   "data_cost_ntd": 0,
-  "ai_api_required": false
+  "ai_api_required": false,
+  "buildlic_queries": 2,
+  "buildlic_failures": 4,
+  "buildlic_raw_rows": 0
 }
