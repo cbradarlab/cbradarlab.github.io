@@ -17,6 +17,7 @@ TITLE_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','落成','興�
 BODY_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','落成','興建','擴產','加碼','導入','設備')
 REJECT=('臺南市政府','台南市政府','經濟發展局','投資臺灣事務所','行政院','經濟部')
 COMPANY_RE=re.compile(r'([^\s，。；：：「」]{2,30}?(?:股份有限公司|有限公司))')
+PREFIX_SPLITS=('總經理及','董事長及','負責人及','並安排','並邀請','以及','包括','包含')
 
 def roc_pub_date(text:str):
     m=re.search(r'刊登日期[：:\s]*(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})',text)
@@ -47,7 +48,12 @@ def company_core(s:str):
     return re.sub(r'[^A-Za-z0-9\u4e00-\u9fff]','',s).lower()
 
 def clean_company(s:str):
-    s=re.sub(r'^(?:本週核准之|核准之|同樣規劃於|而|另|其中|至於|此外)','',s)
+    s=s.strip('「」()（） ')
+    for marker in PREFIX_SPLITS:
+        if marker in s:s=s.rsplit(marker,1)[-1]
+    s=re.sub(r'^(?:本週核准之|核准之|同樣規劃於|而|另|其中|至於|此外|並|及|由|邀請|安排)','',s)
+    # Avoid carrying a person's title/name into the legal company name.
+    s=re.sub(r'^.{1,12}(?:總經理|董事長|負責人)', '', s)
     return s.strip('「」()（） ')
 
 def discover_links():
@@ -78,11 +84,13 @@ def extract_events(url,title):
             if comp not in companies:companies.append(comp)
         if not companies:continue
         needs=core.explicit_needs(line); amt=core.amount_billion(line) or core.amount_billion(title)
+        inf=inferred_of(line+' '+title)
+        # Local-government lane is an opportunity lane, not a generic company-news feed.
+        # Require either a directly stated equipment need or a clear factory/warehouse signal.
+        if not needs and not inf:continue
         for comp in companies:
             if comp in seen:continue
             seen.add(comp)
-            inf=inferred_of(line+' '+title)
-            # Keep local events even without explicit equipment because their value is earlier timing.
             score=78 if needs else 70
             if '動土' in line or '動土' in title:score+=5
             if amt>=5:score+=3
