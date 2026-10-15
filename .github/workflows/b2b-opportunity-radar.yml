@@ -37,5 +37,6 @@ jobs:
             echo "No data changes."
           else
             git commit -m "data: refresh opportunity radar [skip ci]"
+            git pull --rebase origin main
             git push
           fi
