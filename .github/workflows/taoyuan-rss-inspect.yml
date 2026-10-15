@@ -13,12 +13,14 @@ jobs:
       - name: Inspect official RSS
         shell: bash
         run: |
+          set -e
+          curl -L --fail --silent --show-error --retry 2 --retry-delay 2 --connect-timeout 8 --max-time 35 \
+            -A 'Mozilla/5.0' -H 'Accept-Language: zh-TW,zh;q=0.9' \
+            'https://edb.tycg.gov.tw/OpenData.aspx?SN=F1B1153D28102C6F' -o /tmp/taoyuan.xml
+          wc -c /tmp/taoyuan.xml
           python - <<'PY'
-          import urllib.request, xml.etree.ElementTree as ET
-          u='https://edb.tycg.gov.tw/OpenData.aspx?SN=F1B1153D28102C6F'
-          req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0','Accept-Language':'zh-TW,zh;q=0.9'})
-          with urllib.request.urlopen(req,timeout=15) as r:
-              b=r.read()
+          import xml.etree.ElementTree as ET
+          b=open('/tmp/taoyuan.xml','rb').read()
           root=ET.fromstring(b.decode('utf-8-sig'))
           items=root.findall('.//item')
           print('ITEMS',len(items),'BYTES',len(b))
@@ -30,9 +32,9 @@ jobs:
                   hit+=1
                   print('HIT_INDEX',i)
                   for k,v in vals.items():
-                      print('FIELD',k,repr(v[:1000]))
+                      print('FIELD',k,repr(v[:1200]))
           print('HITS',hit)
           for i,item in enumerate(items[:3]):
               vals={c.tag.split('}')[-1]: ''.join(c.itertext()).strip() for c in item}
-              print('SAMPLE',i,{k:vals.get(k,'')[:160] for k in vals if k in ('title','link','pubDate','date','modified')})
+              print('SAMPLE',i,{k:vals.get(k,'')[:200] for k in vals if k in ('title','link','pubDate','date','modified')})
           PY
