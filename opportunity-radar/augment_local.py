@@ -2,17 +2,18 @@
 # -*- coding: utf-8 -*-
 """Augment Opportunity Radar with high-confidence local-government early signals.
 Current production lane: Tainan Economic Development Bureau latest news.
-Explicit purchase intent and inferred factory needs are kept separate.
+Supports a one-time deeper backfill while daily runs preserve prior local events.
 """
 from __future__ import annotations
-import datetime as dt, html, json, re, urllib.parse
+import datetime as dt, html, json, os, re, urllib.parse
 from pathlib import Path
 import update as core
 
 ROOT=Path(__file__).resolve().parent
+PREVIOUS=Path('/tmp/opportunity-events-before.json')
 TAINAN_LIST='https://economic.tainan.gov.tw/News.aspx?PageSize=20&n=5140&page={page}&sms=9749'
 TAINAN_BASE='https://economic.tainan.gov.tw/'
-PAGES=4; MAX_ARTICLES=24
+PAGES=int(os.environ.get('TAINAN_PAGES','4')); MAX_ARTICLES=int(os.environ.get('TAINAN_MAX_ARTICLES','30'))
 TITLE_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','落成','興建','擴產','加碼','擴大布局')
 TITLE_REJECT=('說明會','論壇','產業用地','標售','標租','招商','座談','交流會')
 BODY_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','落成','興建','擴產','加碼','導入','設備')
@@ -32,7 +33,6 @@ def district(text:str):
     return ''
 
 def clean_context(text:str):
-    # These phrases describe the company's customers, not the company itself.
     return re.sub(r'(?:半導體|晶圓廠|客戶)[^，。；]{0,8}建廠(?:需求)?',' ',text)
 
 def stage_of(text:str):
@@ -60,7 +60,6 @@ def clean_company(s:str):
         if marker in s:s=s.rsplit(marker,1)[-1]
     s=re.sub(r'^(?:本週核准之|核准之|同樣規劃於|而|另|其中|至於|此外|並|及|由|邀請|安排)','',s)
     s=re.sub(r'^.{1,12}(?:總經理|董事長|負責人)', '', s)
-    # Reject list-like captures such as A、B、Company Ltd.
     if '、' in s:return ''
     return s.strip('「」()（） ')
 
@@ -99,9 +98,7 @@ def extract_events(url,title):
             segments.setdefault(comp,[]).append(line)
     out=[]
     for comp,parts in segments.items():
-        text=' '.join(dict.fromkeys(parts))
-        needs=article_needs(text); inf=inferred_of(text+' '+title)
-        # Keep only actual opportunity signals, not generic mentions at seminars/news roundups.
+        text=' '.join(dict.fromkeys(parts)); needs=article_needs(text); inf=inferred_of(text+' '+title)
         if not needs and not inf:continue
         amt=core.amount_billion(text) or core.amount_billion(title)
         score=78 if needs else 70
@@ -126,13 +123,25 @@ def is_near_duplicate(e,existing):
         if d and xd and abs((d-xd).days)<=3:return True
     return False
 
+def load_preserved(events):
+    if not PREVIOUS.exists():return []
+    try:old=json.loads(PREVIOUS.read_text(encoding='utf-8'))
+    except Exception:return []
+    kept=[]
+    for e in old:
+        if not e.get('local_source'):continue
+        if e.get('id') in {x.get('id') for x in events+kept}:continue
+        if is_near_duplicate(e,events+kept):continue
+        kept.append(e)
+    return kept
+
 def main():
     events=json.loads((ROOT/'events.json').read_text(encoding='utf-8'))
     status=json.loads((ROOT/'status.json').read_text(encoding='utf-8'))
+    preserved=load_preserved(events); events+=preserved
     links,pages_ok=discover_links(); local=[]; failures=0; checked=0
     for url,title in links:
-        try:
-            local.extend(extract_events(url,title)); checked+=1
+        try:local.extend(extract_events(url,title)); checked+=1
         except Exception as e:
             failures+=1; print('WARN TAINAN',url,repr(e))
     added=[]
@@ -140,17 +149,15 @@ def main():
         if is_near_duplicate(e,events+added):continue
         if e.get('id') in {x.get('id') for x in events+added}:continue
         added.append(e)
-    merged=events+added
-    merged.sort(key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True)
+    merged=events+added; merged.sort(key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True)
     (ROOT/'events.json').write_text(json.dumps(merged,ensure_ascii=False,indent=2),encoding='utf-8')
-    now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)))
-    core.render_topics(merged,now.isoformat(timespec='minutes'))
-    status.update({'source_status':'PASS_MULTI_SOURCE_LIVE_REFRESH_V2','updated_at':now.isoformat(timespec='seconds'),'buildlic_mode':'SHADOW_DISABLED_IN_DAILY_WORKFLOW','tainan_pages_checked':pages_ok,'tainan_candidate_articles':len(links),'tainan_articles_checked':checked,'tainan_article_failures':failures,'tainan_local_event_count':len(added),'total_event_count':len(merged),'unique_company_count':len({company_core(e.get('company','')) for e in merged if company_core(e.get('company',''))})})
+    now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8))); core.render_topics(merged,now.isoformat(timespec='minutes'))
+    local_total=sum(1 for e in merged if e.get('local_source'))
+    status.update({'source_status':'PASS_MULTI_SOURCE_LIVE_REFRESH_V2','updated_at':now.isoformat(timespec='seconds'),'buildlic_mode':'SHADOW_DISABLED_IN_DAILY_WORKFLOW','tainan_pages_checked':pages_ok,'tainan_candidate_articles':len(links),'tainan_articles_checked':checked,'tainan_article_failures':failures,'tainan_local_new_event_count':len(added),'tainan_local_preserved_event_count':len(preserved),'tainan_local_event_count':local_total,'total_event_count':len(merged),'unique_company_count':len({company_core(e.get('company','')) for e in merged if company_core(e.get('company',''))})})
     warnings=[w for w in status.get('warnings',[]) if not str(w).startswith(('TAINAN_','BUILDLIC_'))]
-    if not added:warnings.append('TAINAN_NO_NEW_EVENTS')
     if failures:warnings.append(f'TAINAN_FAILURES={failures}')
     status['warnings']=warnings
     (ROOT/'status.json').write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
-    print(json.dumps({'tainan_added':len(added),'candidate_articles':len(links),'checked':checked,'failures':failures,'total':len(merged)},ensure_ascii=False))
+    print(json.dumps({'tainan_new':len(added),'tainan_preserved':len(preserved),'tainan_total':local_total,'candidate_articles':len(links),'checked':checked,'failures':failures,'total':len(merged)},ensure_ascii=False))
 
 if __name__=='__main__':main()
