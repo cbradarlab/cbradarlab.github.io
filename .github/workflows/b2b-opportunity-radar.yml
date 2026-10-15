@@ -12,6 +12,7 @@ on:
       - 'opportunity-radar/index.html'
       - 'opportunity-radar/product_catalog.json'
       - 'opportunity-radar/intent_rules.json'
+      - 'opportunity-radar/search_rule_overrides.json'
       - 'opportunity-radar/catalog_gate.py'
       - 'opportunity-radar/search_quality_audit.py'
       - '.github/workflows/b2b-opportunity-radar.yml'
