@@ -46,10 +46,10 @@ jobs:
         run: python opportunity-radar/augment_local.py
       - name: Add latest Kaohsiung and Taichung early signals
         env:
-          KAOHSIUNG_PAGES: '4'
-          KAOHSIUNG_MAX_ARTICLES: '30'
-          TAICHUNG_PAGES: '4'
-          TAICHUNG_MAX_ARTICLES: '30'
+          KAOHSIUNG_PAGES: '2'
+          KAOHSIUNG_MAX_ARTICLES: '12'
+          TAICHUNG_PAGES: '2'
+          TAICHUNG_MAX_ARTICLES: '12'
         run: python opportunity-radar/augment_regions.py
       - name: Preserve history and dedupe timelines
         run: python opportunity-radar/merge_history.py
