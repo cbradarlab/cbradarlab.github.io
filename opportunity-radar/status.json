@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-15T12:55:46+08:00",
+  "updated_at": "2026-10-15T12:57:40+08:00",
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "latest_source_date": "2026-10-08",
   "articles_checked": 8,
@@ -9,21 +9,20 @@
   "buildlic_event_count": 0,
   "auto_event_count": 15,
   "seed_event_count": 11,
-  "total_event_count": 32,
-  "unique_company_count": 32,
+  "total_event_count": 29,
+  "unique_company_count": 29,
   "seo_topic_pages": 5,
   "warnings": [
-    "BUILDLIC_NO_EVENTS",
-    "BUILDLIC_FAILURES=1"
+    "BUILDLIC_NO_EVENTS"
   ],
   "data_cost_ntd": 0,
   "ai_api_required": false,
-  "buildlic_queries": 1,
-  "buildlic_failures": 1,
+  "buildlic_queries": 2,
+  "buildlic_failures": 0,
   "buildlic_raw_rows": 0,
   "tainan_pages_checked": 4,
   "tainan_candidate_articles": 14,
   "tainan_articles_checked": 14,
   "tainan_article_failures": 0,
-  "tainan_local_event_count": 6
+  "tainan_local_event_count": 3
 }
