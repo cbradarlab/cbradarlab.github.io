@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-15T21:01:18+08:00",
+  "updated_at": "2026-10-15T21:04:30+08:00",
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "latest_source_date": "2026-10-08",
   "articles_checked": 8,
@@ -12,7 +12,9 @@
   "total_event_count": 104,
   "unique_company_count": 103,
   "seo_topic_pages": 5,
-  "warnings": [],
+  "warnings": [
+    "TAOYUAN_RSS_UNAVAILABLE"
+  ],
   "data_cost_ntd": 0,
   "ai_api_required": false,
   "buildlic_queries": 0,
@@ -46,8 +48,8 @@
   "taoyuan_articles_checked": 0,
   "taoyuan_article_failures": 0,
   "taoyuan_title_fallback_count": 0,
-  "taoyuan_rss_items": 50,
-  "taoyuan_rss_failures": 0,
+  "taoyuan_rss_items": 0,
+  "taoyuan_rss_failures": 1,
   "taoyuan_verified_seed_count": 1,
   "taoyuan_new_event_count": 0,
   "hsinchu_pages_checked": 0,
