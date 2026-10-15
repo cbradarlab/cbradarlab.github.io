@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-15T12:48:58+08:00",
+  "updated_at": "2026-10-15T12:51:14+08:00",
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH",
   "latest_source_date": "2026-10-08",
   "articles_checked": 8,
@@ -14,11 +14,11 @@
   "seo_topic_pages": 5,
   "warnings": [
     "BUILDLIC_NO_EVENTS",
-    "BUILDLIC_FAILURES=4"
+    "BUILDLIC_FAILURES=1"
   ],
   "data_cost_ntd": 0,
   "ai_api_required": false,
-  "buildlic_queries": 2,
-  "buildlic_failures": 4,
+  "buildlic_queries": 1,
+  "buildlic_failures": 1,
   "buildlic_raw_rows": 0
 }
