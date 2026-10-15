@@ -5,7 +5,7 @@ Rule: the headline identifies the commercial actor; article body only corroborat
 Prefer fewer clean leads over inflated counts.
 """
 from __future__ import annotations
-import datetime as dt, html, json, os, re, urllib.parse
+import datetime as dt, html, json, os, re, subprocess, urllib.parse
 from pathlib import Path
 import update as core
 import augment_local as local
@@ -15,8 +15,8 @@ EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'
 SOURCES={
  'kaohsiung':{'city':'高雄','pages':int(os.environ.get('KAOHSIUNG_PAGES','2')),'max_articles':int(os.environ.get('KAOHSIUNG_MAX_ARTICLES','12')),'list':'https://invest.kcg.gov.tw/News.aspx?n=8CE973AC5F6EE514&sms=D7173346CB507235&PageSize=20&page={page}','base':'https://invest.kcg.gov.tw/','source_type':'高雄招商網｜產業新聞'},
  'taichung':{'city':'台中','pages':int(os.environ.get('TAICHUNG_PAGES','2')),'max_articles':int(os.environ.get('TAICHUNG_MAX_ARTICLES','12')),'list':'https://www.economic.taichung.gov.tw/2590629/Lpsimplelist?PageSize=20&page={page}','base':'https://www.economic.taichung.gov.tw/','source_type':'臺中市經發局｜招商新聞'},
- 'taoyuan':{'city':'桃園','pages':int(os.environ.get('TAOYUAN_PAGES','2')),'max_articles':int(os.environ.get('TAOYUAN_MAX_ARTICLES','12')),'list':'https://edb.tycg.gov.tw/News.aspx?PageSize=20&n=3749&page={page}&sms=9954','base':'https://edb.tycg.gov.tw/','source_type':'桃園市經發局｜最新消息'},
- 'hsinchu':{'city':'新竹縣','pages':int(os.environ.get('HSINCHU_PAGES','2')),'max_articles':int(os.environ.get('HSINCHU_MAX_ARTICLES','12')),'list':'https://dda.hsinchu.gov.tw/News.aspx?PageSize=20&n=3386&page={page}&sms=8603','base':'https://dda.hsinchu.gov.tw/','source_type':'新竹縣政府數位發展處｜縣府新聞'}
+ 'taoyuan':{'city':'桃園','pages':int(os.environ.get('TAOYUAN_PAGES','1')),'max_articles':int(os.environ.get('TAOYUAN_MAX_ARTICLES','12')),'list':'https://edb.tycg.gov.tw/News.aspx?PageSize=20&n=3749&page={page}&sms=9954','base':'https://edb.tycg.gov.tw/','source_type':'桃園市經發局｜最新消息'},
+ 'hsinchu':{'city':'新竹縣','pages':int(os.environ.get('HSINCHU_PAGES','1')),'max_articles':int(os.environ.get('HSINCHU_MAX_ARTICLES','12')),'list':'https://dda.hsinchu.gov.tw/News.aspx?PageSize=20&n=3386&page={page}&sms=8603','base':'https://dda.hsinchu.gov.tw/','source_type':'新竹縣政府數位發展處｜縣府新聞'}
 }
 TITLE_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','興建','擴產','加碼','產線','廠房','進駐','落地生產','擴充產能')
 TITLE_REJECT=('說明會','論壇','招商會','招商說明','產業用地','標售','標租','徵才','就業博覽','全台每','六都','工廠投資破','成果發表','會展中心','轉運中心','遊客中心','捷運','社宅','產業園區盛大動土','園區動土','SBIR','補助計畫','審查通過名單','商機媒合大會','設計展','博覽會')
@@ -30,13 +30,27 @@ QUOTE_RE=re.compile(r'[「『]([^」』]{2,24})[」』]')
 def norm_title(s):return re.sub(r'\s+',' ',core.plain_text(s)).strip()
 def company_core(s):return local.company_core(s)
 
+def region_fetch(name,url):
+    # The Hsinchu county host intermittently resolves to an unreachable IPv6 path
+    # from GitHub-hosted Azure runners. Force IPv4 only for that source so the
+    # already-stable regional lanes remain untouched.
+    if name!='hsinchu':return core.fetch(url)
+    p=subprocess.run(
+        ['curl','-4','-L','--silent','--show-error','--fail','--max-time','10',
+         '-A',core.UA,'-H','Accept-Language: zh-TW,zh;q=0.9',url],
+        capture_output=True,timeout=12
+    )
+    if p.returncode!=0:
+        raise RuntimeError(f'curl_ipv4_failed rc={p.returncode} err={p.stderr.decode("utf-8","replace")[:160]}')
+    return p.stdout.decode('utf-8','replace')
+
 def title_ok(title):
     return bool(title and any(k in title for k in TITLE_KEYS) and not any(k in title for k in TITLE_REJECT) and not any(k in title for k in LATE_KEYS))
 
 def discover_links(name,cfg):
     found=[]; pages_ok=0
     for page in range(1,cfg['pages']+1):
-        try:raw=core.fetch(cfg['list'].format(page=page)); pages_ok+=1
+        try:raw=region_fetch(name,cfg['list'].format(page=page)); pages_ok+=1
         except Exception as e:print('WARN REGION_LIST',name,page,repr(e));continue
         for m in re.finditer(r'''<a[^>]+href=["']([^"']+)["'][^>]*>(.*?)</a>''',raw,re.I|re.S):
             href=html.unescape(m.group(1)); title=norm_title(m.group(2))
@@ -139,7 +153,7 @@ def inferred_of(text):
     return list(dict.fromkeys(out))
 
 def extract_events(name,cfg,url,title):
-    raw=core.fetch(url); lines=core.block_lines(raw); page=' '.join(lines); date=pub_date(page)
+    raw=region_fetch(name,url); lines=core.block_lines(raw); page=' '.join(lines); date=pub_date(page)
     if not date or any(k in title for k in LATE_KEYS):return []
     out=[]
     for comp in corroborated_candidates(page,title):
