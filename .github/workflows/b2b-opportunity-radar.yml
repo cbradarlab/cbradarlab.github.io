@@ -7,6 +7,7 @@ on:
     paths:
       - 'opportunity-radar/update.py'
       - 'opportunity-radar/augment_local.py'
+      - 'opportunity-radar/merge_history.py'
       - 'opportunity-radar/index.html'
       - '.github/workflows/b2b-opportunity-radar.yml'
   schedule:
@@ -30,18 +31,20 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Preserve prior local history
+      - name: Preserve prior opportunity history
         run: cp opportunity-radar/events.json /tmp/opportunity-events-before.json
-      - name: Refresh central official opportunity data
+      - name: Backfill 2026 central official opportunity data
         shell: bash
         run: |
           cd opportunity-radar
-          python -c "import update; update.BUILD_MONTHS=0; update.main()"
+          python -c "import update; update.BUILD_MONTHS=0; update.MAX_ARTICLES=40; update.main()"
       - name: Backfill local-government early signals
         env:
           TAINAN_PAGES: '12'
           TAINAN_MAX_ARTICLES: '80'
         run: python opportunity-radar/augment_local.py
+      - name: Preserve history and dedupe timelines
+        run: python opportunity-radar/merge_history.py
       - name: Commit healthy refresh
         shell: bash
         run: |
