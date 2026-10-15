@@ -38,6 +38,14 @@ jobs:
           python-version: '3.12'
       - name: Validate product and service coverage
         run: python opportunity-radar/catalog_gate.py
+      - name: Audit current production search quality
+        run: python opportunity-radar/search_quality_audit.py
+      - name: Upload search quality report
+        uses: actions/upload-artifact@v4
+        with:
+          name: search-quality-report
+          path: opportunity-radar/search_quality_report.json
+          retention-days: 7
       - name: Preserve prior opportunity history
         run: cp opportunity-radar/events.json /tmp/opportunity-events-before.json
       - name: Refresh latest central official opportunity data
@@ -63,7 +71,7 @@ jobs:
         run: python opportunity-radar/augment_regions.py
       - name: Preserve history and dedupe timelines
         run: python opportunity-radar/merge_history.py
-      - name: Audit real-event search quality
+      - name: Audit refreshed search quality
         run: python opportunity-radar/search_quality_audit.py
       - name: Commit healthy refresh
         shell: bash
