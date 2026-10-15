@@ -10,18 +10,16 @@ ROOT=Path(__file__).resolve().parent
 PREVIOUS=Path('/tmp/opportunity-events-before.json')
 EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'; HISTORY_DAYS=450
 LATE_LOCAL=('啟用','落成','已完工','正式投產','投入營運','開幕')
-BAD_LOCAL_TOKENS=('方案','基地','園區','供應鏈','能源管理','投資行動','加速投資','公開案件','資料來源','招商','工業區','科學園區','驗證基地','製造基地','市政府','經發局','經濟發展局','行政院','經濟部')
-BAD_LOCAL_EXACT=('能源管理','先進製造基地','先進設備材料驗證基地','先進設備與材料驗證基地','中小企業方案','中小企業加速投資行動方案','根留台灣企業加速投資行動方案','根留臺灣企業加速投資行動方案')
+BAD_LOCAL_TOKENS=('方案','基地','園區','供應鏈','能源管理','投資行動','加速投資','公開案件','資料來源','招商','工業區','科學園區','驗證基地','製造基地','市政府','經發局','經濟發展局','行政院','經濟部','高科技產業','產業帶動','在地傳統產業')
+BAD_LOCAL_EXACT=('能源管理','新廠','建廠','廠房','產業','投資','設備','製造','先進製造基地','先進設備材料驗證基地','先進設備與材料驗證基地','中小企業方案','中小企業加速投資行動方案','根留台灣企業加速投資行動方案','根留臺灣企業加速投資行動方案')
 BAD_ENDINGS=('擴大','長期','初期','一期','二期','公開案件')
 TAINAN_DISTRICTS=('中西區','東區','南區','北區','安平區','安南區','永康區','歸仁區','新化區','左鎮區','玉井區','楠西區','南化區','仁德區','關廟區','龍崎區','官田區','麻豆區','佳里區','西港區','七股區','將軍區','學甲區','北門區','新營區','後壁區','白河區','東山區','六甲區','下營區','柳營區','鹽水區','善化區','大內區','山上區','新市區','安定區')
 
 def normalize_company_name(s:str)->str:
     s=re.sub(r'\s+','',str(s or '')).strip('「」『』()（）,，:：')
-    # Transitional cleanup for parser phrases already saved in history.
     for prefix in ('公開案件為','案件為'):
         if s.startswith(prefix):s=s[len(prefix):]
     if '係由' in s:s=s.split('係由',1)[0]
-    # InvestTaiwan prose often starts with "公司名長期..." / "公司名初期...".
     s=re.sub(r'(長期|初期)$','',s)
     return s.strip('「」『』()（）,，:：')
 
@@ -60,9 +58,6 @@ def valid_local_company(e):
     if any(x in s for x in ('、','，','。','；')):return False
     if '由' in s and not s.endswith(('股份有限公司','有限公司')):return False
     if any(s.endswith(x) for x in BAD_ENDINGS):return False
-    # Local leads must be recognizable businesses, not generic noun phrases.
-    generic=('設備','材料驗證','製造','投資','管理','產業','行動')
-    if s in generic:return False
     return True
 
 def actionable(e):
@@ -105,7 +100,7 @@ def merge():
     status['tainan_local_event_count']=sum(1 for e in kept if e.get('local_source') and e.get('region_source') not in ('kaohsiung','taichung') and e.get('city')=='台南')
     status['kaohsiung_local_event_count']=sum(1 for e in kept if e.get('region_source')=='kaohsiung')
     status['taichung_local_event_count']=sum(1 for e in kept if e.get('region_source')=='taichung')
-    status['history_preservation']='ON_450D';status['timeline_dedupe']='SAME_COMPANY_WITHIN_3D';status['company_name_cleanup']='STRICT_LOCAL_PLUS_CENTRAL_SUFFIX_NORMALIZATION'
+    status['history_preservation']='ON_450D';status['timeline_dedupe']='SAME_COMPANY_WITHIN_3D';status['company_name_cleanup']='STRICT_LOCAL_GENERIC_REJECT_PLUS_CENTRAL_SUFFIX_NORMALIZATION'
     STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
     now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)));core.render_topics(kept,now.isoformat(timespec='minutes'))
     print(json.dumps({'events':len(kept),'unique_companies':status['unique_company_count'],'auto':status['total_auto_event_count'],'local':status['local_event_count'],'kaohsiung':status['kaohsiung_local_event_count'],'taichung':status['taichung_local_event_count']},ensure_ascii=False))
