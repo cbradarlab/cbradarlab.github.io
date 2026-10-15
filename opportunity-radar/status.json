@@ -1,12 +1,13 @@
 {
-  "updated_at": "2026-10-15T12:19:16+08:00",
-  "source_status": "PASS_LIVE_REFRESH_COMPANY_PARAGRAPH",
+  "updated_at": "2026-10-15T12:21:58+08:00",
+  "source_status": "PASS_LIVE_REFRESH_UNIQUE_COMPANY_EVENTS",
   "latest_source_date": "2026-10-08",
   "articles_checked": 8,
   "article_failures": 0,
   "company_paragraphs_checked": 21,
-  "auto_event_count": 20,
-  "total_event_count": 31,
+  "auto_event_count": 15,
+  "seed_event_count": 11,
+  "total_event_count": 26,
   "warnings": [],
   "data_cost_ntd": 0,
   "ai_api_required": false
