@@ -10,6 +10,8 @@ on:
       - 'opportunity-radar/augment_regions.py'
       - 'opportunity-radar/merge_history.py'
       - 'opportunity-radar/index.html'
+      - 'opportunity-radar/product_catalog.json'
+      - 'opportunity-radar/catalog_gate.py'
       - '.github/workflows/b2b-opportunity-radar.yml'
   schedule:
     # 00:20 UTC = 08:20 Taiwan
@@ -32,6 +34,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Validate product and service coverage
+        run: python opportunity-radar/catalog_gate.py
       - name: Preserve prior opportunity history
         run: cp opportunity-radar/events.json /tmp/opportunity-events-before.json
       - name: Refresh latest central official opportunity data
