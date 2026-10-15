@@ -15,8 +15,8 @@ EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'
 SOURCES={
  'kaohsiung':{'city':'高雄','pages':int(os.environ.get('KAOHSIUNG_PAGES','2')),'max_articles':int(os.environ.get('KAOHSIUNG_MAX_ARTICLES','12')),'list':'https://invest.kcg.gov.tw/News.aspx?n=8CE973AC5F6EE514&sms=D7173346CB507235&PageSize=20&page={page}','base':'https://invest.kcg.gov.tw/','source_type':'高雄招商網｜產業新聞'},
  'taichung':{'city':'台中','pages':int(os.environ.get('TAICHUNG_PAGES','2')),'max_articles':int(os.environ.get('TAICHUNG_MAX_ARTICLES','12')),'list':'https://www.economic.taichung.gov.tw/2590629/Lpsimplelist?PageSize=20&page={page}','base':'https://www.economic.taichung.gov.tw/','source_type':'臺中市經發局｜招商新聞'},
- 'taoyuan':{'city':'桃園','pages':int(os.environ.get('TAOYUAN_PAGES','2')),'max_articles':int(os.environ.get('TAOYUAN_MAX_ARTICLES','12')),'list':'https://invest.tycg.gov.tw/News.aspx?n=798&sms=8160&PageSize=20&page={page}','base':'https://invest.tycg.gov.tw/','source_type':'桃園投資通｜重要訊息'},
- 'hsinchu':{'city':'新竹縣','pages':int(os.environ.get('HSINCHU_PAGES','1')),'max_articles':int(os.environ.get('HSINCHU_MAX_ARTICLES','12')),'list':'https://www.hsinchu.gov.tw/News.aspx?n=153&sms=8603&PageSize=200&page={page}','base':'https://www.hsinchu.gov.tw/','source_type':'新竹縣政府｜縣府新聞'}
+ 'taoyuan':{'city':'桃園','pages':int(os.environ.get('TAOYUAN_PAGES','2')),'max_articles':int(os.environ.get('TAOYUAN_MAX_ARTICLES','12')),'list':'https://edb.tycg.gov.tw/News.aspx?PageSize=20&n=3749&page={page}&sms=9954','base':'https://edb.tycg.gov.tw/','source_type':'桃園市經發局｜最新消息'},
+ 'hsinchu':{'city':'新竹縣','pages':int(os.environ.get('HSINCHU_PAGES','2')),'max_articles':int(os.environ.get('HSINCHU_MAX_ARTICLES','12')),'list':'https://dda.hsinchu.gov.tw/News.aspx?PageSize=20&n=3386&page={page}&sms=8603','base':'https://dda.hsinchu.gov.tw/','source_type':'新竹縣政府數位發展處｜縣府新聞'}
 }
 TITLE_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','興建','擴產','加碼','產線','廠房','進駐','落地生產','擴充產能')
 TITLE_REJECT=('說明會','論壇','招商會','招商說明','產業用地','標售','標租','徵才','就業博覽','全台每','六都','工廠投資破','成果發表','會展中心','轉運中心','遊客中心','捷運','社宅','產業園區盛大動土','園區動土','SBIR','補助計畫','審查通過名單','商機媒合大會','設計展','博覽會')
