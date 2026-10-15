@@ -44,12 +44,12 @@ jobs:
           TAINAN_PAGES: '2'
           TAINAN_MAX_ARTICLES: '12'
         run: python opportunity-radar/augment_local.py
-      - name: Add latest Kaohsiung and Taichung early signals
+      - name: Backfill Kaohsiung and Taichung early signals
         env:
-          KAOHSIUNG_PAGES: '2'
-          KAOHSIUNG_MAX_ARTICLES: '12'
-          TAICHUNG_PAGES: '2'
-          TAICHUNG_MAX_ARTICLES: '12'
+          KAOHSIUNG_PAGES: '6'
+          KAOHSIUNG_MAX_ARTICLES: '50'
+          TAICHUNG_PAGES: '6'
+          TAICHUNG_MAX_ARTICLES: '50'
         run: python opportunity-radar/augment_regions.py
       - name: Preserve history and dedupe timelines
         run: python opportunity-radar/merge_history.py
