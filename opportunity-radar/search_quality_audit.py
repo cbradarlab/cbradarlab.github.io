@@ -4,7 +4,7 @@ from pathlib import Path
 R=Path(__file__).resolve().parent
 CAT=json.loads((R/'product_catalog.json').read_text(encoding='utf-8'))
 RULES=json.loads((R/'intent_rules.json').read_text(encoding='utf-8'))
-OVR_PATH=R/'search_quality_shadow_overrides.json'
+OVR_PATH=R/'search_rule_overrides.json'
 OVR=json.loads(OVR_PATH.read_text(encoding='utf-8')) if OVR_PATH.exists() else {'profiles':{},'intent_profile_overrides':{}}
 EV=json.loads((R/'events.json').read_text(encoding='utf-8'))
 QUERIES=['消防工程','工業地坪','配電盤','UPS','堆高機','冷凍庫','門禁','監視器','弱電','ERP','MES','WMS','AOI','機器手臂','空壓機','冰水主機','廢水處理','純水','CNC刀具','治具','量測儀器','包裝機','保全','清潔','人力派遣','制服','消防設備','高低壓配電','發電機','冷卻水塔','集塵設備','特氣系統','無塵室','機械手臂','PLC','SCADA','機器視覺','AGV','AMR','自動倉儲','QMS','CMMS','APS','資安','太陽能','儲能','能源管理','CNC','雷射切割機','射出機','三次元量測','馬達','軸承','氣動元件','工業閥門','安全鞋','職安訓練','報關','包裝設備','冷藏庫']
@@ -70,7 +70,6 @@ broad=[r for r in rows if r['match_rate']>.60]
 very_broad=[r for r in rows if r['match_rate']>.80]
 high_broad=[r for r in rows if r['high_confidence_rate']>.65]
 counts=[r['total'] for r in rows]
-# Diagnostic only: high overlap can be legitimate co-purchase (e.g. fire safety + flooring in a new factory).
 sim=[]
 for a,b in itertools.combinations(rows,2):
  if a['family']==b['family'] or not a['family'] or not b['family']: continue
@@ -82,7 +81,7 @@ GEN={'company':'測試','stage':'新廠動土','industry':'一般製造','title'
 generic=[q for q in QUERIES if classify(q,GEN)]
 generic_hi=[q for q in QUERIES if classify(q,GEN) in ('A','B')]
 report={
- 'version':'SEARCH_QUALITY_AUDIT_V2_SHADOW',
+ 'version':'SEARCH_QUALITY_AUDIT_V2_PRODUCTION',
  'override_version':OVR.get('version'),
  'events':len(EV),'queries':len(QUERIES),
  'zero_result_count':len(zero),'zero_result_rate':round(len(zero)/len(QUERIES),4),'zero_queries':[r['query'] for r in zero],
@@ -105,7 +104,7 @@ checks={
 }
 report['checks']=checks
 report['similarity_warning']=len(sim)>12
-report['verdict']='PASS_REAL_EVENT_SEARCH_QUALITY_V2_SHADOW' if all(checks.values()) else 'FAIL_REAL_EVENT_SEARCH_QUALITY_V2_SHADOW'
+report['verdict']='PASS_REAL_EVENT_SEARCH_QUALITY_V2_PRODUCTION' if all(checks.values()) else 'FAIL_REAL_EVENT_SEARCH_QUALITY_V2_PRODUCTION'
 (R/'search_quality_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps({k:v for k,v in report.items() if k!='query_rows'},ensure_ascii=False,indent=2))
 print(report['verdict'])
