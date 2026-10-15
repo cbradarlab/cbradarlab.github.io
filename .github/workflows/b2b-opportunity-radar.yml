@@ -32,7 +32,7 @@ jobs:
         run: |
           git config user.name "opportunity-radar-bot"
           git config user.email "opportunity-radar-bot@users.noreply.github.com"
-          git add opportunity-radar/events.json opportunity-radar/status.json
+          git add opportunity-radar/events.json opportunity-radar/status.json opportunity-radar/topics/
           if git diff --cached --quiet; then
             echo "No data changes."
           else
