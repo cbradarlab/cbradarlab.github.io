@@ -2314,6 +2314,31 @@
     "title": "15 翔特精密擴大投資台灣 建置產線搶攻高階鑽針鍍膜商機 2026-03-23"
   },
   {
+    "company": "中華精測科技股份有限公司",
+    "date": "2026-03-20",
+    "city": "桃園",
+    "district": "平鎮",
+    "amount": 35.88,
+    "stage": "已動土/開工｜地方政府公開",
+    "industry": "半導體測試介面",
+    "explicit": [],
+    "explicit_evidence": {},
+    "inferred": [
+      "消防/弱電",
+      "冰水主機/空調"
+    ],
+    "contact": "公司名稱與投資案由桃園市經發局官方新聞確認",
+    "source": "https://edb.tycg.gov.tw/News_Content.aspx?n=3749&s=1613065",
+    "source_type": "桃園市經發局｜官方歷史驗證",
+    "score": 88,
+    "id": "618007408e1cd30c",
+    "auto": false,
+    "local_source": true,
+    "region_source": "taoyuan",
+    "title": "中華精測三廠動土 投資逾35億深耕桃園",
+    "evidence_level": "OFFICIAL_VERIFIED_SEED"
+  },
+  {
     "company": "聚和國際",
     "date": "2026-03-19",
     "city": "",
