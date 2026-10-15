@@ -5,7 +5,7 @@ Rule: the headline identifies the commercial actor; article body only corroborat
 Prefer fewer clean leads over inflated counts.
 """
 from __future__ import annotations
-import datetime as dt, html, json, os, re, subprocess, urllib.parse
+import datetime as dt, email.utils, html, json, os, re, subprocess, urllib.parse, xml.etree.ElementTree as ET
 from pathlib import Path
 import update as core
 import augment_local as local
@@ -15,8 +15,8 @@ EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'
 SOURCES={
  'kaohsiung':{'city':'高雄','pages':int(os.environ.get('KAOHSIUNG_PAGES','2')),'max_articles':int(os.environ.get('KAOHSIUNG_MAX_ARTICLES','12')),'list':'https://invest.kcg.gov.tw/News.aspx?n=8CE973AC5F6EE514&sms=D7173346CB507235&PageSize=20&page={page}','base':'https://invest.kcg.gov.tw/','source_type':'高雄招商網｜產業新聞'},
  'taichung':{'city':'台中','pages':int(os.environ.get('TAICHUNG_PAGES','2')),'max_articles':int(os.environ.get('TAICHUNG_MAX_ARTICLES','12')),'list':'https://www.economic.taichung.gov.tw/2590629/Lpsimplelist?PageSize=20&page={page}','base':'https://www.economic.taichung.gov.tw/','source_type':'臺中市經發局｜招商新聞'},
- 'taoyuan':{'city':'桃園','pages':int(os.environ.get('TAOYUAN_PAGES','1')),'max_articles':int(os.environ.get('TAOYUAN_MAX_ARTICLES','12')),'list':'https://edb.tycg.gov.tw/News.aspx?PageSize=20&n=3749&page={page}&sms=9954','base':'https://edb.tycg.gov.tw/','source_type':'桃園市經發局｜最新消息'},
- 'hsinchu':{'city':'新竹縣','pages':int(os.environ.get('HSINCHU_PAGES','1')),'max_articles':int(os.environ.get('HSINCHU_MAX_ARTICLES','12')),'list':'https://dda.hsinchu.gov.tw/News.aspx?PageSize=20&n=3386&page={page}&sms=8603','base':'https://dda.hsinchu.gov.tw/','source_type':'新竹縣政府數位發展處｜縣府新聞'}
+ 'taoyuan':{'city':'桃園','pages':int(os.environ.get('TAOYUAN_PAGES','0')),'max_articles':int(os.environ.get('TAOYUAN_MAX_ARTICLES','12')),'list':'https://edb.tycg.gov.tw/News.aspx?PageSize=20&n=3749&page={page}&sms=9954','rss':'https://edb.tycg.gov.tw/OpenData.aspx?SN=F1B1153D28102C6F','base':'https://edb.tycg.gov.tw/','source_type':'桃園市經發局｜最新消息'},
+ 'hsinchu':{'city':'新竹縣','pages':int(os.environ.get('HSINCHU_PAGES','0')),'max_articles':int(os.environ.get('HSINCHU_MAX_ARTICLES','0')),'list':'https://dda.hsinchu.gov.tw/News.aspx?PageSize=20&n=3386&page={page}&sms=8603','base':'https://dda.hsinchu.gov.tw/','source_type':'新竹縣政府數位發展處｜縣府新聞'}
 }
 TITLE_KEYS=('投資','新廠','動土','擴廠','建廠','設廠','興建','擴產','加碼','產線','廠房','進駐','落地生產','擴充產能')
 TITLE_REJECT=('說明會','論壇','招商會','招商說明','產業用地','標售','標租','徵才','就業博覽','全台每','六都','工廠投資破','成果發表','會展中心','轉運中心','遊客中心','捷運','社宅','產業園區盛大動土','園區動土','SBIR','補助計畫','審查通過名單','商機媒合大會','設計展','博覽會')
@@ -41,6 +41,17 @@ def region_fetch(name,url):
     if p.returncode!=0:
         raise RuntimeError(f'curl_ipv4_failed rc={p.returncode} err={p.stderr.decode("utf-8","replace")[:160]}')
     return p.stdout.decode('utf-8','replace')
+
+def taoyuan_rss_fetch(url):
+    p=subprocess.run(
+        ['curl','-L','--silent','--show-error','--fail','--retry','2','--retry-delay','2',
+         '--connect-timeout','8','--max-time','35','-A',core.UA,
+         '-H','Accept-Language: zh-TW,zh;q=0.9',url],
+        capture_output=True,timeout=115
+    )
+    if p.returncode!=0:
+        raise RuntimeError(f'taoyuan_rss_failed rc={p.returncode} err={p.stderr.decode("utf-8","replace")[:180]}')
+    return p.stdout
 
 def title_ok(title):
     return bool(title and any(k in title for k in TITLE_KEYS) and not any(k in title for k in TITLE_REJECT) and not any(k in title for k in LATE_KEYS))
@@ -80,6 +91,12 @@ def pub_date(text):
     m=re.search(r'(?:資料更新時間|上版日期|發布日期)[：:\s]*(\d{2,3})[-/.](\d{1,2})[-/.](\d{1,2})',text)
     if m:return f'{int(m.group(1))+1911:04d}-{int(m.group(2)):02d}-{int(m.group(3)):02d}'
     return core.extract_date(text,'')
+
+def rss_pub_date(s):
+    try:
+        d=email.utils.parsedate_to_datetime(s)
+        return d.date().isoformat()
+    except Exception:return ''
 
 def clean_company(s):
     s=re.sub(r'\s+','',s or '').strip('「」『』()（）,，:：')
@@ -159,6 +176,15 @@ def inferred_of(text):
     if '倉儲' in text:out+=['智慧倉儲']
     return list(dict.fromkeys(out))
 
+def build_event(comp,date,cfg,url,title,text,evidence_level='OFFICIAL_ARTICLE'):
+    blob=text+' '+title; needs=core.explicit_needs(text); inf=inferred_of(blob)
+    if not needs and not inf and not any(k in blob for k in ('投資','擴產','擴充產能','增加產線','新增產線','進駐')):return None
+    amt=core.amount_billion(text) or core.amount_billion(title); score=80 if needs else 72
+    if any(k in blob for k in ('動土','開工')):score+=5
+    if amt>=5:score+=3
+    if amt>=20:score+=2
+    return {'company':comp,'date':date,'city':cfg['city'],'district':local.district(blob),'amount':amt,'stage':stage_of(blob),'industry':'地方建廠/擴產早期訊號','explicit':list(needs.keys()),'explicit_evidence':needs,'inferred':inf,'contact':'公司名稱已識別｜可再接公開公司聯絡資料','source':url,'source_type':cfg['source_type'],'score':min(95,score),'id':core.event_id(comp,date,url),'auto':True,'local_source':True,'region_source':'taoyuan' if '桃園' in cfg['city'] else '', 'title':title,'evidence_level':evidence_level}
+
 def extract_events(name,cfg,url,title):
     raw=region_fetch(name,url); lines=core.block_lines(raw); page=' '.join(lines); date=pub_date(page)
     if not date or any(k in title for k in LATE_KEYS):return []
@@ -187,40 +213,68 @@ def title_fallback_event(name,cfg,url,title,date_hint):
     if amt>=20:score+=2
     return {'company':comp,'date':date_hint,'city':cfg['city'],'district':local.district(title),'amount':amt,'stage':stage_of(title),'industry':'地方建廠/擴產早期訊號','explicit':[],'explicit_evidence':{},'inferred':inf,'contact':'公司名稱由官方列表標題確認｜公開聯絡資料可再補','source':url,'source_type':cfg['source_type']+'｜官方列表標題確認','score':score,'id':core.event_id(comp,date_hint,url),'auto':True,'local_source':True,'region_source':name,'title':title,'evidence_level':'OFFICIAL_LIST_TITLE_ONLY','article_fetch_degraded':True}
 
+def extract_taoyuan_rss(cfg):
+    raw=taoyuan_rss_fetch(cfg['rss']); root=ET.fromstring(raw.decode('utf-8-sig')); items=root.findall('.//item')
+    out=[]; candidates=0
+    for item in items:
+        vals={c.tag.split('}')[-1]: ''.join(c.itertext()).strip() for c in item}
+        title=norm_title(vals.get('title','')); url=vals.get('link',''); desc=vals.get('description',''); date=rss_pub_date(vals.get('pubDate',''))
+        if not title_ok(title) or not url or not date:continue
+        candidates+=1; lines=core.block_lines(desc); page=' '.join(lines)
+        for comp in corroborated_candidates(page,title):
+            text=relevant_parts(lines,comp,title)
+            ev=build_event(comp,date,cfg,url,title,text,'OFFICIAL_RSS_BODY')
+            if ev:
+                ev['region_source']='taoyuan';ev['source_type']=cfg['source_type']+'｜官方RSS';out.append(ev)
+    return out,len(items),candidates
+
+def verified_taoyuan_seeds():
+    url='https://edb.tycg.gov.tw/News_Content.aspx?n=3749&s=1613065'; date='2026-03-20'; comp='中華精測科技股份有限公司'
+    return [{'company':comp,'date':date,'city':'桃園','district':'平鎮','amount':35.88,'stage':'已動土/開工｜地方政府公開','industry':'半導體測試介面','explicit':[],'explicit_evidence':{},'inferred':['消防/弱電','冰水主機/空調'],'contact':'公司名稱與投資案由桃園市經發局官方新聞確認','source':url,'source_type':'桃園市經發局｜官方歷史驗證','score':88,'id':core.event_id(comp,date,url),'auto':False,'local_source':True,'region_source':'taoyuan','title':'中華精測三廠動土 投資逾35億深耕桃園','evidence_level':'OFFICIAL_VERIFIED_SEED'}]
+
 def main():
     events=json.loads(EVENTS.read_text(encoding='utf-8')); status=json.loads(STATUS.read_text(encoding='utf-8'))
     all_added=[]; stats={}
     for name,cfg in SOURCES.items():
-        links,pages_ok=discover_links(name,cfg); checked=0; failures=0; fallbacks=0; found=[]
+        if name=='taoyuan':
+            rss_failures=0;found=[];rss_items=0;rss_candidates=0
+            try:found,rss_items,rss_candidates=extract_taoyuan_rss(cfg)
+            except Exception as e:rss_failures=1;print('WARN TAOYUAN_RSS',repr(e))
+            found+=verified_taoyuan_seeds();added=[]
+            for e in sorted(found,key=lambda x:(x.get('date',''),x.get('score',0)),reverse=True):
+                if local.is_near_duplicate(e,events+all_added+added):continue
+                if e.get('id') in {x.get('id') for x in events+all_added+added}:continue
+                added.append(e)
+            all_added.extend(added)
+            stats[name]={'pages_checked':0,'candidate_articles':rss_candidates,'articles_checked':rss_candidates,'article_failures':0,'title_fallback_count':0,'rss_items':rss_items,'rss_failures':rss_failures,'verified_seed_count':1,'new_event_count':len(added)}
+            continue
+        links,pages_ok=discover_links(name,cfg);checked=0;failures=0;fallbacks=0;found=[]
         for url,title,date_hint in links:
             try:found.extend(extract_events(name,cfg,url,title));checked+=1
             except Exception as e:
                 fb=title_fallback_event(name,cfg,url,title,date_hint)
                 if fb:
-                    found.append(fb);checked+=1;fallbacks+=1
-                    print('INFO REGION_TITLE_FALLBACK',name,url,fb['company'],fb['date'])
-                else:
-                    failures+=1;print('WARN REGION_ARTICLE',name,url,repr(e))
+                    found.append(fb);checked+=1;fallbacks+=1;print('INFO REGION_TITLE_FALLBACK',name,url,fb['company'],fb['date'])
+                else:failures+=1;print('WARN REGION_ARTICLE',name,url,repr(e))
         added=[]
         for e in sorted(found,key=lambda x:(x.get('date',''),x.get('score',0)),reverse=True):
             if local.is_near_duplicate(e,events+all_added+added):continue
             if e.get('id') in {x.get('id') for x in events+all_added+added}:continue
             added.append(e)
-        all_added.extend(added)
-        stats[name]={'pages_checked':pages_ok,'candidate_articles':len(links),'articles_checked':checked,'article_failures':failures,'title_fallback_count':fallbacks,'new_event_count':len(added)}
+        all_added.extend(added);stats[name]={'pages_checked':pages_ok,'candidate_articles':len(links),'articles_checked':checked,'article_failures':failures,'title_fallback_count':fallbacks,'new_event_count':len(added)}
     merged=events+all_added;merged.sort(key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True);EVENTS.write_text(json.dumps(merged,ensure_ascii=False,indent=2),encoding='utf-8')
     now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)));core.render_topics(merged,now.isoformat(timespec='minutes'));status['updated_at']=now.isoformat(timespec='seconds')
     hsinchu_disabled=SOURCES['hsinchu']['pages']==0
-    status['regional_sources']='KAOHSIUNG_TAICHUNG_TAOYUAN_DAILY__HSINCHU_SHADOW_DISABLED' if hsinchu_disabled else 'KAOHSIUNG_TAICHUNG_TAOYUAN_HSINCHU_OFFICIAL'
-    status['hsinchu_mode']='SHADOW_DISABLED_DAILY_NETWORK_ROUTE' if hsinchu_disabled else 'LIVE_TEST'
-    status['taoyuan_mode']='DAILY_LATEST_PAGE' if SOURCES['taoyuan']['pages']==1 else f"BACKFILL_{SOURCES['taoyuan']['pages']}P"
+    status['regional_sources']='KAOHSIUNG_TAICHUNG_TAOYUAN_RSS__HSINCHU_SHADOW_DISABLED' if hsinchu_disabled else 'KAOHSIUNG_TAICHUNG_TAOYUAN_RSS_HSINCHU_OFFICIAL'
+    status['hsinchu_mode']='SHADOW_DISABLED_DAILY_NETWORK_ROUTE' if hsinchu_disabled else 'LIVE_TEST';status['taoyuan_mode']='DAILY_RSS_PRIMARY_WITH_VERIFIED_HISTORY_SEED'
     for name,st in stats.items():
         for k,v in st.items():status[f'{name}_{k}']=v
     status['regional_local_new_event_count']=len(all_added);status['total_event_count']=len(merged);status['unique_company_count']=len({company_core(e.get('company','')) for e in merged if company_core(e.get('company',''))})
     warnings=[w for w in status.get('warnings',[]) if not str(w).startswith(('KAOHSIUNG_','TAICHUNG_','TAOYUAN_','HSINCHU_'))]
     for name,st in stats.items():
-        if st['article_failures']:warnings.append(f"{name.upper()}_FAILURES={st['article_failures']}")
-        if st['pages_checked']==0 and SOURCES[name]['pages']>0:warnings.append(f'{name.upper()}_LIST_UNAVAILABLE')
+        if st.get('article_failures'):warnings.append(f"{name.upper()}_FAILURES={st['article_failures']}")
+        if name=='taoyuan' and st.get('rss_failures'):warnings.append('TAOYUAN_RSS_UNAVAILABLE')
+        elif name!='taoyuan' and st['pages_checked']==0 and SOURCES[name]['pages']>0:warnings.append(f'{name.upper()}_LIST_UNAVAILABLE')
     status['warnings']=warnings;STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps({'regional_added':len(all_added),'regions':stats,'total':len(merged),'hsinchu_mode':status['hsinchu_mode'],'taoyuan_mode':status['taoyuan_mode']},ensure_ascii=False))
 
