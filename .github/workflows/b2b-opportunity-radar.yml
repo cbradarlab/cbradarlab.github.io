@@ -44,26 +44,14 @@ jobs:
           TAINAN_PAGES: '2'
           TAINAN_MAX_ARTICLES: '12'
         run: python opportunity-radar/augment_local.py
-      - name: Probe Taoyuan official RSS
-        shell: bash
-        run: |
-          python - <<'PY'
-          import urllib.request
-          u='https://edb.tycg.gov.tw/OpenData.aspx?SN=F1B1153D28102C6F'
-          req=urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0','Accept-Language':'zh-TW,zh;q=0.9'})
-          with urllib.request.urlopen(req,timeout=15) as r:
-              b=r.read()
-              print('RSS_STATUS',r.status,'BYTES',len(b),'CTYPE',r.headers.get('Content-Type'))
-              print(b[:2000].decode('utf-8','replace'))
-          PY
-      - name: Refresh stable regional signals without Taoyuan backfill
+      - name: Add latest regional early signals
         env:
           KAOHSIUNG_PAGES: '2'
           KAOHSIUNG_MAX_ARTICLES: '12'
           TAICHUNG_PAGES: '2'
           TAICHUNG_MAX_ARTICLES: '12'
           TAOYUAN_PAGES: '0'
-          TAOYUAN_MAX_ARTICLES: '0'
+          TAOYUAN_MAX_ARTICLES: '12'
           HSINCHU_PAGES: '0'
           HSINCHU_MAX_ARTICLES: '0'
         run: python opportunity-radar/augment_regions.py
