@@ -147,30 +147,6 @@
     "title": "特用材料供應大廠達興材料高雄橋頭一期新廠動土 強化南部半導體供應鏈"
   },
   {
-    "company": "新廠",
-    "date": "2026-09-29",
-    "city": "高雄",
-    "district": "頭科學園區",
-    "amount": 0,
-    "stage": "已動土/開工｜地方政府公開",
-    "industry": "地方建廠/擴產早期訊號",
-    "explicit": [],
-    "explicit_evidence": {},
-    "inferred": [
-      "消防/弱電",
-      "冰水主機/空調"
-    ],
-    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
-    "source": "https://invest.kcg.gov.tw/News_Content.aspx?n=8CE973AC5F6EE514&sms=D7173346CB507235&s=A4D52C6CF0178E9E",
-    "source_type": "高雄招商網｜產業新聞",
-    "score": 77,
-    "id": "efda0c1cbb87c5f5",
-    "auto": true,
-    "local_source": true,
-    "region_source": "kaohsiung",
-    "title": "特用材料供應大廠達興材料高雄橋頭一期新廠動土 強化南部半導體供應鏈"
-  },
-  {
     "company": "明治科技",
     "date": "2026-09-24",
     "city": "新北",
@@ -225,30 +201,6 @@
     "score": 87,
     "id": "4894d3c938ed7832",
     "auto": true
-  },
-  {
-    "company": "高科技產業帶動在地傳統產業",
-    "date": "2026-09-22",
-    "city": "高雄",
-    "district": "白埔園區",
-    "amount": 0,
-    "stage": "已動土/開工｜地方政府公開",
-    "industry": "地方建廠/擴產早期訊號",
-    "explicit": [],
-    "explicit_evidence": {},
-    "inferred": [
-      "消防/弱電",
-      "冰水主機/空調"
-    ],
-    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
-    "source": "https://invest.kcg.gov.tw/News_Content.aspx?n=8CE973AC5F6EE514&sms=D7173346CB507235&s=8078FCE506508303",
-    "source_type": "高雄招商網｜產業新聞",
-    "score": 77,
-    "id": "ed15a1258e09803b",
-    "auto": true,
-    "local_source": true,
-    "region_source": "kaohsiung",
-    "title": "白埔產業園區盛大動土！串聯南部半導體S廊帶 掌握後摩爾時代契機 打造AI與先進封裝設備新基地"
   },
   {
     "company": "中龍鋼鐵",
@@ -759,30 +711,6 @@
     "local_source": true,
     "region_source": "kaohsiung",
     "title": "公告度小月加碼投資專案-109年度高雄市促進產業發展自治條例投資補助申請期間及經費額度。"
-  },
-  {
-    "company": "新廠",
-    "date": "2026-08-13",
-    "city": "高雄",
-    "district": "頭科學園區",
-    "amount": 32.5,
-    "stage": "已動土/開工｜地方政府公開",
-    "industry": "地方建廠/擴產早期訊號",
-    "explicit": [],
-    "explicit_evidence": {},
-    "inferred": [
-      "消防/弱電",
-      "冰水主機/空調"
-    ],
-    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
-    "source": "https://invest.kcg.gov.tw/News_Content.aspx?n=8CE973AC5F6EE514&sms=D7173346CB507235&s=377D38E470561EC6",
-    "source_type": "高雄招商網｜產業新聞",
-    "score": 82,
-    "id": "63bcc85cd43d10f5",
-    "auto": true,
-    "local_source": true,
-    "region_source": "kaohsiung",
-    "title": "高力橋科新廠動土 高雄AI基礎設施供應鏈再添關鍵拼圖"
   },
   {
     "company": "飛傲科技",
@@ -2560,6 +2488,33 @@
     "local_source": true,
     "region_source": "taichung",
     "title": "14 投資台灣添4案 聚和國際砸45億推高值化綠色化學 2026-03-23"
+  },
+  {
+    "company": "翔特精密",
+    "date": "2026-03-23",
+    "city": "台中",
+    "district": "中太平廠區",
+    "amount": 0,
+    "stage": "企業投資/產線升級｜地方政府公開",
+    "industry": "地方建廠/擴產早期訊號",
+    "explicit": [
+      "機器手臂"
+    ],
+    "explicit_evidence": {
+      "機器手臂": [
+        "機械手臂"
+      ]
+    },
+    "inferred": [],
+    "contact": "公司名稱已識別｜可再接公開公司聯絡資料",
+    "source": "https://www.economic.taichung.gov.tw/3238716/post",
+    "source_type": "臺中市經發局｜招商新聞",
+    "score": 80,
+    "id": "86396bc2dbf0bf5d",
+    "auto": true,
+    "local_source": true,
+    "region_source": "taichung",
+    "title": "15 翔特精密擴大投資台灣 建置產線搶攻高階鑽針鍍膜商機 2026-03-23"
   },
   {
     "company": "聚和國際",
