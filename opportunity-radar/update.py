@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Zero-cost public-data updater for B2B Opportunity Radar.
-Standard library only. Parses company-level paragraphs and fails loudly if the official source is stale/broken.
+Standard library only. Parses company-level paragraphs, dedupes events, and builds a small set of substantive SEO topic pages.
 """
 from __future__ import annotations
 import datetime as dt, hashlib, html, json, re, sys, urllib.parse, urllib.request
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parent
-EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'
+EVENTS=ROOT/'events.json'; STATUS=ROOT/'status.json'; TOPIC_DIR=ROOT/'topics'
 LIST_URL='https://investtaiwan.nat.gov.tw/threeMajorNewsPageList'
 BASE='https://investtaiwan.nat.gov.tw/'
-UA='Mozilla/5.0 OpportunityRadar/0.6 (+https://cbradarlab.github.io/opportunity-radar/)'
+SITE='https://cbradarlab.github.io/opportunity-radar/'
+UA='Mozilla/5.0 OpportunityRadar/0.7 (+https://cbradarlab.github.io/opportunity-radar/)'
 MAX_ARTICLES=8; STALE_DAYS=21; HTTP_TIMEOUT=12
 
 RULES={
@@ -33,6 +34,13 @@ RULES={
 '雷射設備':['雷射銲接','雷射焊接','雷射設備'],
 '無塵室':['無塵室','潔淨室'],
 'RFID':['RFID','射頻識別']
+}
+TOPICS={
+'air-compressor':('空壓機','空壓機採購商機','追蹤台灣新廠與擴產公告中直接提到空壓機、壓縮空氣設備的企業投資案。'),
+'smart-warehouse':('智慧倉儲','智慧倉儲採購商機','整理官方投資公告中明示智慧倉儲、自動倉儲與相關新廠擴產需求。'),
+'machine-vision':('機器視覺/AOI','機器視覺與 AOI 採購商機','追蹤新廠、擴產與智慧製造案中的機器視覺、AOI、影像辨識需求。'),
+'mes':('MES/製程追溯','MES 與製程追溯採購商機','整理企業投資案中明示的 MES、生產管理、製程追溯與智慧資訊平台需求。'),
+'solar':('太陽能','企業太陽能採購商機','追蹤新廠與擴產投資案中官方明示的太陽能、太陽光電設備需求。')
 }
 BLACK_PREFIX=('投資臺灣事務所','截至目前','後續尚有','本次投資','新廠','新產線','該公司','此次投資','資料來源','新聞發言人')
 COMPANY_START=re.compile(r'^([^，。；：\s]{2,24}?)(?=為|深耕|成立於|成立|創立|主要|專注|隸屬|是|以)')
@@ -80,11 +88,9 @@ def explicit_needs(t:str):
     return out
 
 def detail_paragraphs(raw:str):
-    lines=block_lines(raw)
-    start=0
+    lines=block_lines(raw); start=0
     for i,x in enumerate(lines):
-        if '投資臺灣事務所今' in x and ('通過' in x or '投資' in x):
-            start=i+1; break
+        if '投資臺灣事務所今' in x and ('通過' in x or '投資' in x):start=i+1; break
     out=[]
     for x in lines[start:]:
         if '投資臺灣事務所新聞發言人' in x or x.startswith('資料來源'):break
@@ -98,12 +104,7 @@ def detail_paragraphs(raw:str):
     return out
 
 def amount_billion(t:str):
-    # Company-paragraph only. Supports common official wording such as
-    # 投資約5.1億元 / 總投資金額約10億元 / 總金額約10.2億元.
-    pats=[
-        r'(?:總?投資(?:金額)?|投資金額|本案投資金額|總金額|斥資|加碼)[^。；，]{0,28}?([0-9]+(?:\.[0-9]+)?)\s*億',
-        r'([0-9]+(?:\.[0-9]+)?)\s*億(?:元)?(?:投資|建廠|擴廠|擴產)'
-    ]
+    pats=[r'(?:總?投資(?:金額)?|投資金額|本案投資金額|總金額|斥資|加碼)[^。；，]{0,28}?([0-9]+(?:\.[0-9]+)?)\s*億',r'([0-9]+(?:\.[0-9]+)?)\s*億(?:元)?(?:投資|建廠|擴廠|擴產)']
     for pat in pats:
         ms=re.findall(pat,t)
         if ms:return float(ms[0])
@@ -121,6 +122,23 @@ def event_id(company,date,source):return hashlib.sha1(f'{company}|{date}|{source
 def load_events():
     try:return json.loads(EVENTS.read_text(encoding='utf-8'))
     except Exception:return []
+
+def h(s):return html.escape(str(s or ''),quote=True)
+
+def render_topics(events, updated):
+    TOPIC_DIR.mkdir(exist_ok=True)
+    for slug,(key,title,desc) in TOPICS.items():
+        matches=[e for e in events if key in (e.get('explicit') or [])]
+        matches.sort(key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True)
+        cards=[]
+        for e in matches:
+            evidence='、'.join((e.get('explicit_evidence') or {}).get(key,[])) or key
+            amount=f"｜投資約 {h(e.get('amount'))} 億元" if e.get('amount') else ''
+            cards.append(f'''<article><h2>{h(e.get('company'))}</h2><p class="meta">{h(e.get('date'))}｜{h(e.get('city') or '地區待補')}｜商機分數 {h(e.get('score'))}</p><p><b>官方明示：</b>{h(evidence)}</p><p>{h(e.get('stage'))}{amount}</p><a href="{h(e.get('source'))}" rel="nofollow noopener" target="_blank">查看官方來源 ↗</a></article>''')
+        if not cards:cards=['<div class="empty">目前近期資料中尚無符合的官方明示案件；系統仍會每天自動更新。</div>']
+        canonical=f'{SITE}topics/{slug}.html'
+        body=f'''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{h(title)}｜企業採購商機雷達</title><meta name="description" content="{h(desc)}"><link rel="canonical" href="{canonical}"><style>body{{margin:0;background:#f6f8fc;color:#172033;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif}}main{{max-width:920px;margin:auto;padding:36px 18px 70px}}header{{background:#0f172a;color:white;border-radius:22px;padding:30px}}h1{{font-size:36px;margin:8px 0}}header p{{line-height:1.7;color:#dbeafe}}nav{{margin:18px 0}}nav a{{margin-right:12px;color:#1d4ed8}}article,.empty{{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:20px;margin:14px 0}}article h2{{margin:0 0 7px}}.meta{{color:#64748b;font-size:14px}}article a{{color:#1d4ed8;font-weight:700;text-decoration:none}}footer{{color:#64748b;font-size:13px;margin-top:28px;line-height:1.7}}</style></head><body><main><header><small>企業採購商機雷達</small><h1>{h(title)}</h1><p>{h(desc)} A 級只收官方原文明示的需求，不把一般產業猜測混進來。</p></header><nav><a href="../">搜尋全部商機</a><a href="./smart-warehouse.html">智慧倉儲</a><a href="./machine-vision.html">機器視覺</a><a href="./mes.html">MES</a><a href="./solar.html">太陽能</a><a href="./air-compressor.html">空壓機</a></nav><p>目前符合：<b>{len(matches)}</b> 筆｜資料更新：{h(updated)}</p>{''.join(cards)}<footer>資料來自政府與官方公開資訊，自動更新。商機資訊不代表採購、得標或成交保證。</footer></main></body></html>'''
+        (TOPIC_DIR/f'{slug}.html').write_text(body,encoding='utf-8')
 
 def main():
     now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8)))
@@ -146,7 +164,6 @@ def main():
     if not latest:raise RuntimeError('Latest official date missing')
     age=(now.date()-dt.date.fromisoformat(latest)).days
     if age>STALE_DAYS:raise RuntimeError(f'Official source stale: latest={latest}, age={age}d')
-
     manual=[e for e in load_events() if not e.get('auto')]
     manual_ids={e.get('id') for e in manual if e.get('id')}
     byid={e['id']:e for e in autos if e.get('id') and e.get('id') not in manual_ids}
@@ -154,9 +171,9 @@ def main():
     merged=manual+sorted(byid.values(),key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True)
     ids=[e.get('id') for e in merged if e.get('id')]
     if len(ids)!=len(set(ids)):raise RuntimeError('Duplicate event IDs after merge')
-
     EVENTS.write_text(json.dumps(merged,ensure_ascii=False,indent=2),encoding='utf-8')
-    status={'updated_at':now.isoformat(timespec='seconds'),'source_status':'PASS_LIVE_REFRESH_UNIQUE_COMPANY_EVENTS','latest_source_date':latest,'articles_checked':checked,'article_failures':failures,'company_paragraphs_checked':paragraphs,'auto_event_count':len(byid),'seed_event_count':len(manual),'total_event_count':len(merged),'warnings':[],'data_cost_ntd':0,'ai_api_required':False}
+    render_topics(merged,now.isoformat(timespec='minutes'))
+    status={'updated_at':now.isoformat(timespec='seconds'),'source_status':'PASS_LIVE_REFRESH_UNIQUE_COMPANY_EVENTS','latest_source_date':latest,'articles_checked':checked,'article_failures':failures,'company_paragraphs_checked':paragraphs,'auto_event_count':len(byid),'seed_event_count':len(manual),'total_event_count':len(merged),'seo_topic_pages':len(TOPICS),'warnings':[],'data_cost_ntd':0,'ai_api_required':False}
     STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(status,ensure_ascii=False))
 
