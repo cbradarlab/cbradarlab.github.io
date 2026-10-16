@@ -1,5 +1,5 @@
 {
-  "version": "SEARCH_RULE_OVERRIDES_V1",
+  "version": "SEARCH_RULE_OVERRIDES_V2_INTENT_SEPARATION",
   "intent_profile_overrides": {
     "manpower": "staffing_v2",
     "aps": "planning_supply_v2",
@@ -8,7 +8,9 @@
     "uniform": "new_site_ops_v2",
     "ppe": "new_site_ops_v2",
     "energy_storage": "storage_project_v2",
-    "ems": "ems_project_v2"
+    "ems": "ems_project_v2",
+    "customs": "logistics_service_v2",
+    "scada_dcs": "scada_control_v2"
   },
   "profiles": {
     "staffing_v2": {
@@ -39,6 +41,18 @@
       "rules": [
         {"level":"B","blob_any":["能源管理","EMS","電力監控","智慧電表","需量控制","節能管理"]},
         {"level":"C","stage_any":["智慧化","產線升級","新廠","擴廠"],"blob_any":["節能","能源","淨零","低碳"]}
+      ]
+    },
+    "logistics_service_v2": {
+      "rules": [
+        {"level":"B","blob_any":["進出口","出口","外銷","報關","國際物流","海運","空運","貨運"]},
+        {"level":"C","stage_any":["新廠","擴廠","擴產","新產能","投入營運"],"blob_any":["物流","配送","出貨","海外市場"]}
+      ]
+    },
+    "scada_control_v2": {
+      "rules": [
+        {"level":"B","blob_any":["SCADA","DCS","PLC","自動控制","控制系統","設備聯網","數據採集","遠端監控","製程監控"]},
+        {"level":"C","stage_any":["產線升級","新增產線","擴產","新廠"],"blob_any":["智慧製造","智慧化","自動化","設備聯網"]}
       ]
     }
   }
