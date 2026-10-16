@@ -28,7 +28,10 @@ def parse_date(value):
 
 def route_texts(e):
     out=[]
-    for key in ('contact', 'website', 'company_website', 'contact_url', 'procurement_url', 'phone', 'email'):
+    for key in (
+        'contact','website','company_website','contact_url','procurement_url',
+        'phone','email','company_phone','company_email'
+    ):
         v=e.get(key)
         if v:
             out.append(str(v).strip())
@@ -123,7 +126,7 @@ else:
     verdict='FAIL_RESEARCH_ACTIONABILITY_V1'
 
 report={
-    'version':'OPPORTUNITY_ACTIONABILITY_AUDIT_V1_1_STRICT_ROUTE',
+    'version':'OPPORTUNITY_ACTIONABILITY_AUDIT_V1_2_ENRICHED_ROUTE_FIELDS',
     'generated_at':dt.datetime.now(dt.timezone(dt.timedelta(hours=8))).isoformat(timespec='seconds'),
     'events':total,
     'source_status':STATUS.get('source_status'),
