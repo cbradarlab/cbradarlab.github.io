@@ -1,0 +1,100 @@
+{
+  "version": "DEMAND_PULL_AUDIT_V1",
+  "events": 104,
+  "flagged": 10,
+  "bad_count": 0,
+  "bad": [],
+  "rows": [
+    {
+      "company": "合晶科技",
+      "stock_code": "6182",
+      "date": "2026-10-08",
+      "grade": "FWD",
+      "basis": "RESEARCH_DEFINITION_FORWARD_ONLY_V1",
+      "demand_term": "",
+      "action_term": ""
+    },
+    {
+      "company": "亞帝歐光電",
+      "stock_code": "3516",
+      "date": "2026-08-21",
+      "grade": "A",
+      "basis": "RESEARCH_VALIDATED_V1",
+      "demand_term": "",
+      "action_term": ""
+    },
+    {
+      "company": "欣銓科技",
+      "stock_code": "3264",
+      "date": "2026-07-31",
+      "grade": "A",
+      "basis": "RESEARCH_VALIDATED_V1",
+      "demand_term": "",
+      "action_term": ""
+    },
+    {
+      "company": "新應材",
+      "stock_code": "4749",
+      "date": "2026-07-27",
+      "grade": "AUTO",
+      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
+      "demand_term": "市場需求",
+      "action_term": "興建新廠"
+    },
+    {
+      "company": "菱生精密",
+      "stock_code": "2369",
+      "date": "2026-05-29",
+      "grade": "A",
+      "basis": "RESEARCH_VALIDATED_V1",
+      "demand_term": "",
+      "action_term": ""
+    },
+    {
+      "company": "鴻勁精密",
+      "stock_code": "7769",
+      "date": "2026-05-26",
+      "grade": "AUTO",
+      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
+      "demand_term": "訂單需求",
+      "action_term": "新建廠房"
+    },
+    {
+      "company": "中國砂輪",
+      "stock_code": "1560",
+      "date": "2026-05-08",
+      "grade": "AUTO",
+      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
+      "demand_term": "市場需求",
+      "action_term": "增設產線"
+    },
+    {
+      "company": "聚和國際",
+      "stock_code": "6509",
+      "date": "2026-03-23",
+      "grade": "AUTO",
+      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
+      "demand_term": "市場需求",
+      "action_term": "興建新廠"
+    },
+    {
+      "company": "聚和國際",
+      "stock_code": "6509",
+      "date": "2026-03-19",
+      "grade": "A",
+      "basis": "RESEARCH_VALIDATED_V1",
+      "demand_term": "",
+      "action_term": ""
+    },
+    {
+      "company": "美琪瑪國際",
+      "stock_code": "4721",
+      "date": "2025-12-19",
+      "grade": "A",
+      "basis": "RESEARCH_VALIDATED_V1",
+      "demand_term": "",
+      "action_term": ""
+    }
+  ],
+  "verdict": "PASS"
+}

@@ -37,7 +37,8 @@
     "company_email": "investor@cheer-time.com.tw",
     "company_address": "新北市新莊區瓊林南路305巷2號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2009-12-31"
   },
   {
     "company": "合晶科技",
@@ -73,7 +74,12 @@
     "company_email": "public@waferworks.com",
     "company_address": "No.100, Longyuan 1 st Rd., Longtan Science Park,Taoyuan,32542,Taiwan R.O.C.",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2002-05-16",
+    "demand_pull": true,
+    "demand_pull_grade": "FWD",
+    "demand_pull_basis": "RESEARCH_DEFINITION_FORWARD_ONLY_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00"
   },
   {
     "company": "中鋼鋁業",
@@ -172,7 +178,8 @@
     "company_email": "ir@daxinmat.com",
     "company_address": "臺中市西屯區科園一路15號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2012-07-16"
   },
   {
     "company": "明治科技",
@@ -383,7 +390,8 @@
     "company_email": "sam_hsieh@farcent.com.tw",
     "company_address": "台北市大同區承德路三段230號13樓",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2001-09-17"
   },
   {
     "company": "英特盛科技",
@@ -540,7 +548,12 @@
     "company_email": "ado@adotek.com.tw",
     "company_address": "NO.858,GUANGFU RDBADE CITY , TAOYUAN COUNTY, TAIWAN",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2007-11-29",
+    "demand_pull": true,
+    "demand_pull_grade": "A",
+    "demand_pull_basis": "RESEARCH_VALIDATED_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00"
   },
   {
     "company": "永進興不銹鋼",
@@ -867,7 +880,8 @@
     "company_email": "spokesperson@wistron.com",
     "company_address": "新竹縣竹北市智慧路1號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2003-08-19"
   },
   {
     "company": "飛傲科技",
@@ -928,7 +942,8 @@
     "company_email": "gilbert_wu@kaori.com.tw",
     "company_address": "桃園市中壢區吉林北路5-2號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2014-02-14"
   },
   {
     "company": "穎崴",
@@ -959,7 +974,8 @@
     "company_email": "0",
     "company_address": "高雄市楠梓區創意南路68號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2021-01-20"
   },
   {
     "company": "台塑德山精密化學股份有限公司",
@@ -1116,7 +1132,12 @@
     "company_email": "Investors@ardentec.com",
     "company_address": "No.3, Gongye 3rd Rd., Shengli Vil.,Hukou Township,Hsinchu County 303, Taiwan",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2005-01-05",
+    "demand_pull": true,
+    "demand_pull_grade": "A",
+    "demand_pull_basis": "RESEARCH_VALIDATED_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00"
   },
   {
     "company": "富統食品",
@@ -1184,7 +1205,14 @@
     "company_email": "ir@aemc.com.tw",
     "company_address": "No.455, Sinhe Rd.Longtan, Taoyuan Taiwan",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2025-01-17",
+    "demand_pull": true,
+    "demand_pull_grade": "AUTO",
+    "demand_pull_basis": "AUTO_OFFICIAL_CAUSAL_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00",
+    "demand_pull_demand_term": "市場需求",
+    "demand_pull_action_term": "興建新廠"
   },
   {
     "company": "遠雄流通",
@@ -1271,7 +1299,8 @@
     "company_email": "1005670@sakura.com.tw",
     "company_address": "台中市大雅區雅潭路4段436號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "1992-07-16"
   },
   {
     "company": "貫理工業",
@@ -1539,7 +1568,8 @@
     "company_email": "investor@synbiotech.com.tw",
     "company_address": "NO.82,Beiling 6th Rd.,Luzhu Dist.,Kaohsiung City821,Taiwan",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2025-05-27"
   },
   {
     "company": "高都汽車",
@@ -1624,7 +1654,8 @@
     "company_email": "ir@msscorps.com",
     "company_address": "新竹市埔頂路27號1樓",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2022-08-31"
   },
   {
     "company": "宅興實業",
@@ -1842,7 +1873,8 @@
     "company_email": "GWCIR@sas-globalwafers.com",
     "company_address": "No. 8. Industrial East Road 2, Hsinchu Science Park, Taiwan, R.O.C.Taiwan R.O.C",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2015-09-25"
   },
   {
     "company": "健豪印刷",
@@ -1948,7 +1980,8 @@
     "company_email": "grace@program.com.tw",
     "company_address": "台中市西屯區市政路402號6樓之2",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2025-07-29"
   },
   {
     "company": "菱生精密",
@@ -1981,7 +2014,12 @@
     "company_email": "lpi@lingsen.com.tw",
     "company_address": "台中市潭子區南二路五之一號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "1998-04-10",
+    "demand_pull": true,
+    "demand_pull_grade": "A",
+    "demand_pull_basis": "RESEARCH_VALIDATED_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00"
   },
   {
     "company": "鴻勁精密",
@@ -2026,7 +2064,14 @@
     "company_email": "ir@honprec.com",
     "company_address": "臺中市大雅區中清路三段758巷11號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2025-11-27",
+    "demand_pull": true,
+    "demand_pull_grade": "AUTO",
+    "demand_pull_basis": "AUTO_OFFICIAL_CAUSAL_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00",
+    "demand_pull_demand_term": "訂單需求",
+    "demand_pull_action_term": "新建廠房"
   },
   {
     "company": "華旭先進",
@@ -2136,7 +2181,14 @@
     "company_email": "ir@kinik.com.tw",
     "company_address": "新北市鶯歌區中山路64號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2005-01-31",
+    "demand_pull": true,
+    "demand_pull_grade": "AUTO",
+    "demand_pull_basis": "AUTO_OFFICIAL_CAUSAL_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00",
+    "demand_pull_demand_term": "市場需求",
+    "demand_pull_action_term": "增設產線"
   },
   {
     "company": "工豐企業",
@@ -2358,7 +2410,8 @@
     "company_email": "ytho@qualipoly.com.tw",
     "company_address": "高雄市永安區維新里永工五路2號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2012-08-15"
   },
   {
     "company": "維勝鋼鐵",
@@ -2471,7 +2524,14 @@
     "company_email": "investor@hopax.com.tw",
     "company_address": "No. 28, Hua Dong Rd., Chaoliao VillageDaliao Dist., Kaohsiung City, Taiwan",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2004-04-12",
+    "demand_pull": true,
+    "demand_pull_grade": "AUTO",
+    "demand_pull_basis": "AUTO_OFFICIAL_CAUSAL_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00",
+    "demand_pull_demand_term": "市場需求",
+    "demand_pull_action_term": "興建新廠"
   },
   {
     "company": "翔特精密",
@@ -2533,7 +2593,8 @@
     "company_email": "chpt@chpt.com",
     "company_address": "15 Gongye 3rd Road, Pingjhen Dist,Taoyuan City 324, Taiwan, R.O.C",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2016-03-24"
   },
   {
     "company": "聚和國際",
@@ -2567,7 +2628,12 @@
     "company_email": "investor@hopax.com.tw",
     "company_address": "No. 28, Hua Dong Rd., Chaoliao VillageDaliao Dist., Kaohsiung City, Taiwan",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2004-04-12",
+    "demand_pull": true,
+    "demand_pull_grade": "A",
+    "demand_pull_basis": "RESEARCH_VALIDATED_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00"
   },
   {
     "company": "宏驎",
@@ -2866,7 +2932,8 @@
     "company_email": "invest@pti.com.tw",
     "company_address": "新竹縣湖口鄉新竹工業區大同路10號",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2004-11-08"
   },
   {
     "company": "台塑大金精密化學",
@@ -2996,7 +3063,8 @@
     "company_email": "invest@tw.uneec.com",
     "company_address": "台北市內湖區民權東路六段27號2~6F",
     "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2002-09-16"
   },
   {
     "company": "和大芯科技股份有限公司",
@@ -3075,7 +3143,12 @@
     "company_email": "info@mechema.com",
     "company_address": "No. 1, TA-TUNG 1st. RD., KUNG-YING DISTRICT, TAO-YUAN CITY, TAIWAN",
     "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
-    "contact_verified_at": "2026-10-16T11:17:00+08:00"
+    "contact_verified_at": "2026-10-16T11:34:23+08:00",
+    "listing_date_at_check": "2001-03-09",
+    "demand_pull": true,
+    "demand_pull_grade": "A",
+    "demand_pull_basis": "RESEARCH_VALIDATED_V1",
+    "demand_pull_checked_at": "2026-10-16T11:36:25+08:00"
   },
   {
     "company": "友證",
