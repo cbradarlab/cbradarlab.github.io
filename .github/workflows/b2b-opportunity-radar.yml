@@ -11,6 +11,7 @@ on:
       - 'opportunity-radar/merge_history.py'
       - 'opportunity-radar/enrich_official_contacts.py'
       - 'opportunity-radar/classify_demand_pull.py'
+      - 'opportunity-radar/demand_pull_audit.py'
       - 'opportunity-radar/index.html'
       - 'opportunity-radar/stocks.html'
       - 'opportunity-radar/product_catalog.json'
@@ -82,6 +83,8 @@ jobs:
         run: python opportunity-radar/enrich_official_contacts.py
       - name: Classify strict demand-pull expansion events
         run: python opportunity-radar/classify_demand_pull.py
+      - name: Audit demand-pull classification safety
+        run: python opportunity-radar/demand_pull_audit.py
       - name: Audit result actionability
         run: python opportunity-radar/actionability_audit.py
       - name: Upload actionability report
@@ -95,7 +98,7 @@ jobs:
         run: |
           git config user.name "opportunity-radar-bot"
           git config user.email "opportunity-radar-bot@users.noreply.github.com"
-          git add opportunity-radar/events.json opportunity-radar/status.json opportunity-radar/search_quality_report.json opportunity-radar/actionability_report.json opportunity-radar/topics/
+          git add opportunity-radar/events.json opportunity-radar/status.json opportunity-radar/search_quality_report.json opportunity-radar/actionability_report.json opportunity-radar/demand_pull_report.json opportunity-radar/topics/
           if git diff --cached --quiet; then
             echo "No data changes."
           else
