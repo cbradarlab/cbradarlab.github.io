@@ -8,9 +8,11 @@ or service capacity. This is an observation-priority context, never a buy signal
 
 Safety rules:
 - research-validated historical events are keyed by exact stock_code + event date;
+- sealed research rejections remain rejected unless separately re-opened and revalidated;
 - new automatic events require an official-source causal match;
 - new automatic events must also have been listed on/before the event date;
-- no later-listing backfill and no name-only stock guessing.
+- no later-listing backfill and no name-only stock guessing;
+- same-stock events near a sealed research event are suppressed as likely same-project nodes.
 """
 from __future__ import annotations
 import datetime as dt
@@ -63,6 +65,15 @@ KNOWN = {
     ('6182','2026-10-08'):('FWD','RESEARCH_DEFINITION_FORWARD_ONLY_V1'),
 }
 
+# Exact sealed research exclusions. These block only the adjudicated event, not all
+# future events from the same company.
+RESEARCH_EXCLUDED = {
+    ('4749','2026-07-27'):'RESEARCH_REJECTED_PRIOR_STUDY_V1',
+    ('3017','2026-03-11'):'RESEARCH_BLOCKED_SUBSIDIARY_PRINCIPAL_V1',
+    ('3013','2026-01-02'):'RESEARCH_REJECTED_PRIOR_STUDY_V1',
+    ('7934','2026-06-18'):'RESEARCH_FAIL_LISTING_GATE_V1',
+}
+
 DEMAND_TERMS = (
     '市場需求','客戶需求','訂單需求','訂單增加','訂單成長','訂單成長需求','訂單強勁',
     '接單增加','接單成長','接單及產能需求增加','產能需求增加','未來訂單需求',
@@ -79,18 +90,11 @@ ACTION_TERMS = (
 )
 NEGATIVE_TERMS = ('暫緩擴產','取消擴產','停止擴產','無擴產計畫','沒有擴產計畫','尚無擴產計畫')
 MAX_TERM_DISTANCE = 180
+NEAR_RESEARCH_EVENT_DAYS = 14
 
 
 def ntext(s):
     return re.sub(r'\s+','',str(s or '')).lower()
-
-
-def first_pos(text, terms):
-    hits=[]
-    for term in terms:
-        p=text.find(ntext(term))
-        if p >= 0:hits.append((p,term))
-    return min(hits, default=None)
 
 
 def causal_match(text):
@@ -102,6 +106,24 @@ def causal_match(text):
     best=min(((abs(dp-ap),d,a) for dp,d in demands for ap,a in actions), key=lambda x:x[0])
     if best[0] > MAX_TERM_DISTANCE:return None
     return {'demand_term':best[1],'action_term':best[2],'distance':best[0]}
+
+
+def parse_iso_date(v):
+    try:return dt.date.fromisoformat(str(v or ''))
+    except Exception:return None
+
+
+def near_known_event(code,date):
+    d=parse_iso_date(date)
+    if not d:return None
+    hits=[]
+    for (known_code,known_date),meta in KNOWN.items():
+        if known_code != code:continue
+        kd=parse_iso_date(known_date)
+        if not kd:continue
+        gap=abs((d-kd).days)
+        if gap <= NEAR_RESEARCH_EVENT_DAYS:hits.append((gap,known_date,meta[0]))
+    return min(hits, default=None)
 
 
 def parse_listing_date(v):
@@ -166,7 +188,6 @@ def source_segment(event, cache):
         return ''  # aggregate page: do not borrow another company's paragraph
     text=obj.get('text','')
     if company and company in contacts.core_name(text):return text
-    # Regional pages may use the short company name with punctuation/spacing differences.
     simple=ntext(event.get('company'))
     return text if simple and simple in ntext(text) else ''
 
@@ -175,11 +196,11 @@ def main():
     events=json.loads(EVENTS.read_text(encoding='utf-8'))
     status=json.loads(STATUS.read_text(encoding='utf-8'))
     listing_dates,market_rows,listing_failures=official_listing_dates()
-    cache={};verified=0;strict_a=0;boundary=0;forward=0;auto_count=0;pending_listing=0
+    cache={};verified=0;strict_a=0;boundary=0;forward=0;auto_count=0;pending_listing=0;excluded_count=0;duplicate_suppressed=0
     now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8))).isoformat(timespec='seconds')
 
     for e in events:
-        for k in ('demand_pull','demand_pull_grade','demand_pull_basis','demand_pull_demand_term','demand_pull_action_term','demand_pull_checked_at','listing_date_at_check'):
+        for k in ('demand_pull','demand_pull_grade','demand_pull_basis','demand_pull_demand_term','demand_pull_action_term','demand_pull_checked_at','listing_date_at_check','demand_pull_suppressed_reason'):
             e.pop(k,None)
         code=str(e.get('stock_code') or '').strip();date=str(e.get('date') or '').strip();market=str(e.get('market') or '').strip()
         if not code or not market:continue
@@ -196,6 +217,19 @@ def main():
             elif grade=='FWD':forward+=1
             continue
 
+        reject_reason=RESEARCH_EXCLUDED.get((code,date))
+        if reject_reason:
+            e['demand_pull_suppressed_reason']=reject_reason
+            excluded_count+=1
+            continue
+
+        near=near_known_event(code,date)
+        if near:
+            gap,known_date,grade=near
+            e['demand_pull_suppressed_reason']=f'NEAR_RESEARCH_EVENT_DUPLICATE:{known_date}:{grade}:{gap}D'
+            duplicate_suppressed+=1
+            continue
+
         seg=source_segment(e,cache)
         match=causal_match(seg)
         if not match:continue
@@ -208,16 +242,18 @@ def main():
         verified+=1;auto_count+=1
 
     EVENTS.write_text(json.dumps(events,ensure_ascii=False,indent=2),encoding='utf-8')
-    status['demand_pull_classifier']='DEMAND_PULL_STRICT_V1'
+    status['demand_pull_classifier']='DEMAND_PULL_STRICT_V1_1_SEALED_RESEARCH_CONSISTENCY'
     status['demand_pull_verified_events']=verified
     status['demand_pull_research_A_events']=strict_a
     status['demand_pull_boundary_A_minus_events']=boundary
     status['demand_pull_forward_only_events']=forward
     status['demand_pull_auto_official_events']=auto_count
+    status['demand_pull_research_excluded_events']=excluded_count
+    status['demand_pull_same_project_suppressed_events']=duplicate_suppressed
     status['demand_pull_pending_listing_date']=pending_listing
     status['demand_pull_listing_market_rows']=market_rows
     status['demand_pull_listing_failures']=listing_failures
     STATUS.write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
-    print(json.dumps({'verified':verified,'research_A':strict_a,'A_minus':boundary,'forward_only':forward,'auto_official':auto_count,'pending_listing':pending_listing,'listing_failures':listing_failures},ensure_ascii=False))
+    print(json.dumps({'verified':verified,'research_A':strict_a,'A_minus':boundary,'forward_only':forward,'auto_official':auto_count,'research_excluded':excluded_count,'same_project_suppressed':duplicate_suppressed,'pending_listing':pending_listing,'listing_failures':listing_failures},ensure_ascii=False))
 
 if __name__=='__main__':main()
