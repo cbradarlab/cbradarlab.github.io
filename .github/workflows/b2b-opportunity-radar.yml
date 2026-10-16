@@ -9,6 +9,7 @@ on:
       - 'opportunity-radar/augment_local.py'
       - 'opportunity-radar/augment_regions.py'
       - 'opportunity-radar/merge_history.py'
+      - 'opportunity-radar/enrich_official_contacts.py'
       - 'opportunity-radar/index.html'
       - 'opportunity-radar/product_catalog.json'
       - 'opportunity-radar/intent_rules.json'
@@ -75,6 +76,8 @@ jobs:
         run: python opportunity-radar/merge_history.py
       - name: Audit refreshed search quality
         run: python opportunity-radar/search_quality_audit.py
+      - name: Enrich official listed company contacts
+        run: python opportunity-radar/enrich_official_contacts.py
       - name: Audit result actionability
         run: python opportunity-radar/actionability_audit.py
       - name: Upload actionability report
