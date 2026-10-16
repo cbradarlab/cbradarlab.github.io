@@ -1,7 +1,7 @@
 {
   "version": "DEMAND_PULL_AUDIT_V1",
   "events": 104,
-  "flagged": 10,
+  "flagged": 8,
   "bad_count": 0,
   "bad": [],
   "rows": [
@@ -33,15 +33,6 @@
       "action_term": ""
     },
     {
-      "company": "新應材",
-      "stock_code": "4749",
-      "date": "2026-07-27",
-      "grade": "AUTO",
-      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
-      "demand_term": "市場需求",
-      "action_term": "興建新廠"
-    },
-    {
       "company": "菱生精密",
       "stock_code": "2369",
       "date": "2026-05-29",
@@ -67,15 +58,6 @@
       "basis": "AUTO_OFFICIAL_CAUSAL_V1",
       "demand_term": "市場需求",
       "action_term": "增設產線"
-    },
-    {
-      "company": "聚和國際",
-      "stock_code": "6509",
-      "date": "2026-03-23",
-      "grade": "AUTO",
-      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
-      "demand_term": "市場需求",
-      "action_term": "興建新廠"
     },
     {
       "company": "聚和國際",
