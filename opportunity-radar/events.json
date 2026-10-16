@@ -28,7 +28,16 @@
     "source_type": "投資臺灣三大方案",
     "score": 96,
     "id": "1f09a609723f46c1",
-    "auto": false
+    "auto": false,
+    "stock_code": "3229",
+    "market": "TWSE",
+    "official_company_name": "晟鈦股份有限公司",
+    "company_website": "http://www.cheer-time.com.tw/",
+    "company_phone": "22052032",
+    "company_email": "investor@cheer-time.com.tw",
+    "company_address": "新北市新莊區瓊林南路305巷2號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "合晶科技",
@@ -55,7 +64,16 @@
     "source_type": "投資臺灣三大方案",
     "score": 92,
     "id": "627dfab06520fafb",
-    "auto": false
+    "auto": false,
+    "stock_code": "6182",
+    "market": "TPEx",
+    "official_company_name": "合晶科技股份有限公司",
+    "company_website": "Http://www.waferworks.com",
+    "company_phone": "(03)4815001",
+    "company_email": "public@waferworks.com",
+    "company_address": "No.100, Longyuan 1 st Rd., Longtan Science Park,Taoyuan,32542,Taiwan R.O.C.",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "中鋼鋁業",
@@ -144,7 +162,16 @@
     "auto": true,
     "local_source": true,
     "region_source": "kaohsiung",
-    "title": "特用材料供應大廠達興材料高雄橋頭一期新廠動土 強化南部半導體供應鏈"
+    "title": "特用材料供應大廠達興材料高雄橋頭一期新廠動土 強化南部半導體供應鏈",
+    "stock_code": "5234",
+    "market": "TWSE",
+    "official_company_name": "達興材料股份有限公司",
+    "company_website": "https://www.daxinmat.com/",
+    "company_phone": "04-24608889",
+    "company_email": "ir@daxinmat.com",
+    "company_address": "臺中市西屯區科園一路15號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "明治科技",
@@ -346,7 +373,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 89,
     "id": "565fdf02fffd8f06",
-    "auto": true
+    "auto": true,
+    "stock_code": "1730",
+    "market": "TWSE",
+    "official_company_name": "花仙子企業股份有限公司",
+    "company_website": "https://WWW.FARCENT.COM.TW",
+    "company_phone": "2592-2860",
+    "company_email": "sam_hsieh@farcent.com.tw",
+    "company_address": "台北市大同區承德路三段230號13樓",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "英特盛科技",
@@ -494,7 +530,16 @@
     "source_type": "投資臺灣三大方案",
     "score": 97,
     "id": "6078512626518530",
-    "auto": false
+    "auto": false,
+    "stock_code": "3516",
+    "market": "TPEx",
+    "official_company_name": "亞帝歐光電股份有限公司",
+    "company_website": "https://www.adotek.com.tw",
+    "company_phone": "033768380",
+    "company_email": "ado@adotek.com.tw",
+    "company_address": "NO.858,GUANGFU RDBADE CITY , TAOYUAN COUNTY, TAIWAN",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "永進興不銹鋼",
@@ -812,7 +857,16 @@
     "auto": true,
     "local_source": true,
     "region_source": "kaohsiung",
-    "title": "投資百億後再加碼！緯創資通高雄研發大樓一期正式動土"
+    "title": "投資百億後再加碼！緯創資通高雄研發大樓一期正式動土",
+    "stock_code": "3231",
+    "market": "TWSE",
+    "official_company_name": "緯創資通股份有限公司",
+    "company_website": "https://www.wistron.com",
+    "company_phone": "(02)6616-9999",
+    "company_email": "spokesperson@wistron.com",
+    "company_address": "新竹縣竹北市智慧路1號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "飛傲科技",
@@ -863,7 +917,16 @@
     "auto": true,
     "local_source": true,
     "region_source": "kaohsiung",
-    "title": "高力橋科新廠動土 高雄AI基礎設施供應鏈再添關鍵拼圖"
+    "title": "高力橋科新廠動土 高雄AI基礎設施供應鏈再添關鍵拼圖",
+    "stock_code": "8996",
+    "market": "TWSE",
+    "official_company_name": "高力熱處理工業股份有限公司",
+    "company_website": "https://www.kaori.com.tw/",
+    "company_phone": "03-4527005-9",
+    "company_email": "gilbert_wu@kaori.com.tw",
+    "company_address": "桃園市中壢區吉林北路5-2號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "穎崴",
@@ -884,7 +947,16 @@
     "auto": true,
     "local_source": true,
     "region_source": "kaohsiung",
-    "title": "穎崴35億元投資仁武 高雄AI明星隊再添生力軍"
+    "title": "穎崴35億元投資仁武 高雄AI明星隊再添生力軍",
+    "stock_code": "6515",
+    "market": "TWSE",
+    "official_company_name": "穎崴科技股份有限公司",
+    "company_website": "https://www.winwayglobal.com/",
+    "company_phone": "07-3610999",
+    "company_email": "0",
+    "company_address": "高雄市楠梓區創意南路68號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "台塑德山精密化學股份有限公司",
@@ -1032,7 +1104,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 93,
     "id": "50cf1c1bc1c9baa3",
-    "auto": true
+    "auto": true,
+    "stock_code": "3264",
+    "market": "TPEx",
+    "official_company_name": "欣銓科技股份有限公司",
+    "company_website": "https://www.ardentec.com",
+    "company_phone": "03-5976688",
+    "company_email": "Investors@ardentec.com",
+    "company_address": "No.3, Gongye 3rd Rd., Shengli Vil.,Hukou Township,Hsinchu County 303, Taiwan",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "富統食品",
@@ -1090,7 +1171,16 @@
     "auto": true,
     "local_source": true,
     "region_source": "taichung",
-    "title": "6 投資台灣增六案 「新應材」三度申請擴大半導體特用化學品產能 2026-07-27"
+    "title": "6 投資台灣增六案 「新應材」三度申請擴大半導體特用化學品產能 2026-07-27",
+    "stock_code": "4749",
+    "market": "TPEx",
+    "official_company_name": "新應材股份有限公司",
+    "company_website": "http://www.aemc.com.tw",
+    "company_phone": "03-4072100",
+    "company_email": "ir@aemc.com.tw",
+    "company_address": "No.455, Sinhe Rd.Longtan, Taoyuan Taiwan",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "遠雄流通",
@@ -1167,7 +1257,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 89,
     "id": "e615685ef68ada5b",
-    "auto": true
+    "auto": true,
+    "stock_code": "9911",
+    "market": "TWSE",
+    "official_company_name": "台灣櫻花股份有限公司",
+    "company_website": "https://www.sakura.com.tw",
+    "company_phone": "(04)2566-6106",
+    "company_email": "1005670@sakura.com.tw",
+    "company_address": "台中市大雅區雅潭路4段436號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "貫理工業",
@@ -1426,7 +1525,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 84,
     "id": "fc8555f2a31f037b",
-    "auto": true
+    "auto": true,
+    "stock_code": "1295",
+    "market": "TPEx",
+    "official_company_name": "生合生物科技股份有限公司",
+    "company_website": "http://www.synbiotech.com",
+    "company_phone": "07-6955680",
+    "company_email": "investor@synbiotech.com.tw",
+    "company_address": "NO.82,Beiling 6th Rd.,Luzhu Dist.,Kaohsiung City821,Taiwan",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "高都汽車",
@@ -1502,7 +1610,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 87,
     "id": "737f6ff578c7ce3f",
-    "auto": true
+    "auto": true,
+    "stock_code": "6830",
+    "market": "TWSE",
+    "official_company_name": "汎銓科技股份有限公司",
+    "company_website": "https://www.msscorps.com",
+    "company_phone": "03-666-3298",
+    "company_email": "ir@msscorps.com",
+    "company_address": "新竹市埔頂路27號1樓",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "宅興實業",
@@ -1711,7 +1828,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 86,
     "id": "fdc93405e5c8bc36",
-    "auto": true
+    "auto": true,
+    "stock_code": "6488",
+    "market": "TPEx",
+    "official_company_name": "環球晶圓股份有限公司",
+    "company_website": "http://www.sas-globalwafers.com",
+    "company_phone": "03-5772255",
+    "company_email": "GWCIR@sas-globalwafers.com",
+    "company_address": "No. 8. Industrial East Road 2, Hsinchu Science Park, Taiwan, R.O.C.Taiwan R.O.C",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "健豪印刷",
@@ -1808,7 +1934,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 90,
     "id": "a775a13801b10a54",
-    "auto": true
+    "auto": true,
+    "stock_code": "7721",
+    "market": "TWSE",
+    "official_company_name": "微程式資訊股份有限公司",
+    "company_website": "https://www.program.com.tw/",
+    "company_phone": "04-23692699",
+    "company_email": "grace@program.com.tw",
+    "company_address": "台中市西屯區市政路402號6樓之2",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "菱生精密",
@@ -1832,7 +1967,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 87,
     "id": "e370d5890e345d4c",
-    "auto": true
+    "auto": true,
+    "stock_code": "2369",
+    "market": "TWSE",
+    "official_company_name": "菱生精密工業股份有限公司",
+    "company_website": "https://www.lingsen.com.tw",
+    "company_phone": "04-25335120",
+    "company_email": "lpi@lingsen.com.tw",
+    "company_address": "台中市潭子區南二路五之一號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "鴻勁精密",
@@ -1867,7 +2011,16 @@
     "auto": true,
     "local_source": true,
     "region_source": "taichung",
-    "title": "11 台積電1.5兆投資效應發威！台中半導體供應鏈鴻勁精密砸8.5億擴廠 2026-05-26"
+    "title": "11 台積電1.5兆投資效應發威！台中半導體供應鏈鴻勁精密砸8.5億擴廠 2026-05-26",
+    "stock_code": "7769",
+    "market": "TWSE",
+    "official_company_name": "鴻勁精密股份有限公司",
+    "company_website": "https://www.honprec.com/",
+    "company_phone": "04-25608752",
+    "company_email": "ir@honprec.com",
+    "company_address": "臺中市大雅區中清路三段758巷11號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "華旭先進",
@@ -1968,7 +2121,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 89,
     "id": "c5c0a36e71f26270",
-    "auto": true
+    "auto": true,
+    "stock_code": "1560",
+    "market": "TWSE",
+    "official_company_name": "中國砂輪企業股份有限公司",
+    "company_website": "https://www.kinik.com.tw",
+    "company_phone": "02-26791931",
+    "company_email": "ir@kinik.com.tw",
+    "company_address": "新北市鶯歌區中山路64號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "工豐企業",
@@ -2181,7 +2343,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 91,
     "id": "9026c3a89f718390",
-    "auto": true
+    "auto": true,
+    "stock_code": "4722",
+    "market": "TWSE",
+    "official_company_name": "國精化學股份有限公司",
+    "company_website": "https://www.qualipoly.com.tw",
+    "company_phone": "(07)6236199",
+    "company_email": "ytho@qualipoly.com.tw",
+    "company_address": "高雄市永安區維新里永工五路2號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "維勝鋼鐵",
@@ -2284,7 +2455,16 @@
     "auto": true,
     "local_source": true,
     "region_source": "taichung",
-    "title": "14 投資台灣添4案 聚和國際砸45億推高值化綠色化學 2026-03-23"
+    "title": "14 投資台灣添4案 聚和國際砸45億推高值化綠色化學 2026-03-23",
+    "stock_code": "6509",
+    "market": "TPEx",
+    "official_company_name": "聚和國際股份有限公司",
+    "company_website": "https://www.hopax.com",
+    "company_phone": "07-7887600",
+    "company_email": "investor@hopax.com.tw",
+    "company_address": "No. 28, Hua Dong Rd., Chaoliao VillageDaliao Dist., Kaohsiung City, Taiwan",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "翔特精密",
@@ -2336,7 +2516,16 @@
     "local_source": true,
     "region_source": "taoyuan",
     "title": "中華精測三廠動土 投資逾35億深耕桃園",
-    "evidence_level": "OFFICIAL_VERIFIED_SEED"
+    "evidence_level": "OFFICIAL_VERIFIED_SEED",
+    "stock_code": "6510",
+    "market": "TPEx",
+    "official_company_name": "中華精測科技股份有限公司",
+    "company_website": "https://www.chpt.com",
+    "company_phone": "(03)4691234",
+    "company_email": "chpt@chpt.com",
+    "company_address": "15 Gongye 3rd Road, Pingjhen Dist,Taoyuan City 324, Taiwan, R.O.C",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "聚和國際",
@@ -2361,7 +2550,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 89,
     "id": "e3e894f1b6591d27",
-    "auto": true
+    "auto": true,
+    "stock_code": "6509",
+    "market": "TPEx",
+    "official_company_name": "聚和國際股份有限公司",
+    "company_website": "https://www.hopax.com",
+    "company_phone": "07-7887600",
+    "company_email": "investor@hopax.com.tw",
+    "company_address": "No. 28, Hua Dong Rd., Chaoliao VillageDaliao Dist., Kaohsiung City, Taiwan",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "宏驎",
@@ -2651,7 +2849,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 93,
     "id": "c121ccb51f0ede0b",
-    "auto": true
+    "auto": true,
+    "stock_code": "6239",
+    "market": "TWSE",
+    "official_company_name": "力成科技股份有限公司",
+    "company_website": "https://www.pti.com.tw/",
+    "company_phone": "03-5980300",
+    "company_email": "invest@pti.com.tw",
+    "company_address": "新竹縣湖口鄉新竹工業區大同路10號",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "台塑大金精密化學",
@@ -2772,7 +2979,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 87,
     "id": "1f9f82c5312c16dd",
-    "auto": true
+    "auto": true,
+    "stock_code": "3013",
+    "market": "TWSE",
+    "official_company_name": "晟銘電子科技股份有限公司",
+    "company_website": "http://www.uneec.com/",
+    "company_phone": "02-2797-3999",
+    "company_email": "invest@tw.uneec.com",
+    "company_address": "台北市內湖區民權東路六段27號2~6F",
+    "contact_source": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "和大芯科技股份有限公司",
@@ -2841,7 +3057,16 @@
     "source_type": "投資臺灣三大方案｜自動抓取",
     "score": 84,
     "id": "c341fcdf18026dea",
-    "auto": true
+    "auto": true,
+    "stock_code": "4721",
+    "market": "TPEx",
+    "official_company_name": "美琪瑪國際股份有限公司",
+    "company_website": "https://www.mechema.com",
+    "company_phone": "03-4833788",
+    "company_email": "info@mechema.com",
+    "company_address": "No. 1, TA-TUNG 1st. RD., KUNG-YING DISTRICT, TAO-YUAN CITY, TAIWAN",
+    "contact_source": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
+    "contact_verified_at": "2026-10-16T10:46:34+08:00"
   },
   {
     "company": "友證",

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-16T10:41:34+08:00",
+  "updated_at": "2026-10-16T10:45:10+08:00",
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "latest_source_date": "2026-10-08",
   "articles_checked": 8,
@@ -12,9 +12,7 @@
   "total_event_count": 104,
   "unique_company_count": 103,
   "seo_topic_pages": 5,
-  "warnings": [
-    "TAOYUAN_RSS_UNAVAILABLE"
-  ],
+  "warnings": [],
   "data_cost_ntd": 0,
   "ai_api_required": false,
   "buildlic_queries": 0,
@@ -48,8 +46,8 @@
   "taoyuan_articles_checked": 0,
   "taoyuan_article_failures": 0,
   "taoyuan_title_fallback_count": 0,
-  "taoyuan_rss_items": 0,
-  "taoyuan_rss_failures": 1,
+  "taoyuan_rss_items": 50,
+  "taoyuan_rss_failures": 0,
   "taoyuan_verified_seed_count": 1,
   "taoyuan_new_event_count": 0,
   "hsinchu_pages_checked": 0,
@@ -68,5 +66,21 @@
   "hsinchu_local_event_count": 0,
   "history_preservation": "ON_450D",
   "timeline_dedupe": "SAME_COMPANY_WITHIN_3D",
-  "company_name_cleanup": "STRICT_REGIONAL_EVENT_TYPE_AND_HEADLINE_V4"
+  "company_name_cleanup": "STRICT_REGIONAL_EVENT_TYPE_AND_HEADLINE_V4",
+  "official_contact_enrichment": "TWSE_TPEX_EXACT_NAME_V1",
+  "official_contact_market_rows": {
+    "TWSE": 1095,
+    "TPEx": 894
+  },
+  "official_contact_matched_events": 25,
+  "official_contact_routed_events": 25,
+  "official_contact_matched_by_market": {
+    "TWSE": 15,
+    "TPEx": 10
+  },
+  "official_contact_sources": {
+    "TWSE": "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+    "TPEx": "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O"
+  },
+  "official_contact_failures": {}
 }

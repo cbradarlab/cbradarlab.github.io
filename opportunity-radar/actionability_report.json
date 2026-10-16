@@ -1,6 +1,6 @@
 {
   "version": "OPPORTUNITY_ACTIONABILITY_AUDIT_V1_1_STRICT_ROUTE",
-  "generated_at": "2026-10-16T10:41:37+08:00",
+  "generated_at": "2026-10-16T10:46:34+08:00",
   "events": 104,
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "metrics": {
@@ -11,13 +11,13 @@
     "city_present": 52,
     "district_present": 25,
     "explicit_evidence_present": 94,
-    "real_contact_present": 0,
-    "verified_outreach_route_present": 0,
+    "real_contact_present": 25,
+    "verified_outreach_route_present": 25,
     "fresh_90d": 40,
     "fresh_180d": 73,
     "fresh_365d": 104,
     "research_actionable": 104,
-    "outreach_ready": 0
+    "outreach_ready": 25
   },
   "rates": {
     "company_identified_rate": 1.0,
@@ -27,13 +27,13 @@
     "city_present_rate": 0.5,
     "district_present_rate": 0.2404,
     "explicit_evidence_present_rate": 0.9038,
-    "real_contact_present_rate": 0.0,
-    "verified_outreach_route_present_rate": 0.0,
+    "real_contact_present_rate": 0.2404,
+    "verified_outreach_route_present_rate": 0.2404,
     "fresh_90d_rate": 0.3846,
     "fresh_180d_rate": 0.7019,
     "fresh_365d_rate": 1.0,
     "research_actionable_rate": 1.0,
-    "outreach_ready_rate": 0.0
+    "outreach_ready_rate": 0.2404
   },
   "thresholds": {
     "research_actionable_pass": 0.95,
@@ -45,20 +45,6 @@
     "descriptive_contact_text_is_not_ready": true
   },
   "missing_outreach_examples": [
-    {
-      "company": "晟鈦",
-      "date": "2026-10-08",
-      "city": "新北/桃園",
-      "source_type": "投資臺灣三大方案",
-      "contact": "公司名稱已識別｜公開聯絡資料可再補"
-    },
-    {
-      "company": "合晶科技",
-      "date": "2026-10-08",
-      "city": "",
-      "source_type": "投資臺灣三大方案",
-      "contact": "公司名稱已識別｜公開聯絡資料可再補"
-    },
     {
       "company": "中鋼鋁業",
       "date": "2026-10-01",
@@ -72,13 +58,6 @@
       "city": "宜蘭",
       "source_type": "投資臺灣三大方案",
       "contact": "公司名稱已識別｜公開聯絡資料可再補"
-    },
-    {
-      "company": "達興材料",
-      "date": "2026-09-29",
-      "city": "高雄",
-      "source_type": "高雄招商網｜產業新聞",
-      "contact": "公司名稱已識別｜可再接公開公司聯絡資料"
     },
     {
       "company": "明治科技",
@@ -123,9 +102,30 @@
       "contact": "公司名稱已識別｜公開聯絡資料可再補"
     },
     {
-      "company": "花仙子企業",
+      "company": "英特盛科技",
+      "date": "2026-08-28",
+      "city": "",
+      "source_type": "投資臺灣三大方案｜自動抓取",
+      "contact": "公司名稱已識別｜公開聯絡資料可再補"
+    },
+    {
+      "company": "帝凱國際實業",
       "date": "2026-08-28",
       "city": "桃園",
+      "source_type": "投資臺灣三大方案｜自動抓取",
+      "contact": "公司名稱已識別｜公開聯絡資料可再補"
+    },
+    {
+      "company": "台北港國際通運",
+      "date": "2026-08-28",
+      "city": "",
+      "source_type": "投資臺灣三大方案｜自動抓取",
+      "contact": "公司名稱已識別｜公開聯絡資料可再補"
+    },
+    {
+      "company": "善誠公司",
+      "date": "2026-08-28",
+      "city": "台南",
       "source_type": "投資臺灣三大方案｜自動抓取",
       "contact": "公司名稱已識別｜公開聯絡資料可再補"
     }
