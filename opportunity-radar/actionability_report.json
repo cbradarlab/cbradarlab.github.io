@@ -1,6 +1,6 @@
 {
-  "version": "OPPORTUNITY_ACTIONABILITY_AUDIT_V1",
-  "generated_at": "2026-10-16T10:37:52+08:00",
+  "version": "OPPORTUNITY_ACTIONABILITY_AUDIT_V1_1_STRICT_ROUTE",
+  "generated_at": "2026-10-16T10:41:37+08:00",
   "events": 104,
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "metrics": {
@@ -11,13 +11,13 @@
     "city_present": 52,
     "district_present": 25,
     "explicit_evidence_present": 94,
-    "real_contact_present": 7,
-    "verified_outreach_route_present": 7,
+    "real_contact_present": 0,
+    "verified_outreach_route_present": 0,
     "fresh_90d": 40,
     "fresh_180d": 73,
     "fresh_365d": 104,
     "research_actionable": 104,
-    "outreach_ready": 7
+    "outreach_ready": 0
   },
   "rates": {
     "company_identified_rate": 1.0,
@@ -27,13 +27,13 @@
     "city_present_rate": 0.5,
     "district_present_rate": 0.2404,
     "explicit_evidence_present_rate": 0.9038,
-    "real_contact_present_rate": 0.0673,
-    "verified_outreach_route_present_rate": 0.0673,
+    "real_contact_present_rate": 0.0,
+    "verified_outreach_route_present_rate": 0.0,
     "fresh_90d_rate": 0.3846,
     "fresh_180d_rate": 0.7019,
     "fresh_365d_rate": 1.0,
     "research_actionable_rate": 1.0,
-    "outreach_ready_rate": 0.0673
+    "outreach_ready_rate": 0.0
   },
   "thresholds": {
     "research_actionable_pass": 0.95,
@@ -41,8 +41,8 @@
   },
   "definitions": {
     "research_actionable": "company + valid date + source URL + source_type",
-    "outreach_ready": "research_actionable + verified website/contact/procurement route",
-    "contact_placeholder_is_not_ready": true
+    "outreach_ready": "research_actionable + concrete URL/email/phone route",
+    "descriptive_contact_text_is_not_ready": true
   },
   "missing_outreach_examples": [
     {
