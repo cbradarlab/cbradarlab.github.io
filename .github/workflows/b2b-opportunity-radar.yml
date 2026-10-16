@@ -15,6 +15,7 @@ on:
       - 'opportunity-radar/search_rule_overrides.json'
       - 'opportunity-radar/catalog_gate.py'
       - 'opportunity-radar/search_quality_audit.py'
+      - 'opportunity-radar/actionability_audit.py'
       - '.github/workflows/b2b-opportunity-radar.yml'
   schedule:
     # 00:20 UTC = 08:20 Taiwan
@@ -74,12 +75,20 @@ jobs:
         run: python opportunity-radar/merge_history.py
       - name: Audit refreshed search quality
         run: python opportunity-radar/search_quality_audit.py
+      - name: Audit result actionability
+        run: python opportunity-radar/actionability_audit.py
+      - name: Upload actionability report
+        uses: actions/upload-artifact@v4
+        with:
+          name: actionability-report
+          path: opportunity-radar/actionability_report.json
+          retention-days: 7
       - name: Commit healthy refresh
         shell: bash
         run: |
           git config user.name "opportunity-radar-bot"
           git config user.email "opportunity-radar-bot@users.noreply.github.com"
-          git add opportunity-radar/events.json opportunity-radar/status.json opportunity-radar/search_quality_report.json opportunity-radar/topics/
+          git add opportunity-radar/events.json opportunity-radar/status.json opportunity-radar/search_quality_report.json opportunity-radar/actionability_report.json opportunity-radar/topics/
           if git diff --cached --quiet; then
             echo "No data changes."
           else
