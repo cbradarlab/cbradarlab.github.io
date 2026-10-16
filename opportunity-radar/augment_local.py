@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Augment Opportunity Radar with high-confidence local-government early signals.
 Current production lane: Tainan Economic Development Bureau latest news.
-Supports a one-time deeper backfill while daily runs preserve prior local events.
+Supports a one-time deeper backfill while daily runs preserve prior Tainan events.
 """
 from __future__ import annotations
 import datetime as dt, html, json, os, re, urllib.parse
@@ -123,13 +123,17 @@ def is_near_duplicate(e,existing):
         if d and xd and abs((d-xd).days)<=3:return True
     return False
 
+def is_tainan_local(e):
+    return bool(e.get('local_source')) and not e.get('region_source') and e.get('city')=='台南'
+
 def load_preserved(events):
     if not PREVIOUS.exists():return []
     try:old=json.loads(PREVIOUS.read_text(encoding='utf-8'))
     except Exception:return []
     kept=[]
     for e in old:
-        if not e.get('local_source'):continue
+        # This lane owns only Tainan. Other regional history is preserved later by merge_history.py.
+        if not is_tainan_local(e):continue
         if e.get('id') in {x.get('id') for x in events+kept}:continue
         if is_near_duplicate(e,events+kept):continue
         kept.append(e)
@@ -152,12 +156,12 @@ def main():
     merged=events+added; merged.sort(key=lambda e:(e.get('date',''),e.get('score',0)),reverse=True)
     (ROOT/'events.json').write_text(json.dumps(merged,ensure_ascii=False,indent=2),encoding='utf-8')
     now=dt.datetime.now(dt.timezone(dt.timedelta(hours=8))); core.render_topics(merged,now.isoformat(timespec='minutes'))
-    local_total=sum(1 for e in merged if e.get('local_source'))
-    status.update({'source_status':'PASS_MULTI_SOURCE_LIVE_REFRESH_V2','updated_at':now.isoformat(timespec='seconds'),'buildlic_mode':'SHADOW_DISABLED_IN_DAILY_WORKFLOW','tainan_pages_checked':pages_ok,'tainan_candidate_articles':len(links),'tainan_articles_checked':checked,'tainan_article_failures':failures,'tainan_local_new_event_count':len(added),'tainan_local_preserved_event_count':len(preserved),'tainan_local_event_count':local_total,'total_event_count':len(merged),'unique_company_count':len({company_core(e.get('company','')) for e in merged if company_core(e.get('company',''))})})
+    tainan_total=sum(1 for e in merged if is_tainan_local(e))
+    status.update({'source_status':'PASS_MULTI_SOURCE_LIVE_REFRESH_V2','updated_at':now.isoformat(timespec='seconds'),'buildlic_mode':'SHADOW_DISABLED_IN_DAILY_WORKFLOW','tainan_pages_checked':pages_ok,'tainan_candidate_articles':len(links),'tainan_articles_checked':checked,'tainan_article_failures':failures,'tainan_local_new_event_count':len(added),'tainan_local_preserved_event_count':len(preserved),'tainan_local_event_count':tainan_total,'total_event_count':len(merged),'unique_company_count':len({company_core(e.get('company','')) for e in merged if company_core(e.get('company',''))})})
     warnings=[w for w in status.get('warnings',[]) if not str(w).startswith(('TAINAN_','BUILDLIC_'))]
     if failures:warnings.append(f'TAINAN_FAILURES={failures}')
     status['warnings']=warnings
     (ROOT/'status.json').write_text(json.dumps(status,ensure_ascii=False,indent=2),encoding='utf-8')
-    print(json.dumps({'tainan_new':len(added),'tainan_preserved':len(preserved),'tainan_total':local_total,'candidate_articles':len(links),'checked':checked,'failures':failures,'total':len(merged)},ensure_ascii=False))
+    print(json.dumps({'tainan_new':len(added),'tainan_preserved':len(preserved),'tainan_total':tainan_total,'candidate_articles':len(links),'checked':checked,'failures':failures,'total':len(merged)},ensure_ascii=False))
 
 if __name__=='__main__':main()
