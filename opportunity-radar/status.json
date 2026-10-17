@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-16T11:42:30+08:00",
+  "updated_at": "2026-10-17T12:42:29+08:00",
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "latest_source_date": "2026-10-08",
-  "articles_checked": 7,
-  "article_failures": 1,
-  "company_paragraphs_checked": 19,
-  "investment_auto_event_count": 18,
+  "articles_checked": 8,
+  "article_failures": 0,
+  "company_paragraphs_checked": 21,
+  "investment_auto_event_count": 20,
   "buildlic_event_count": 0,
   "auto_event_count": 15,
   "seed_event_count": 11,
@@ -20,8 +20,8 @@
   "buildlic_raw_rows": 0,
   "buildlic_mode": "SHADOW_DISABLED_IN_DAILY_WORKFLOW",
   "tainan_pages_checked": 2,
-  "tainan_candidate_articles": 6,
-  "tainan_articles_checked": 6,
+  "tainan_candidate_articles": 7,
+  "tainan_articles_checked": 7,
   "tainan_article_failures": 0,
   "tainan_local_new_event_count": 0,
   "tainan_local_preserved_event_count": 0,
@@ -29,12 +29,12 @@
   "regional_sources": "KAOHSIUNG_TAICHUNG_TAOYUAN_RSS__HSINCHU_SHADOW_DISABLED",
   "hsinchu_mode": "SHADOW_DISABLED_DAILY_NETWORK_ROUTE",
   "taoyuan_mode": "DAILY_RSS_PRIMARY_WITH_VERIFIED_HISTORY_SEED",
-  "kaohsiung_pages_checked": 2,
-  "kaohsiung_candidate_articles": 9,
-  "kaohsiung_articles_checked": 9,
+  "kaohsiung_pages_checked": 1,
+  "kaohsiung_candidate_articles": 5,
+  "kaohsiung_articles_checked": 5,
   "kaohsiung_article_failures": 0,
   "kaohsiung_title_fallback_count": 0,
-  "kaohsiung_new_event_count": 12,
+  "kaohsiung_new_event_count": 8,
   "taichung_pages_checked": 2,
   "taichung_candidate_articles": 12,
   "taichung_articles_checked": 12,
@@ -56,7 +56,7 @@
   "hsinchu_article_failures": 0,
   "hsinchu_title_fallback_count": 0,
   "hsinchu_new_event_count": 0,
-  "regional_local_new_event_count": 25,
+  "regional_local_new_event_count": 21,
   "total_auto_event_count": 93,
   "total_manual_event_count": 11,
   "local_event_count": 18,
@@ -69,8 +69,8 @@
   "company_name_cleanup": "STRICT_REGIONAL_EVENT_TYPE_AND_HEADLINE_V4",
   "official_contact_enrichment": "TWSE_TPEX_EXACT_NAME_V1",
   "official_contact_market_rows": {
-    "TWSE": 1095,
-    "TPEx": 894
+    "TWSE": 1096,
+    "TPEx": 893
   },
   "official_contact_matched_events": 25,
   "official_contact_routed_events": 25,
@@ -93,8 +93,8 @@
   "demand_pull_same_project_suppressed_events": 1,
   "demand_pull_pending_listing_date": 0,
   "demand_pull_listing_market_rows": {
-    "TWSE": 1095,
-    "TPEx": 894
+    "TWSE": 1096,
+    "TPEx": 893
   },
   "demand_pull_listing_failures": {}
 }
