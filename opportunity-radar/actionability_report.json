@@ -1,22 +1,22 @@
 {
   "version": "OPPORTUNITY_ACTIONABILITY_AUDIT_V1_2_ENRICHED_ROUTE_FIELDS",
-  "generated_at": "2026-10-20T13:05:28+08:00",
-  "events": 104,
+  "generated_at": "2026-10-21T13:03:37+08:00",
+  "events": 107,
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "metrics": {
-    "company_identified": 104,
-    "dated": 104,
-    "official_source_link": 104,
-    "source_type_present": 104,
-    "city_present": 52,
+    "company_identified": 107,
+    "dated": 107,
+    "official_source_link": 107,
+    "source_type_present": 107,
+    "city_present": 55,
     "district_present": 25,
     "explicit_evidence_present": 94,
     "real_contact_present": 25,
     "verified_outreach_route_present": 25,
-    "fresh_90d": 40,
-    "fresh_180d": 73,
-    "fresh_365d": 104,
-    "research_actionable": 104,
+    "fresh_90d": 43,
+    "fresh_180d": 76,
+    "fresh_365d": 107,
+    "research_actionable": 107,
     "outreach_ready": 25
   },
   "rates": {
@@ -24,16 +24,16 @@
     "dated_rate": 1.0,
     "official_source_link_rate": 1.0,
     "source_type_present_rate": 1.0,
-    "city_present_rate": 0.5,
-    "district_present_rate": 0.2404,
-    "explicit_evidence_present_rate": 0.9038,
-    "real_contact_present_rate": 0.2404,
-    "verified_outreach_route_present_rate": 0.2404,
-    "fresh_90d_rate": 0.3846,
-    "fresh_180d_rate": 0.7019,
+    "city_present_rate": 0.514,
+    "district_present_rate": 0.2336,
+    "explicit_evidence_present_rate": 0.8785,
+    "real_contact_present_rate": 0.2336,
+    "verified_outreach_route_present_rate": 0.2336,
+    "fresh_90d_rate": 0.4019,
+    "fresh_180d_rate": 0.7103,
     "fresh_365d_rate": 1.0,
     "research_actionable_rate": 1.0,
-    "outreach_ready_rate": 0.2404
+    "outreach_ready_rate": 0.2336
   },
   "thresholds": {
     "research_actionable_pass": 0.95,
@@ -45,6 +45,27 @@
     "descriptive_contact_text_is_not_ready": true
   },
   "missing_outreach_examples": [
+    {
+      "company": "度獵地拚",
+      "date": "2026-10-20",
+      "city": "台中",
+      "source_type": "臺中市經發局｜招商新聞",
+      "contact": "公司名稱已識別｜可再接公開公司聯絡資料"
+    },
+    {
+      "company": "美光",
+      "date": "2026-10-20",
+      "city": "台中",
+      "source_type": "臺中市經發局｜招商新聞",
+      "contact": "公司名稱已識別｜可再接公開公司聯絡資料"
+    },
+    {
+      "company": "將加速",
+      "date": "2026-10-20",
+      "city": "台中",
+      "source_type": "臺中市經發局｜招商新聞",
+      "contact": "公司名稱已識別｜可再接公開公司聯絡資料"
+    },
     {
       "company": "中鋼鋁業",
       "date": "2026-10-01",
@@ -105,27 +126,6 @@
       "company": "英特盛科技",
       "date": "2026-08-28",
       "city": "",
-      "source_type": "投資臺灣三大方案｜自動抓取",
-      "contact": "公司名稱已識別｜公開聯絡資料可再補"
-    },
-    {
-      "company": "帝凱國際實業",
-      "date": "2026-08-28",
-      "city": "桃園",
-      "source_type": "投資臺灣三大方案｜自動抓取",
-      "contact": "公司名稱已識別｜公開聯絡資料可再補"
-    },
-    {
-      "company": "台北港國際通運",
-      "date": "2026-08-28",
-      "city": "",
-      "source_type": "投資臺灣三大方案｜自動抓取",
-      "contact": "公司名稱已識別｜公開聯絡資料可再補"
-    },
-    {
-      "company": "善誠公司",
-      "date": "2026-08-28",
-      "city": "台南",
       "source_type": "投資臺灣三大方案｜自動抓取",
       "contact": "公司名稱已識別｜公開聯絡資料可再補"
     }
