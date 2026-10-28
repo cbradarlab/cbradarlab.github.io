@@ -1,0 +1,26 @@
+name: Sector Rotation - Official Company Master
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '50 11 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: sector-rotation-master
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download and validate both official company masters
+        run: python sector-rotation/sync_master.py
+      - name: Commit only verified snapshot
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add sector-rotation/data/stocks.json
+          git diff --cached --quiet || (git commit -m 'data: refresh sector rotation company master' && git push)
