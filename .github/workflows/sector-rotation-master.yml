@@ -1,5 +1,10 @@
 name: Sector Rotation - Official Company Master
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sector-rotation-master.yml'
+      - 'sector-rotation/sync_master.py'
   workflow_dispatch:
   schedule:
     - cron: '50 11 * * 1-5'
