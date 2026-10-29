@@ -34,7 +34,9 @@ def main():
    if re.fullmatch(r"\d{4}",code or "") and close:
     rows[code]={"close":close,"market":market}
   print("SOURCE_SCHEMA",market,"raw",len(data),"valid",len(rows),"keys",list(data[0].keys()) if data and isinstance(data[0],dict) else [],flush=True)
-  if len(rows)<300:raise ValueError("invalid quote coverage "+market+" "+str(len(rows)))
+  if len(rows)<300:
+   print("SOURCE_SAMPLE",market,str(data[0])[:850] if data else "EMPTY",flush=True)
+   raise ValueError("invalid quote coverage "+market+" "+str(len(rows)))
   out.update(rows);counts[market]=len(rows)
  if len(out)<1000:raise ValueError("insufficient total quotes")
  dest=ROOT/"data"/"quotes_latest.json";dest.parent.mkdir(exist_ok=True)
