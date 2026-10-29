@@ -86,6 +86,7 @@ def main():
  # Upgrade legacy same-day entry after calendar verification, even when prices are identical.
  # Keep archive records explicitly keyed to capture date rather than claiming quote-source date.
  history=[x for x in history if x.get("snapshot_date")!=record["snapshot_date"]]+[record]
+ print("ARCHIVE_RECORD_STATUS",record["snapshot_date"],record["date_status"],flush=True)
  history=history[-180:]
  hist_tmp=history_path.with_suffix(".tmp");hist_tmp.write_text(json.dumps(history,ensure_ascii=False,separators=(",",":")),encoding="utf-8");hist_tmp.replace(history_path)
  print("PASS quote snapshot",counts,"NOTE: date not verified; do not label as today's close")
