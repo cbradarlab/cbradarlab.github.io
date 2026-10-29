@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Daily official close snapshot. No fabricated prices; retain last good on failures."""
-import datetime,json,pathlib,urllib.request,urllib.error,re,hashlib
+import datetime,json,pathlib,urllib.request,urllib.error,re,hashlib,time
 ROOT=pathlib.Path(__file__).resolve().parent
 FEEDS={"上市":"https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL","上櫃":"https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"}
 def get(o,*keys):
@@ -19,13 +19,21 @@ def main():
  out={};counts={}
  for market,url in FEEDS.items():
   req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0","Accept":"application/json","Accept-Language":"zh-TW"})
-  try:
-   with urllib.request.urlopen(req,timeout=50) as response:raw=response.read(20000001)
-  except Exception as e:
-   print("FETCH_FAILED",market,type(e).__name__,str(e)[:200],flush=True);raise
-  if len(raw)>20000000:raise ValueError("response too large")
-  data=json.loads(raw.decode("utf-8-sig"))
-  if not isinstance(data,list):raise ValueError("expected JSON array")
+  # Retry incomplete/invalid official responses; never publish a partial JSON payload.
+  data=None
+  for attempt in range(1,5):
+   try:
+    with urllib.request.urlopen(req,timeout=50) as response:
+     raw=response.read(20000001)
+    if len(raw)>20000000:raise ValueError("response too large")
+    candidate=json.loads(raw.decode("utf-8-sig"))
+    if not isinstance(candidate,list):raise ValueError("expected JSON array")
+    data=candidate
+    break
+   except (urllib.error.URLError,TimeoutError,UnicodeError,json.JSONDecodeError,ValueError) as e:
+    print("SOURCE_RETRY",market,attempt,type(e).__name__,str(e)[:180],flush=True)
+    if attempt==4:raise
+    time.sleep(min(attempt*3,12))
   rows={}
   for x in data:
    if not isinstance(x,dict):continue
