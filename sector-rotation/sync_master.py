@@ -26,7 +26,10 @@ def main():
             if not name:continue
             industry=first(x,"產業別","產業類別","Industry","IndustryType") or "未分類"
             items.append({"id":code,"name":name,"industry":industry,"market":market})
-        if len(items)<300:raise ValueError("incomplete "+market+" "+str(len(items)))
+        if len(items)<300:
+            sample=data[0] if data else {}
+            print("SOURCE_SCHEMA_DIAGNOSTIC",market,"rows",len(data),"keys",list(sample.keys()) if isinstance(sample,dict) else type(sample).__name__,"sample",str(sample)[:700],flush=True)
+            raise ValueError("incomplete "+market+" "+str(len(items)))
         counts[market]=len(items);result.extend(items)
     ids=[x["id"] for x in result]
     if len(ids)!=len(set(ids)):raise ValueError("duplicate codes")
