@@ -83,6 +83,8 @@ def main():
  tmp=dest.with_suffix(".tmp");tmp.write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8");tmp.replace(dest)
  # Snapshot archive is keyed by fetch date, NOT verified exchange trading date.
  record={"snapshot_date":now.date().isoformat(),"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","price_fingerprint":current_hash,"quotes":out}
+ # Upgrade legacy same-day entry after calendar verification, even when prices are identical.
+ # Keep archive records explicitly keyed to capture date rather than claiming quote-source date.
  history=[x for x in history if x.get("snapshot_date")!=record["snapshot_date"]]+[record]
  history=history[-180:]
  hist_tmp=history_path.with_suffix(".tmp");hist_tmp.write_text(json.dumps(history,ensure_ascii=False,separators=(",",":")),encoding="utf-8");hist_tmp.replace(history_path)
