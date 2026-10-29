@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Isolated official company-master sync; fail closed, preserve last good snapshot."""
-import datetime,json,pathlib,urllib.request
+import datetime,json,pathlib,urllib.request,urllib.error,time
 ROOT=pathlib.Path(__file__).resolve().parent
 SOURCES={"上市":"https://openapi.twse.com.tw/v1/opendata/t187ap03_L","上櫃":"https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O"}
 def first(row,*names):
@@ -12,8 +12,12 @@ def main():
     result=[];counts={}
     for market,url in SOURCES.items():
         req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0 SectorRotation/1.0"})
-        with urllib.request.urlopen(req,timeout=45) as r:
-            raw=r.read(12000001)
+        try:
+            with urllib.request.urlopen(req,timeout=45) as r:
+                raw=r.read(12000001)
+        except urllib.error.HTTPError as exc:
+            print("SOURCE_HTTP_ERROR",market,"status",exc.code,"host",urllib.request.urlparse(url).hostname,flush=True)
+            raise RuntimeError("official source denied cloud runner; keep previous snapshot") from exc
         if len(raw)>12000000:raise ValueError("oversize "+market)
         data=json.loads(raw.decode("utf-8-sig"))
         if not isinstance(data,list):raise ValueError("not array "+market)
