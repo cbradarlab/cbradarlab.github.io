@@ -40,7 +40,19 @@ def main():
   out.update(rows);counts[market]=len(rows)
  if len(out)<1000:raise ValueError("insufficient total quotes")
  dest=ROOT/"data"/"quotes_latest.json";dest.parent.mkdir(exist_ok=True)
+ history_path=ROOT/"data"/"quotes_history.json"
+ history=[]
+ if history_path.exists():
+  old=json.loads(history_path.read_text(encoding="utf-8"))
+  if isinstance(old,list):history=old
+  else:raise ValueError("invalid existing history format")
+ if history and now.isoformat()[:10]<str(history[-1].get("snapshot_date","")):raise ValueError("snapshot clock older than history")
  payload={"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","counts":counts,"sources":FEEDS,"quotes":out}
  tmp=dest.with_suffix(".tmp");tmp.write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8");tmp.replace(dest)
+ # Snapshot archive is keyed by fetch date, NOT verified exchange trading date.
+ record={"snapshot_date":now.date().isoformat(),"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","quotes":out}
+ history=[x for x in history if x.get("snapshot_date")!=record["snapshot_date"]]+[record]
+ history=history[-180:]
+ hist_tmp=history_path.with_suffix(".tmp");hist_tmp.write_text(json.dumps(history,ensure_ascii=False,separators=(",",":")),encoding="utf-8");hist_tmp.replace(history_path)
  print("PASS quote snapshot",counts,"NOTE: date not verified; do not label as today's close")
 if __name__=="__main__":main()
