@@ -47,6 +47,27 @@ def main():
   if isinstance(old,list):history=old
   else:raise ValueError("invalid existing history format")
  if history and now.isoformat()[:10]<str(history[-1].get("snapshot_date","")):raise ValueError("snapshot clock older than history") 
+ # Check TWSE's official trading-day index for the current Taiwan calendar date.
+ # This check is independent of quote price changes and catches stale holiday feeds.
+ def official_twse_trade_day(day):
+  url="https://www.twse.com.tw/exchangeReport/FMTQIK?response=json&date="+day.strftime("%Y%m%d")
+  req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0","Accept":"application/json"})
+  with urllib.request.urlopen(req,timeout=40) as response:
+   data=json.loads(response.read(2000000).decode("utf-8-sig"))
+  if data.get("stat")!="OK" or not isinstance(data.get("data"),list):
+   raise ValueError("TWSE FMTQIK calendar unavailable: "+str(data.get("stat")))
+  roc=f"{day.year-1911}/{day.month:02d}/{day.day:02d}"
+  matched=[r for r in data["data"] if isinstance(r,list) and r and str(r[0]).strip()==roc]
+  return bool(matched)
+ try:
+  is_trade_day=official_twse_trade_day(now.date())
+ except Exception as e:
+  print("HOLD_CALENDAR_UNVERIFIED",type(e).__name__,str(e)[:220],flush=True)
+  return
+ if not is_trade_day:
+  print("SKIP_OFFICIAL_NON_TRADING_DAY",now.date().isoformat(),flush=True)
+  return
+ print("PASS_TWSE_TRADE_DATE",now.date().isoformat(),flush=True)
  # Same complete closing-price snapshot on a later date indicates a stale/holiday feed.
  # Never count it as a new trading day; source trade date remains unverified.
  def fingerprint(quotes):
@@ -58,7 +79,7 @@ def main():
   print("SKIP_STALE_IDENTICAL_QUOTES",now.date().isoformat(),"previous",earlier[-1]["snapshot_date"],flush=True)
   return
  print("QUOTE_FINGERPRINT",current_hash,flush=True)
- payload={"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","price_fingerprint":current_hash,"counts":counts,"sources":FEEDS,"quotes":out}
+ payload={"fetched_at":now.isoformat(),"date_status":"twse_calendar_verified_quotes_source_date_unverified","price_fingerprint":current_hash,"counts":counts,"sources":FEEDS,"quotes":out}
  tmp=dest.with_suffix(".tmp");tmp.write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8");tmp.replace(dest)
  # Snapshot archive is keyed by fetch date, NOT verified exchange trading date.
  record={"snapshot_date":now.date().isoformat(),"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","price_fingerprint":current_hash,"quotes":out}
