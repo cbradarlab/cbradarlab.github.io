@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Isolated official company-master sync; fail closed, preserve last good snapshot."""
-import datetime,json,pathlib,urllib.request,urllib.error,time
+import datetime,json,pathlib,urllib.request,urllib.error,time,urllib.parse
 ROOT=pathlib.Path(__file__).resolve().parent
 SOURCES={"上市":"https://openapi.twse.com.tw/v1/opendata/t187ap03_L","上櫃":"https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O"}
 def first(row,*names):
@@ -11,13 +11,23 @@ def first(row,*names):
 def main():
     result=[];counts={}
     for market,url in SOURCES.items():
-        req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0 SectorRotation/1.0"})
-        try:
-            with urllib.request.urlopen(req,timeout=45) as r:
-                raw=r.read(12000001)
-        except urllib.error.HTTPError as exc:
-            print("SOURCE_HTTP_ERROR",market,"status",exc.code,"host",urllib.request.urlparse(url).hostname,flush=True)
-            raise RuntimeError("official source denied cloud runner; keep previous snapshot") from exc
+        raw=None
+        for attempt in range(1,4):
+            req=urllib.request.Request(url,headers={"User-Agent":"Mozilla/5.0 (compatible; SectorRotationData/1.0)","Accept":"application/json","Accept-Language":"zh-TW,zh;q=0.9,en;q=0.8"})
+            try:
+                with urllib.request.urlopen(req,timeout=45) as response:
+                    raw=response.read(12000001)
+                break
+            except urllib.error.HTTPError as exc:
+                print("SOURCE_HTTP_ERROR",market,"attempt",attempt,"status",exc.code,"host",urllib.parse.urlparse(url).hostname,flush=True)
+                if exc.code in (401,403,404):
+                    raise RuntimeError("official source rejected request; existing snapshot preserved") from exc
+                if attempt==3:raise
+                time.sleep(attempt*3)
+            except (urllib.error.URLError,TimeoutError) as exc:
+                print("SOURCE_NETWORK_ERROR",market,"attempt",attempt,type(exc).__name__,flush=True)
+                if attempt==3:raise
+                time.sleep(attempt*3)
         if len(raw)>12000000:raise ValueError("oversize "+market)
         data=json.loads(raw.decode("utf-8-sig"))
         if not isinstance(data,list):raise ValueError("not array "+market)
