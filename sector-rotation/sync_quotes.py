@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Daily official close snapshot. No fabricated prices; retain last good on failures."""
-import datetime,json,pathlib,urllib.request,urllib.error,re
+import datetime,json,pathlib,urllib.request,urllib.error,re,hashlib
 ROOT=pathlib.Path(__file__).resolve().parent
 FEEDS={"上市":"https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL","上櫃":"https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"}
 def get(o,*keys):
@@ -46,11 +46,22 @@ def main():
   old=json.loads(history_path.read_text(encoding="utf-8"))
   if isinstance(old,list):history=old
   else:raise ValueError("invalid existing history format")
- if history and now.isoformat()[:10]<str(history[-1].get("snapshot_date","")):raise ValueError("snapshot clock older than history")
- payload={"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","counts":counts,"sources":FEEDS,"quotes":out}
+ if history and now.isoformat()[:10]<str(history[-1].get("snapshot_date","")):raise ValueError("snapshot clock older than history") 
+ # Same complete closing-price snapshot on a later date indicates a stale/holiday feed.
+ # Never count it as a new trading day; source trade date remains unverified.
+ def fingerprint(quotes):
+  values={k:v["close"] for k,v in sorted(quotes.items())}
+  return hashlib.sha256(json.dumps(values,sort_keys=True,separators=(",",":")).encode()).hexdigest()
+ current_hash=fingerprint(out)
+ earlier=[x for x in history if x.get("snapshot_date")!=now.date().isoformat()]
+ if earlier and current_hash==fingerprint(earlier[-1]["quotes"]):
+  print("SKIP_STALE_IDENTICAL_QUOTES",now.date().isoformat(),"previous",earlier[-1]["snapshot_date"],flush=True)
+  return
+ print("QUOTE_FINGERPRINT",current_hash,flush=True)
+ payload={"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","price_fingerprint":current_hash,"counts":counts,"sources":FEEDS,"quotes":out}
  tmp=dest.with_suffix(".tmp");tmp.write_text(json.dumps(payload,ensure_ascii=False,separators=(",",":")),encoding="utf-8");tmp.replace(dest)
  # Snapshot archive is keyed by fetch date, NOT verified exchange trading date.
- record={"snapshot_date":now.date().isoformat(),"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","quotes":out}
+ record={"snapshot_date":now.date().isoformat(),"fetched_at":now.isoformat(),"date_status":"unverified_exchange_trade_date","price_fingerprint":current_hash,"quotes":out}
  history=[x for x in history if x.get("snapshot_date")!=record["snapshot_date"]]+[record]
  history=history[-180:]
  hist_tmp=history_path.with_suffix(".tmp");hist_tmp.write_text(json.dumps(history,ensure_ascii=False,separators=(",",":")),encoding="utf-8");hist_tmp.replace(history_path)
