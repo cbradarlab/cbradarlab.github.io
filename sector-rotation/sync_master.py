@@ -36,9 +36,9 @@ def main():
             if not isinstance(x,dict):continue
             code=first(x,"公司代號","股票代號","SecuritiesCompanyCode","Code")
             if not(code.isdigit() and len(code)==4):continue
-            name=first(x,"公司簡稱","公司名稱","股票名稱","SecuritiesCompanyName","Name")
+            name=first(x,"公司簡稱","公司名稱","股票名稱","CompanyAbbreviation","CompanyName","SecuritiesCompanyName","Name")
             if not name:continue
-            industry=first(x,"產業別","產業類別","Industry","IndustryType") or "未分類"
+            industry=first(x,"產業別","產業類別","SecuritiesIndustryCode","Industry","IndustryType") or "未分類"
             items.append({"id":code,"name":name,"industry":industry,"market":market})
         if len(items)<300:
             sample=data[0] if data else {}
