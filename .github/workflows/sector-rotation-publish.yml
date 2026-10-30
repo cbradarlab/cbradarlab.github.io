@@ -1,0 +1,55 @@
+name: Publish sector rotation minute snapshot (SHADOW)
+on:
+  push:
+    paths:
+      - 'sector-rotation/incoming/*.csv'
+      - 'sector-rotation/build_daily_data.py'
+      - '.github/workflows/sector-rotation-publish.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: sector-rotation-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Find latest dated CSV and validate
+        id: prepare
+        shell: bash
+        run: |
+          python - <<'PY'
+          import glob, os
+          from pathlib import Path
+          files = sorted(glob.glob('sector-rotation/incoming/*.csv'))
+          if not files:
+              print('No incoming CSV yet. Skipping publication.')
+              with open(os.environ['GITHUB_OUTPUT'],'a') as out: out.write('ready=false\n')
+          else:
+              source=files[-1]
+              print('Preparing', source)
+              with open(os.environ['GITHUB_OUTPUT'],'a') as out:
+                  out.write('ready=true\n')
+                  out.write('source='+source+'\n')
+          PY
+      - name: Build JSON snapshot
+        if: steps.prepare.outputs.ready == 'true'
+        run: python sector-rotation/build_daily_data.py "${{ steps.prepare.outputs.source }}" sector-rotation/data/latest.json
+      - name: Commit published snapshot
+        if: steps.prepare.outputs.ready == 'true'
+        shell: bash
+        run: |
+          git add sector-rotation/data/latest.json
+          if git diff --cached --quiet; then
+            echo "No snapshot changes"
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'data: publish validated sector minute snapshot [skip ci]'
+          git push
