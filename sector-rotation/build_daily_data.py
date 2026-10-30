@@ -11,6 +11,21 @@ from datetime import datetime
 from pathlib import Path
 
 REQUIRED = {"date", "minute", "code", "industry", "open", "close", "volume_lots"}
+SECTORS = {"半導體","電子代工","PCB","AI伺服器","記憶體","散熱","光通訊","電源管理","被動元件","機器人","網通","航運","金融","生技","工具機"}
+
+def load_mapping():
+    path = Path(__file__).parent / "data" / "stock_industry_map.csv"
+    if not path.exists():
+        raise ValueError("Missing stock_industry_map.csv")
+    with path.open(encoding="utf-8-sig", newline="") as f:
+        result = {}
+        for row in csv.DictReader(f):
+            code = row["code"].strip()
+            sector = row["industry"].strip()
+            if not code or sector not in SECTORS or code in result:
+                raise ValueError("Invalid/duplicate stock mapping: " + code)
+            result[code] = sector
+    return result
 TIMES = [f"{9 + i // 60:02d}:{i % 60:02d}" for i in range(265)]
 TIME_SET = set(TIMES)
 
@@ -27,6 +42,7 @@ def build(source):
         raise ValueError("Expected one trading date per file")
     day = dates.pop()
     datetime.strptime(day, "%Y-%m-%d")
+    mapping = load_mapping()
     seen = set()
     stock_minutes = defaultdict(set)
     industry_by_stock = {}
@@ -39,6 +55,10 @@ def build(source):
         industry = row["industry"].strip()
         if not code or not industry:
             raise ValueError("Missing code or industry")
+        if code not in mapping:
+            raise ValueError("Unclassified stock: " + code + " (add to stock_industry_map.csv after verification)")
+        if mapping[code] != industry:
+            raise ValueError("Sector mapping conflict: " + code + " CSV=" + industry + " registry=" + mapping[code])
         key = (code, minute)
         if key in seen:
             raise ValueError("Duplicate stock/minute: " + str(key))
