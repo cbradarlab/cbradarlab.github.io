@@ -30,7 +30,7 @@ def get_rows(url):
     if not reader.fieldnames:
         raise ValueError("No official CSV header")
     reader.fieldnames = [x.strip().lstrip("\ufeff") for x in reader.fieldnames]
-    required = {"公司代號", "公司簡稱", "產業別"}
+    required = {"公司代號", "產業別"}
     if not required.issubset(reader.fieldnames):
         raise ValueError("Official schema changed: " + str(reader.fieldnames[:12]))
     return list(reader)
@@ -46,7 +46,7 @@ def main():
             if not re.fullmatch(r"[0-9]{4}",code):
                 continue
             industry = row["產業別"].strip()
-            name = row["公司簡稱"].strip()
+            name = (row.get("公司簡稱") or row.get("公司名稱") or "").strip()
             if not industry or not name:
                 raise ValueError("Blank official industry/name for " + code)
             if code in records:
