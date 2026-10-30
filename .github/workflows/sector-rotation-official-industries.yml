@@ -1,0 +1,29 @@
+name: Update official TWSE TPEx industry registry
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 11 * * 1-5'
+permissions:
+  contents: write
+concurrency:
+  group: official-stock-industries
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch and validate official company classifications
+        run: python sector-rotation/build_official_industries.py
+      - name: Commit updated registry
+        run: |
+          git add sector-rotation/data/official_stock_industries.csv sector-rotation/data/official_stock_industries_report.json
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'data: refresh official TWSE TPEx industry registry [skip ci]'
+          git push
