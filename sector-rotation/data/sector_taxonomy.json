@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "source": "user supplied screenshots 2026-10-30",
+  "classification_policy": {
+    "official_primary": "one per stock; official TWSE/TPEx issuer classification",
+    "themes": "multiple tags per stock; evidence required",
+    "unclassified": "never silently assign to miscellaneous"
+  },
+  "industry_chain": [
+    "交通運輸及航運",
+    "資訊安全",
+    "食品",
+    "水泥",
+    "油電燃氣",
+    "金融",
+    "造紙",
+    "半導體",
+    "再生醫療",
+    "區塊鏈",
+    "石化及塑橡膠",
+    "印刷電路板",
+    "被動元件",
+    "風力發電",
+    "未分類"
+  ],
+  "concepts": [
+    "CoWoS",
+    "GLP-1減重藥",
+    "水資源",
+    "資安",
+    "重電",
+    "軍工",
+    "邊緣AI",
+    "FOPLP",
+    "記憶體",
+    "記憶體模組",
+    "先進封裝設備",
+    "PCB",
+    "太陽能",
+    "MLCC",
+    "HBM",
+    "車用電子"
+  ],
+  "aliases": {
+    "資訊安全": "資安",
+    "印刷電路板": "PCB",
+    "被動元件": "MLCC為細分題材，不等同全部被動元件",
+    "半導體": "CoWoS、HBM、先進封裝等可作跨產業題材"
+  },
+  "notes": "Screenshot labels only; no per-stock membership is implied. Historical heat/return values from screenshots are not imported as verified stock data."
+}
