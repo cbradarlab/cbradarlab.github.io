@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "source": "user screenshots 2026-10-30; visible labels transcribed; partial screenshot coverage",
   "classification_policy": {
     "official_primary": "one per stock using official TWSE/TPEx industry",
@@ -8,6 +8,77 @@
     "unclassified": "keep unresolved; never invent membership"
   },
   "industry_chain": [
+    "半導體",
+    "印刷電路板",
+    "被動元件",
+    "電子零組件",
+    "電腦及週邊設備",
+    "通信網路",
+    "資訊安全",
+    "軟體服務",
+    "雲端運算",
+    "電子商務",
+    "金融",
+    "金融科技",
+    "食品",
+    "食品生技",
+    "製藥",
+    "醫療器材",
+    "再生醫療",
+    "鋼鐵",
+    "水泥",
+    "建材營造",
+    "石化及塑橡膠",
+    "油電燃氣",
+    "交通運輸及航運",
+    "汽車",
+    "電動車輛產業",
+    "電機機械",
+    "造紙",
+    "紡織",
+    "太陽能產業",
+    "風力發電"
+  ],
+  "concepts": [
+    "AI 伺服器",
+    "AI PC",
+    "AI 儲存",
+    "AI 客製化晶片",
+    "AI 資料中心電源",
+    "CoWoS",
+    "先進封裝設備",
+    "FOPLP",
+    "HBM",
+    "記憶體",
+    "記憶體模組",
+    "CPO／矽光子",
+    "液冷散熱",
+    "PCB",
+    "玻璃基板",
+    "玻纖布",
+    "高頻高速材料",
+    "高速連接器",
+    "重電",
+    "軍工",
+    "資安",
+    "邊緣AI",
+    "機器人",
+    "機器人視覺",
+    "車用半導體",
+    "第三類半導體(SiC／GaN)",
+    "低軌衛星",
+    "儲能",
+    "BBU",
+    "GLP-1減重藥"
+  ],
+  "aliases": {
+    "資訊安全": "資安",
+    "印刷電路板": "PCB",
+    "被動元件": "MLCC為細分題材，不等同全部被動元件",
+    "半導體": "CoWoS、HBM、先進封裝等可作跨產業題材"
+  },
+  "notes": "Thirty displayed per tab. Labels reflect screenshot categories with normalization. Stock membership is separately verified, and screenshots do not establish membership.",
+  "available_industry_chain": [
     "交通運輸及航運",
     "資訊安全",
     "食品",
@@ -57,7 +128,7 @@
     "食品生技",
     "體驗科技"
   ],
-  "concepts": [
+  "available_concepts": [
     "CoWoS",
     "GLP-1減重藥",
     "水資源",
@@ -123,11 +194,5 @@
     "AI 資料中心電源",
     "BBU"
   ],
-  "aliases": {
-    "資訊安全": "資安",
-    "印刷電路板": "PCB",
-    "被動元件": "MLCC為細分題材，不等同全部被動元件",
-    "半導體": "CoWoS、HBM、先進封裝等可作跨產業題材"
-  },
-  "notes": "Screenshot names are taxonomy labels only, not verified membership or price data. Some labels overlap across chain/concept by design."
+  "selection_policy": "30 displayed per category; archival labels retained in available_*; categories not inferred to have stock members"
 }
