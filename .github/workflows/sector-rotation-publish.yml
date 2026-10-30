@@ -42,6 +42,26 @@ jobs:
       - name: Build JSON snapshot
         if: steps.prepare.outputs.ready == 'true'
         run: python sector-rotation/build_daily_data.py "${{ steps.prepare.outputs.source }}" sector-rotation/data/latest.json
+      - name: Reject incomplete or regressed snapshots
+        if: steps.prepare.outputs.ready == 'true'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          current = json.loads(Path('sector-rotation/data/latest.json').read_text(encoding='utf-8'))
+          c = current['coverage']
+          if c['minutes'] != 265 or c['industries'] < 2 or c['partial_stocks']:
+              raise SystemExit('BLOCKED: incomplete 265-minute coverage or fewer than 2 industries')
+          import subprocess
+          old = subprocess.run(['git','show','HEAD:sector-rotation/data/latest.json'],capture_output=True,text=True)
+          if old.returncode == 0:
+              previous = json.loads(old.stdout)
+              if current['date'] < previous['date']:
+                  raise SystemExit('BLOCKED: snapshot date is older than the published date')
+              if current['date'] == previous['date'] and c['stocks'] < previous['coverage']['stocks']:
+                  raise SystemExit('BLOCKED: same-day stock coverage decreased')
+          print('PASS: snapshot publication safety checks')
+          PY
       - name: Commit published snapshot
         if: steps.prepare.outputs.ready == 'true'
         shell: bash
