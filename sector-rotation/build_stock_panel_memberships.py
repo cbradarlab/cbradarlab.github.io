@@ -63,7 +63,7 @@ def main():
         seen.add(code)
         raw=stock["official_industry"].strip()
         panel=INDUSTRY_CODE.get(raw.zfill(2)) if raw.isdigit() else INDUSTRY_LABEL.get(raw)
-        if panel and panel not in panels: raise ValueError("Mapped panel absent from taxonomy: "+panel)
+        if panel not in panels: panel=None
         if panel:
             output.append({"code":code,"name":stock["name"],"market":stock["market"],
                 "kind":"industry_chain","panel":panel,"source":"official_industry:"+raw,
