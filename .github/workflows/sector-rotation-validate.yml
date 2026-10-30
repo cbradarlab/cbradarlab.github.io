@@ -1,0 +1,65 @@
+name: Sector rotation data validation (SHADOW)
+on:
+  push:
+    paths:
+      - 'sector-rotation/build_daily_data.py'
+      - 'sector-rotation/data/**'
+      - '.github/workflows/sector-rotation-validate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile data builder
+        run: python -m py_compile sector-rotation/build_daily_data.py
+      - name: Verify complete and incomplete sample sessions
+        run: |
+          python - <<'PY'
+          import csv, json, subprocess, sys, tempfile
+          from pathlib import Path
+          with tempfile.TemporaryDirectory() as temp:
+              p=Path(temp)
+              fields=['date','minute','code','industry','open','close','volume_lots']
+              def make(rows):
+                  with (p/'input.csv').open('w',encoding='utf-8-sig',newline='') as f:
+                      w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows)
+                  return subprocess.run([sys.executable,'sector-rotation/build_daily_data.py',str(p/'input.csv'),str(p/'latest.json')],capture_output=True,text=True)
+              times=[f'{9+i//60:02d}:{i%60:02d}' for i in range(265)]
+              rows=[dict(date='2026-10-29',minute=t,code=code,industry=industry,open='100',close='101',volume_lots='10') for t in times for code,industry in [('2330','半導體'),('2317','電子代工')]]
+              result=make(rows)
+              assert result.returncode==0,result.stderr
+              data=json.loads((p/'latest.json').read_text(encoding='utf-8'))
+              assert data['coverage']['rows']==530
+              assert data['coverage']['minutes']==265
+              assert data['coverage']['stocks']==2
+              assert data['volume_unit_verified'] is False
+              assert data['coverage']['partial_stocks']=={}
+              result=make(rows[:-1])
+              assert result.returncode==0,result.stderr
+              data=json.loads((p/'latest.json').read_text(encoding='utf-8'))
+              assert data['coverage']['partial_stocks']=={'2317':264}
+              result=make(rows+[rows[0]])
+              assert result.returncode!=0,'Duplicate stock/minute must fail'
+              print('PASS: complete, partial, duplicate, and volume-unit checks')
+          PY
+      - name: Validate published snapshot if present
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('sector-rotation/data/latest.json')
+          if not p.exists():
+              print('NO PUBLISHED DATA: website will use demo fallback')
+          else:
+              d=json.loads(p.read_text(encoding='utf-8'))
+              assert d['schema_version']==1 and d['rows']
+              assert d['coverage']['rows']==len(d['rows'])
+              assert d['coverage']['market_wide'] is False
+              print('PASS: published snapshot',d['date'],d['coverage'])
+          PY
