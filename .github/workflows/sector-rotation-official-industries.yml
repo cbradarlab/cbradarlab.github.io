@@ -17,10 +17,10 @@ jobs:
         with:
           python-version: '3.11'
       - name: Fetch and validate official company classifications
-        run: python sector-rotation/build_official_industries.py
+        run: |\n          python sector-rotation/build_official_industries.py\n          python sector-rotation/build_stock_panel_memberships.py
       - name: Commit updated registry
         run: |
-          git add sector-rotation/data/official_stock_industries.csv sector-rotation/data/official_stock_industries_report.json
+          git add sector-rotation/data/official_stock_industries.csv sector-rotation/data/official_stock_industries_report.json sector-rotation/data/stock_panel_memberships.csv sector-rotation/data/stock_panel_review.csv sector-rotation/data/stock_panel_report.json
           if git diff --cached --quiet; then
             echo "No changes"
             exit 0
