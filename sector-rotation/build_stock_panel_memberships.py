@@ -25,7 +25,7 @@ INDUSTRY_CODE = {
     "01":"水泥", "02":"食品", "03":"石化及塑橡膠", "04":"紡織",
     "05":"電機機械", "09":"造紙", "10":"鋼鐵", "11":"石化及塑橡膠",
     "12":"汽車", "14":"建材營造", "15":"交通運輸及航運",
-    "17":"金融", "21":"石化及塑橡膠",
+    "17":"金融",
     "23":"油電燃氣", "24":"半導體", "25":"電腦及週邊設備",
     "27":"通信網路", "28":"電子零組件", "30":"軟體服務",
     "34":"電子商務", "36":"雲端運算",
@@ -96,7 +96,11 @@ def main():
             w=csv.DictWriter(f,fieldnames=header);w.writeheader();w.writerows(items)
     write(OUT,["code","name","market","kind","panel","source","review_status"],output)
     write(UNMATCHED,["code","name","market","official_industry","reason"],review)
+    review_counts=Counter(x["official_industry"] for x in review)
+    panel_counts=Counter(x["panel"] for x in output if x["kind"]=="industry_chain")
     REPORT.write_text(json.dumps({"official_stocks":len(official),"panel_count":60,
+        "industry_panel_counts":dict(sorted(panel_counts.items())),
+        "review_by_official_industry":dict(sorted(review_counts.items(),key=lambda kv:(-kv[1],kv[0]))),
         "industry_mapped":stats["industry_mapped"],"industry_review":stats["industry_review"],
         "concept_mapped":stats["concept_mapped"],
         "note":"Concepts are not automatically inferred from official industry; incomplete panels are expected."},
