@@ -27,15 +27,15 @@ const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 function draw(){
  for(const t of ["industry","concept","review"])$(t).classList.toggle("active",state.tab===t);
  const concepts=state.tab==="concept",review=state.tab==="review";
- const panels=review?[]:concepts?state.tax.concepts:state.tax.industry_chain;
+ const panels=review?[...new Set(state.review.map(s=>s.official_industry))].sort((a,b)=>state.review.filter(s=>s.official_industry===b).length-state.review.filter(s=>s.official_industry===a).length):concepts?state.tax.concepts:state.tax.industry_chain;
  const kind=concepts?"concept":"industry_chain";
  const rows=review?state.review:state.stocks.filter(s=>s.kind===kind);
  const q=$("search").value.trim().toLowerCase();
- $("panels").hidden=review;
- $("panels").innerHTML=panels.map(p=>{const count=rows.filter(s=>s.panel===p).length;return '<button class="panel '+(state.selected===p?"selected":"")+'" data-panel="'+esc(p)+'">'+esc(p)+'<b>'+count+' 檔</b></button>'}).join("");
+ $("panels").hidden=false;
+ $("panels").innerHTML=panels.map(p=>{const count=rows.filter(s=>(review?s.official_industry:s.panel)===p).length;return '<button class="panel '+(state.selected===p?"selected":"")+'" data-panel="'+esc(p)+'">'+esc(review?'官方產業 '+p:p)+'<b>'+count+' 檔</b></button>'}).join("");
  $("panels").querySelectorAll("button").forEach(b=>b.onclick=()=>{state.selected=state.selected===b.dataset.panel?"":b.dataset.panel;draw()});
- const shown=rows.filter(s=>(!state.selected||s.panel===state.selected)&&(!q||[s.code,s.name,s.panel,s.official_industry].some(v=>String(v||"").toLowerCase().includes(q))));
- $("heading").textContent=(review?"待確認股票":state.selected|| (concepts?"概念股成分":"產業鏈成分"))+"（"+shown.length+" 檔）";
+ const shown=rows.filter(s=>(!state.selected||(review?s.official_industry:s.panel)===state.selected)&&(!q||[s.code,s.name,s.panel,s.official_industry].some(v=>String(v||"").toLowerCase().includes(q))));
+ $("heading").textContent=(review?(state.selected?"官方產業 "+state.selected+" 待確認":"待確認股票"):state.selected|| (concepts?"概念股成分":"產業鏈成分"))+"（"+shown.length+" 檔）";
  const cells=review?["code","name","market","official_industry"]:["code","name","market","panel","review_status"];
  const titles=review?["代號","名稱","市場","官方產業代碼"]:["代號","名稱","市場","板塊","查證狀態"];
  $("results").innerHTML='<table><thead><tr>'+titles.map(t=>"<th>"+t+"</th>").join("")+'</tr></thead><tbody>'+shown.map(s=>"<tr>"+cells.map(k=>"<td>"+esc(s[k])+"</td>").join("")+"</tr>").join("")+"</tbody></table>";
