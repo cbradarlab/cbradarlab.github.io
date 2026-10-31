@@ -32,6 +32,13 @@ class PcbCoverageTests(unittest.TestCase):
         result = self.check(rows, expected_complete=1)
         self.assertEqual(result["groups"]["玻纖布"]["complete_pct"], round(100 / 6, 2))
 
+    def test_invalid_minutes_do_not_count_as_complete(self):
+        rows = [{"code": "1303", "minute": f"00:{i:02d}"} for i in range(60)]
+        result = self.check(rows)
+        self.assertEqual(result["groups"]["玻纖布"]["complete"], 0)
+        self.assertEqual(result["groups"]["玻纖布"]["missing"], ["1303", "1802", "1815", "3388", "5340", "5475"])
+        self.assertEqual(len(result["groups"]["玻纖布"]["invalid_minutes"]["1303"]), 60)
+
     def test_duplicate_minute_does_not_inflate_coverage(self):
         self.check([{"code": "1303", "minute": "09:00"}] * 265, expected_partial={"1303": 1})
 
