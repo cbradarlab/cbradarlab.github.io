@@ -31,7 +31,10 @@ def export(api, trading_day, output, *, watchlist=WATCHLIST):
             # Shioaji kbars fields: ts, Open, High, Low, Close, Volume.
             # Preserve RAW values: do not infer lots, fabricate zero-volume bars,
             # or assume all 265/270 minutes must be present.
-            for ts, o, h, l, c, vol in zip(kb.ts, kb.Open, kb.High, kb.Low, kb.Close, kb.Volume):
+            fields = (kb.ts, kb.Open, kb.High, kb.Low, kb.Close, kb.Volume)
+            if len({len(field) for field in fields}) != 1:
+                raise ValueError("Inconsistent K-bar field lengths")
+            for ts, o, h, l, c, vol in zip(*fields):
                 timestamp = str(ts)
                 if not timestamp.startswith(trading_day):
                     continue
