@@ -17,7 +17,9 @@ jobs:
         with:
           python-version: '3.11'
       - name: Fetch and validate official company classifications
-        run: |\n          python sector-rotation/build_official_industries.py\n          python sector-rotation/build_stock_panel_memberships.py
+        run: |
+          python sector-rotation/build_official_industries.py
+          python sector-rotation/build_stock_panel_memberships.py
       - name: Commit updated registry
         run: |
           git add sector-rotation/data/official_stock_industries.csv sector-rotation/data/official_stock_industries_report.json sector-rotation/data/stock_panel_memberships.csv sector-rotation/data/stock_panel_review.csv sector-rotation/data/stock_panel_report.json
