@@ -22,9 +22,15 @@ def audit(snapshot):
     if not isinstance(data.get("rows"), list):
         raise ValueError("Snapshot has no minute rows")
     by_stock = defaultdict(set)
+    expected = {f"{9 + i // 60:02d}:{i % 60:02d}" for i in range(265)}
+    invalid = defaultdict(set)
     for row in data["rows"]:
-        if row.get("code") and row.get("minute"):
-            by_stock[str(row["code"])].add(row["minute"])
+        code, minute = str(row.get("code", "")), row.get("minute")
+        if code and minute:
+            if minute in expected:
+                by_stock[code].add(minute)
+            else:
+                invalid[code].add(str(minute))
     result = {"status": "SHADOW_COVERAGE_ONLY", "date": data.get("date"),
               "snapshot_status": data.get("status"), "market_wide": data.get("coverage", {}).get("market_wide", False),
               "expected_minutes": 265, "groups": {}}
@@ -34,7 +40,8 @@ def audit(snapshot):
         missing = sorted(c for c in members if not by_stock[c])
         result["groups"][group] = {"members": len(members), "complete": len(complete),
                                     "complete_codes": complete, "partial": partial, "missing": missing,
-                                    "complete_pct": round(100 * len(complete) / len(members), 2)}
+                                    "complete_pct": round(100 * len(complete) / len(members), 2),
+                                    "invalid_minutes": {c: sorted(invalid[c]) for c in sorted(members) if invalid[c]}}
     result["ready_for_rotation"] = False
     result["reason"] = "Coverage audit alone cannot validate market-wide minute flow, units or lead-lag."
     return result
