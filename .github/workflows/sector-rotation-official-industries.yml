@@ -5,6 +5,7 @@ on:
     paths:
       - 'sector-rotation/build_official_industries.py'
       - 'sector-rotation/build_stock_panel_memberships.py'
+      - 'sector-rotation/validate_stock_panels.py'
       - 'sector-rotation/data/sector_taxonomy.json'
       - 'sector-rotation/data/reviewed_stock_themes.csv'
   workflow_dispatch:
@@ -27,6 +28,7 @@ jobs:
         run: |
           python sector-rotation/build_official_industries.py
           python sector-rotation/build_stock_panel_memberships.py
+          python sector-rotation/validate_stock_panels.py
       - name: Commit updated registry
         run: |
           git add sector-rotation/data/official_stock_industries.csv sector-rotation/data/official_stock_industries_report.json sector-rotation/data/stock_panel_memberships.csv sector-rotation/data/stock_panel_review.csv sector-rotation/data/stock_panel_report.json
