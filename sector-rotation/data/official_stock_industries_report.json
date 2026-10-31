@@ -1,0 +1,51 @@
+{
+  "source": {
+    "TWSE": "https://mopsfin.twse.com.tw/opendata/t187ap03_L.csv",
+    "TPEX": "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv"
+  },
+  "generated_at_utc": "2026-10-31T01:53:32.545321+00:00",
+  "stocks": 1990,
+  "market_counts": {
+    "TWSE": 1093,
+    "TPEX": 897
+  },
+  "industry_counts": {
+    "01": 7,
+    "02": 34,
+    "03": 25,
+    "04": 52,
+    "05": 102,
+    "06": 17,
+    "08": 5,
+    "09": 7,
+    "10": 48,
+    "11": 11,
+    "12": 44,
+    "14": 88,
+    "15": 34,
+    "16": 51,
+    "17": 40,
+    "18": 18,
+    "20": 94,
+    "21": 42,
+    "22": 160,
+    "23": 12,
+    "24": 207,
+    "25": 111,
+    "26": 116,
+    "27": 92,
+    "28": 210,
+    "29": 38,
+    "30": 47,
+    "31": 94,
+    "32": 26,
+    "33": 4,
+    "35": 46,
+    "36": 40,
+    "37": 27,
+    "38": 37,
+    "91": 4
+  },
+  "scope": "listed_and_otc_four_digit_stock_codes",
+  "classification": "official_primary_industry_not_theme"
+}

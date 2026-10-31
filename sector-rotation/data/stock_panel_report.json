@@ -1,0 +1,8 @@
+{
+  "official_stocks": 1990,
+  "panel_count": 60,
+  "industry_mapped": 1253,
+  "industry_review": 737,
+  "concept_mapped": 0,
+  "note": "Concepts are not automatically inferred from official industry; incomplete panels are expected."
+}
