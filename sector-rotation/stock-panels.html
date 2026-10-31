@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>股票板塊成分查詢｜SHADOW</title><style>
+:root{font-family:system-ui,"Microsoft JhengHei",sans-serif;color-scheme:dark;background:#101720;color:#eef4fa}
+body{max-width:1120px;margin:auto;padding:20px}h1{font-size:1.55rem}small,.muted{color:#9cb0c4}
+button,input,select{font:inherit;border:1px solid #496074;border-radius:8px;padding:10px;background:#192635;color:#fff}
+button{cursor:pointer}button.active{background:#245f82}button:focus-visible{outline:2px solid #6fd0fa}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}
+.panel{border:1px solid #33485d;background:#172331;border-radius:10px;padding:12px;text-align:left}
+.panel b{display:block;margin-top:6px;color:#8ecbe8}
+.panel.selected{border-color:#66c6ff;background:#244052}
+table{border-collapse:collapse;width:100%;margin-top:12px}td,th{border-bottom:1px solid #33485d;text-align:left;padding:9px}
+#status{margin:10px 0;padding:10px;border-left:3px solid #6388a3;background:#192635}
+</style></head><body>
+<h1>股票板塊成分查詢 <small>SHADOW</small></h1>
+<p class="muted">上市櫃官方產業映射與人工查證概念股分開顯示。空白板塊不代表沒有股票，而是尚未完成查證。</p>
+<div id="status" role="status">正在讀取 GitHub 分類資料…</div>
+<div class="controls"><button id="industry" class="active">產業鏈 30 類</button><button id="concept">概念股 30 類</button><button id="review">待確認</button><input id="search" type="search" placeholder="搜尋股票代號／名稱／板塊" aria-label="搜尋股票"></div>
+<div id="panels" class="grid"></div><h2 id="heading">股票成分</h2><div id="results"></div>
+<script>
+"use strict";
+const state={tab:"industry",selected:"",tax:null,stocks:[],review:[],report:null};
+const $=id=>document.getElementById(id);
+function parseCSV(src){const lines=src.replace(/^\uFEFF/,"").trim().split(/\r?\n/);const h=lines.shift().split(",");return lines.filter(Boolean).map(l=>{const v=l.split(",");return Object.fromEntries(h.map((k,i)=>[k,v[i]||""]))})}
+const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function draw(){
+ for(const t of ["industry","concept","review"])$(t).classList.toggle("active",state.tab===t);
+ const concepts=state.tab==="concept",review=state.tab==="review";
+ const panels=review?[]:concepts?state.tax.concepts:state.tax.industry_chain;
+ const kind=concepts?"concept":"industry_chain";
+ const rows=review?state.review:state.stocks.filter(s=>s.kind===kind);
+ const q=$("search").value.trim().toLowerCase();
+ $("panels").hidden=review;
+ $("panels").innerHTML=panels.map(p=>{const count=rows.filter(s=>s.panel===p).length;return '<button class="panel '+(state.selected===p?"selected":"")+'" data-panel="'+esc(p)+'">'+esc(p)+'<b>'+count+' 檔</b></button>'}).join("");
+ $("panels").querySelectorAll("button").forEach(b=>b.onclick=()=>{state.selected=state.selected===b.dataset.panel?"":b.dataset.panel;draw()});
+ const shown=rows.filter(s=>(!state.selected||s.panel===state.selected)&&(!q||[s.code,s.name,s.panel,s.official_industry].some(v=>String(v||"").toLowerCase().includes(q))));
+ $("heading").textContent=(review?"待確認股票":state.selected|| (concepts?"概念股成分":"產業鏈成分"))+"（"+shown.length+" 檔）";
+ const cells=review?["code","name","market","official_industry"]:["code","name","market","panel","review_status"];
+ const titles=review?["代號","名稱","市場","官方產業代碼"]:["代號","名稱","市場","板塊","查證狀態"];
+ $("results").innerHTML='<table><thead><tr>'+titles.map(t=>"<th>"+t+"</th>").join("")+'</tr></thead><tbody>'+shown.map(s=>"<tr>"+cells.map(k=>"<td>"+esc(s[k])+"</td>").join("")+"</tr>").join("")+"</tbody></table>";
+}
+async function start(){
+ try{
+  const [tax,stocks,review,report]=await Promise.all(["data/sector_taxonomy.json","data/stock_panel_memberships.csv","data/stock_panel_review.csv","data/stock_panel_report.json"].map(async p=>{const r=await fetch(p+"?v="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error(p+" HTTP "+r.status);return p.endsWith(".json")?r.json():r.text()}));
+  state.tax=tax;state.stocks=parseCSV(stocks);state.review=parseCSV(review);state.report=report;
+  $("status").textContent="官方股票 "+report.official_stocks+" 檔｜已對應產業鏈 "+report.industry_mapped+" 檔｜待確認 "+report.industry_review+" 檔｜已查證概念股對應 "+report.concept_mapped+" 筆。此為研究資料，非完整概念股清單。";
+  draw();
+ }catch(e){$("status").textContent="分類資料讀取失敗："+e.message+"。請確認 GitHub 資料檔是否已產生。"}
+}
+for(const tab of ["industry","concept","review"])$(tab).onclick=()=>{state.tab=tab;state.selected="";draw()};
+$("search").oninput=()=>{if(state.tax)draw()};
+start();
+</script></body></html>
