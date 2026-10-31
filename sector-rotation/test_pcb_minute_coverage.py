@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Offline regression tests for the read-only PCB minute coverage audit."""
+import csv
 import json
 import tempfile
 import unittest
@@ -18,6 +19,17 @@ class PcbCoverageTests(unittest.TestCase):
         if expected_partial is not None:
             self.assertEqual(result["groups"]["玻纖布"]["partial"], expected_partial)
         return result
+
+    def test_watchlist_matches_unique_role_stocks(self):
+        root = Path(__file__).resolve().parent / "data"
+        with (root / "pcb_chain_roles_shadow.csv").open(encoding="utf-8-sig", newline="") as f:
+            roles = list(csv.DictReader(f))
+        with (root / "pcb_minute_watchlist_shadow.csv").open(encoding="utf-8-sig", newline="") as f:
+            watchlist = list(csv.DictReader(f))
+        expected = {r["code"]: r["name"] for r in roles}
+        actual = {r["code"]: r["name"] for r in watchlist}
+        self.assertEqual(len(actual), len(watchlist), "Duplicate watchlist codes")
+        self.assertEqual(actual, expected, "Watchlist and PCB roles out of sync")
 
     def test_no_pcb_rows(self):
         result = self.check([{"code": "2330", "minute": "09:00"}])
