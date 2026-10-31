@@ -20,7 +20,7 @@ table{border-collapse:collapse;width:100%;margin-top:12px}td,th{border-bottom:1p
 <div id="panels" class="grid"></div><h2 id="heading">股票成分</h2><div id="results"></div>
 <script>
 "use strict";
-const state={tab:"industry",selected:"",tax:null,stocks:[],review:[],report:null};
+const state={tab:"industry",selected:"",tax:null,stocks:[],review:[],report:null,labels:{}};
 const $=id=>document.getElementById(id);
 function parseCSV(src){const lines=src.replace(/^\uFEFF/,"").trim().split(/\r?\n/);const h=lines.shift().split(",");return lines.filter(Boolean).map(l=>{const v=l.split(",");return Object.fromEntries(h.map((k,i)=>[k,v[i]||""]))})}
 const esc=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -32,7 +32,7 @@ function draw(){
  const rows=review?state.review:state.stocks.filter(s=>s.kind===kind);
  const q=$("search").value.trim().toLowerCase();
  $("panels").hidden=false;
- $("panels").innerHTML=panels.map(p=>{const count=rows.filter(s=>(review?s.official_industry:s.panel)===p).length;return '<button class="panel '+(state.selected===p?"selected":"")+'" data-panel="'+esc(p)+'">'+esc(review?'官方產業 '+p:p)+'<b>'+count+' 檔</b></button>'}).join("");
+ $("panels").innerHTML=panels.map(p=>{const count=rows.filter(s=>(review?s.official_industry:s.panel)===p).length;return '<button class="panel '+(state.selected===p?"selected":"")+'" data-panel="'+esc(p)+'">'+esc(review?'官方產業 '+p+' '+(state.labels[p]||'待核對'):p)+'<b>'+count+' 檔</b></button>'}).join("");
  $("panels").querySelectorAll("button").forEach(b=>b.onclick=()=>{state.selected=state.selected===b.dataset.panel?"":b.dataset.panel;draw()});
  const shown=rows.filter(s=>(!state.selected||(review?s.official_industry:s.panel)===state.selected)&&(!q||[s.code,s.name,s.panel,s.official_industry].some(v=>String(v||"").toLowerCase().includes(q))));
  $("heading").textContent=(review?(state.selected?"官方產業 "+state.selected+" 待確認":"待確認股票"):state.selected|| (concepts?"概念股成分":"產業鏈成分"))+"（"+shown.length+" 檔）";
@@ -42,8 +42,8 @@ function draw(){
 }
 async function start(){
  try{
-  const [tax,stocks,review,report]=await Promise.all(["data/sector_taxonomy.json","data/stock_panel_memberships.csv","data/stock_panel_review.csv","data/stock_panel_report.json"].map(async p=>{const r=await fetch(p+"?v="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error(p+" HTTP "+r.status);return p.endsWith(".json")?r.json():r.text()}));
-  state.tax=tax;state.stocks=parseCSV(stocks);state.review=parseCSV(review);state.report=report;
+  const [tax,stocks,review,report,labels]=await Promise.all(["data/sector_taxonomy.json","data/stock_panel_memberships.csv","data/stock_panel_review.csv","data/stock_panel_report.json","data/official_industry_labels.json"].map(async p=>{const r=await fetch(p+"?v="+Date.now(),{cache:"no-store"});if(!r.ok)throw Error(p+" HTTP "+r.status);return p.endsWith(".json")?r.json():r.text()}));
+  state.tax=tax;state.stocks=parseCSV(stocks);state.review=parseCSV(review);state.report=report;state.labels=labels.labels;
   $("status").textContent="官方股票 "+report.official_stocks+" 檔｜已對應產業鏈 "+report.industry_mapped+" 檔｜待確認 "+report.industry_review+" 檔｜已查證概念股對應 "+report.concept_mapped+" 筆。此為研究資料，非完整概念股清單。";
   draw();
  }catch(e){$("status").textContent="分類資料讀取失敗："+e.message+"。請確認 GitHub 資料檔是否已產生。"}
