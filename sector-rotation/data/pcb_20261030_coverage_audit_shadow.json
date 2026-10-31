@@ -1,0 +1,24 @@
+{
+  "status": "SHADOW_CSV_VALIDATED_NOT_PRODUCTION",
+  "date": "2026-10-30",
+  "stocks": 21,
+  "observed_rows": 4865,
+  "expected_stock_minute_slots": 5565,
+  "unobserved_slots": 700,
+  "coverage_pct": 87.42,
+  "complete_265_minute_codes": [
+    "1303",
+    "1802",
+    "1815",
+    "3037",
+    "6269"
+  ],
+  "invalid_ohlc_rows": 0,
+  "duplicate_stock_minute_rows": 0,
+  "invalid_clock_rows": 0,
+  "volume_unit_verified": false,
+  "market_wide": false,
+  "ready_for_rotation": false,
+  "source": "user supplied local Shioaji CSV; derived aggregate only",
+  "note": "Unobserved minutes cannot be classified as no-trade or data failures without independent verification. No raw quotes published."
+}
