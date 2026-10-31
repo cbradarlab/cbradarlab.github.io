@@ -25,6 +25,7 @@ def export(api, trading_day, output, *, watchlist=WATCHLIST):
     records, failures = [], []
     for stock in stocks:
         code = stock["code"]
+        stock_records = []
         try:
             contract = api.Contracts.Stocks[code]
             kb = api.kbars(contract=contract, start=trading_day, end=trading_day)
@@ -38,8 +39,9 @@ def export(api, trading_day, output, *, watchlist=WATCHLIST):
                 timestamp = str(ts)
                 if not timestamp.startswith(trading_day):
                     continue
-                records.append((trading_day, code, stock["name"], timestamp,
-                                o, h, l, c, vol))
+                stock_records.append((trading_day, code, stock["name"], timestamp,
+                                      o, h, l, c, vol))
+            records.extend(stock_records)
         except Exception as exc:
             failures.append({"code": code, "error_type": type(exc).__name__})
     output.parent.mkdir(parents=True, exist_ok=True)
