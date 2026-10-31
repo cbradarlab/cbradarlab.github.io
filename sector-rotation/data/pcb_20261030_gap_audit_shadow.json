@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-30",
+  "status": "SHADOW_GAP_PATTERN_AUDITED",
+  "stocks": 21,
+  "observed_minutes": 4865,
+  "unobserved_stock_minute_slots": 700,
+  "gap_runs": 539,
+  "max_consecutive_gap_minutes": 9,
+  "complete_stocks": 5,
+  "stocks_last_intraday_minute_1324": 21,
+  "stocks_with_1330_auction_bar": 21,
+  "stock_first_minute_exception": {
+    "code": "8358",
+    "first_observed": "09:02"
+  },
+  "missing_reason_verified": false,
+  "volume_unit_verified": false,
+  "production_ready": false,
+  "source": "Aggregate derived from user-supplied V2 intraday and auction CSV; raw licensed quotes not uploaded."
+}
