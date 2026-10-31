@@ -1,5 +1,12 @@
 name: Update official TWSE TPEx industry registry
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'sector-rotation/build_official_industries.py'
+      - 'sector-rotation/build_stock_panel_memberships.py'
+      - 'sector-rotation/data/sector_taxonomy.json'
+      - 'sector-rotation/data/reviewed_stock_themes.csv'
   workflow_dispatch:
   schedule:
     - cron: '30 11 * * 1-5'
