@@ -24,7 +24,13 @@ def main():
     assert not (set(codes)&set(review_codes)),"review and mapped overlap"
     assert set(codes)|set(review_codes)==set(universe),"unaccounted official stock"
     assert all(x["panel"] in taxonomy["industry_chain"] for x in industries)
-    assert all(x["panel"] in taxonomy["concepts"] and x["review_status"]=="verified" and x["source"] for x in concepts)
+    assert all(x["panel"] in taxonomy["concepts"] and x["review_status"]=="verified" and x["source"].startswith("reviewed_theme:") for x in concepts), "concept must have reviewed evidence provenance"
+    pairs=[(x["code"],x["panel"]) for x in concepts]
+    assert len(pairs)==len(set(pairs)), "duplicate concept membership"
+    reviewed=load("reviewed_stock_themes.csv")
+    verified={(x["code"],x["concept"]) for x in reviewed if x["review_status"]=="verified" and x["evidence_url"].startswith("https://")}
+    assert set(pairs)==verified, "published concepts differ from verified evidence rows"
+    assert all(x["code"] in universe for x in concepts), "concept stock outside official universe"
     assert report["official_stocks"]==len(official)
     assert report["industry_mapped"]==len(industries)
     assert report["industry_review"]==len(review)
