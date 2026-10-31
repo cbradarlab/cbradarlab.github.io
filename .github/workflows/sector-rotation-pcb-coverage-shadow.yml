@@ -6,6 +6,7 @@ on:
       - 'sector-rotation/audit_pcb_minute_coverage.py'
       - 'sector-rotation/test_pcb_minute_coverage.py'
       - 'sector-rotation/data/pcb_chain_roles_shadow.csv'
+      - 'sector-rotation/data/pcb_minute_watchlist_shadow.csv'
       - 'sector-rotation/data/latest.json'
       - '.github/workflows/sector-rotation-pcb-coverage-shadow.yml'
   workflow_dispatch:
