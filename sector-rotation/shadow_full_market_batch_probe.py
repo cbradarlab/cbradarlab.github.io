@@ -4,6 +4,7 @@ import json,os,sys,time
 from datetime import datetime,timezone
 from pathlib import Path
 import shioaji as sj
+from shadow_official_equity_universe import SOURCES,CODE_KEYS_BY_MARKET,load,field
 
 DATE=os.getenv("PROBE_DATE","2026-10-30")
 BATCH_SIZE=min(50,max(1,int(os.getenv("BATCH_SIZE","30"))))
@@ -16,8 +17,17 @@ def universe(api):
             market=str(getattr(contract,"exchange","")).upper()
             if len(code)==4 and code.isdigit() and market in ("TSE","OTC"):
                 selected[(market,code)]=contract
-    # Filter fund-like prefixes for *probe*, not a claim of fully validated equity-only list.
-    return sorted(((m,c,contract) for (m,c),contract in selected.items() if not c.startswith("00")),key=lambda x:(x[0],x[1]))
+    official={}
+    for market,url in SOURCES.items():
+        rows=load(url)
+        keys=CODE_KEYS_BY_MARKET[market]
+        if not rows or not any(k in rows[0] for k in keys):
+            raise ValueError("official company schema missing: "+market)
+        official[market]={field(row,keys) for row in rows}
+        if len(official[market])<300:raise ValueError("official company universe too small: "+market)
+    matched=sorted(((m,c,contract) for (m,c),contract in selected.items() if c in official[m]),key=lambda x:(x[0],x[1]))
+    if len(matched)<1900:raise ValueError("official/Shioaji intersection unexpectedly small")
+    return matched
 def main():
     key=os.getenv("SHIOAJI_API_KEY");secret=os.getenv("SHIOAJI_SECRET_KEY")
     if not key or not secret:
@@ -50,7 +60,7 @@ def main():
                 status="ERROR_"+kind
             elapsed.append(round(time.monotonic()-start,3))
             print("PROBE",market,code,status,"seconds",elapsed[-1])
-        result={"date":DATE,"status":("PASS_BATCH_PROBE_SHADOW" if good==BATCH_SIZE else "PASS_REQUESTS_WITH_EMPTY_BARS_SHADOW") if len(elapsed)==BATCH_SIZE and not exception_codes else "HOLD","candidate_count":len(candidates),"requested":len(elapsed),"successful":good,"target":BATCH_SIZE,"total_seconds":round(time.monotonic()-started,2),"max_request_seconds":max(elapsed,default=0),"average_request_seconds":round(sum(elapsed)/len(elapsed),3) if elapsed else None,"failures":failures,"empty_codes":empty_codes,"exception_codes":exception_codes,"raw_ohlcv_exported":False,"equity_universe_verified":False,"production_ready":False}
+        result={"date":DATE,"status":("PASS_BATCH_PROBE_SHADOW" if good==BATCH_SIZE else "PASS_REQUESTS_WITH_EMPTY_BARS_SHADOW") if len(elapsed)==BATCH_SIZE and not exception_codes else "HOLD","candidate_count":len(candidates),"requested":len(elapsed),"successful":good,"target":BATCH_SIZE,"total_seconds":round(time.monotonic()-started,2),"max_request_seconds":max(elapsed,default=0),"average_request_seconds":round(sum(elapsed)/len(elapsed),3) if elapsed else None,"failures":failures,"empty_codes":empty_codes,"exception_codes":exception_codes,"raw_ohlcv_exported":False,"official_company_intersection_verified":True,"common_stock_only_verified":False,"production_ready":False}
         Path("full_market_batch_performance_shadow.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         print("SUMMARY",json.dumps(result,ensure_ascii=False))
         return 0 if len(elapsed)==BATCH_SIZE and not exception_codes else 3
