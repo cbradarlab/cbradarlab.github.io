@@ -2,7 +2,7 @@
 """PCB21 cloud daily SHADOW coverage audit. Read-only Shioaji; no trades or raw data publication."""
 import csv,json,os,sys
 from pathlib import Path
-from datetime import datetime,timedelta
+from datetime import datetime,timedelta\nfrom zoneinfo import ZoneInfo
 import shioaji as sj
 ROOT=Path(__file__).resolve().parent
 WATCHLIST=ROOT/"data"/"pcb_minute_watchlist_shadow.csv"
@@ -40,7 +40,7 @@ def audit(api,day,watchlist=WATCHLIST):
             outcome.append({"code":code,"status":"HOLD","error_type":type(exc).__name__})
     return {"date":day,"scope":"PCB21_SHADOW","stocks":len(outcome),"passed":sum(x["status"]=="PASS" for x in outcome),"status":"PASS_COVERAGE_STRUCTURE_SHADOW" if all(x["status"]=="PASS" for x in outcome) else "HOLD","market_volume_verified":False,"production_ready":False,"stocks_detail":outcome}
 def main():
-    day=os.environ.get("TRADE_DATE") or (datetime.utcnow()+timedelta(hours=8)-timedelta(days=1)).date().isoformat()
+    day=os.environ.get("TRADE_DATE") or datetime.now(ZoneInfo("Asia/Taipei")).date().isoformat()
     if datetime.strptime(day,"%Y-%m-%d").weekday()>=5:
         print("HOLD: weekend; no quote fetch");return 0
     key=os.environ.get("SHIOAJI_API_KEY");secret=os.environ.get("SHIOAJI_SECRET_KEY")
