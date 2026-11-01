@@ -1,0 +1,26 @@
+name: Official x Shioaji stock universe reconciliation SHADOW
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reconcile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'shioaji>=1.0,<2'
+      - name: Compare official company codes with Shioaji stock contracts
+        env:
+          SHIOAJI_API_KEY: ${{ secrets.SHIOAJI_API_KEY }}
+          SHIOAJI_SECRET_KEY: ${{ secrets.SHIOAJI_SECRET_KEY }}
+        run: python sector-rotation/shadow_official_shioaji_intersection.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-shioaji-intersection-shadow
+          path: official_shioaji_intersection_shadow.json
+          if-no-files-found: ignore
