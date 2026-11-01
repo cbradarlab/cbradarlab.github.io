@@ -7,8 +7,8 @@ import shioaji as sj
 from shadow_official_equity_universe import SOURCES,CODE_KEYS_BY_MARKET,load,field
 
 DATE=os.getenv("PROBE_DATE","2026-10-30")
-BATCH_SIZE=min(50,max(1,int(os.getenv("BATCH_SIZE","30"))))
-MAX_SECONDS=min(240,max(30,int(os.getenv("MAX_SECONDS","150"))))
+BATCH_SIZE=min(200,max(1,int(os.getenv("BATCH_SIZE","30"))))
+MAX_SECONDS=min(300,max(30,int(os.getenv("MAX_SECONDS","150"))))
 def universe(api):
     selected={}
     for group in api.Contracts.Stocks:
@@ -36,9 +36,18 @@ def main():
     try:
         api.login(api_key=key,secret_key=secret,subscribe_trade=False)
         candidates=universe(api)
-        # Stable, deterministic spread across the universe; keep <=50 requests.
-        chosen=[candidates[i] for i in range(0,len(candidates),max(1,len(candidates)//BATCH_SIZE))][:BATCH_SIZE]
-        elapsed=[];good=0;failures={};minute_counts=[];empty_codes=[];exception_codes=[]
+        # Stable stratified sampling: include both TSE and OTC even for small batches.
+        def sample(items,n):
+            if n<=0:return []
+            if n>=len(items):return items
+            return [items[(i*len(items))//n] for i in range(n)]
+        tse=[x for x in candidates if x[0]=="TSE"]
+        otc=[x for x in candidates if x[0]=="OTC"]
+        n_tse=min(len(tse),round(BATCH_SIZE*len(tse)/len(candidates)))
+        n_otc=BATCH_SIZE-n_tse
+        chosen=sample(tse,n_tse)+sample(otc,n_otc)
+        print("SAMPLING",json.dumps({"TSE":n_tse,"OTC":n_otc,"total":len(chosen)}))
+        elapsed=[];good=0;failures={};minute_counts=[];empty_codes=[];exception_codes=[];market_stats={"TSE":{"requested":0,"with_bars":0},"OTC":{"requested":0,"with_bars":0}}
         started=time.monotonic()
         for market,code,contract in chosen:
             if time.monotonic()-started>=MAX_SECONDS:
@@ -58,9 +67,11 @@ def main():
                 failures[kind]=failures.get(kind,0)+1
                 exception_codes.append({"market":market,"code":code,"type":kind})
                 status="ERROR_"+kind
+            market_stats[market]["requested"]+=1
+            if status=="OK":market_stats[market]["with_bars"]+=1
             elapsed.append(round(time.monotonic()-start,3))
             print("PROBE",market,code,status,"seconds",elapsed[-1])
-        result={"date":DATE,"status":("PASS_BATCH_PROBE_SHADOW" if good==BATCH_SIZE else "PASS_REQUESTS_WITH_EMPTY_BARS_SHADOW") if len(elapsed)==BATCH_SIZE and not exception_codes else "HOLD","candidate_count":len(candidates),"requested":len(elapsed),"successful":good,"target":BATCH_SIZE,"total_seconds":round(time.monotonic()-started,2),"max_request_seconds":max(elapsed,default=0),"average_request_seconds":round(sum(elapsed)/len(elapsed),3) if elapsed else None,"failures":failures,"empty_codes":empty_codes,"exception_codes":exception_codes,"raw_ohlcv_exported":False,"official_company_intersection_verified":True,"common_stock_only_verified":False,"production_ready":False}
+        result={"date":DATE,"status":("PASS_BATCH_PROBE_SHADOW" if good==BATCH_SIZE else "PASS_REQUESTS_WITH_EMPTY_BARS_SHADOW") if len(elapsed)==BATCH_SIZE and not exception_codes else "HOLD","candidate_count":len(candidates),"market_stats":market_stats,"requested":len(elapsed),"successful":good,"target":BATCH_SIZE,"total_seconds":round(time.monotonic()-started,2),"max_request_seconds":max(elapsed,default=0),"average_request_seconds":round(sum(elapsed)/len(elapsed),3) if elapsed else None,"failures":failures,"empty_codes":empty_codes,"exception_codes":exception_codes,"raw_ohlcv_exported":False,"official_company_intersection_verified":True,"common_stock_only_verified":False,"production_ready":False}
         Path("full_market_batch_performance_shadow.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         print("SUMMARY",json.dumps(result,ensure_ascii=False))
         return 0 if len(elapsed)==BATCH_SIZE and not exception_codes else 3
