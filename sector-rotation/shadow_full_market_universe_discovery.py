@@ -16,16 +16,31 @@ def main():
         api.login(api_key=key,secret_key=secret,subscribe_trade=False)
         stocks=api.Contracts.Stocks
         items=[]
-        for exchange in ("TSE","OTC"):
-            try: contracts=list(stocks[exchange])
+        # Shioaji has direct code lookup (verified in PCB21); TSE/OTC are not
+        # guaranteed dictionary keys. Iterate available contract groups instead.
+        try:
+            groups=list(stocks)
+        except Exception as exc:
+            print("HOLD: contract group enumeration:",type(exc).__name__);return 3
+        seen={}
+        group_stats=[]
+        for group in groups:
+            try:
+                contracts=list(group)
+                valid=0
+                for contract in contracts:
+                    code=str(getattr(contract,"code",""))
+                    exchange=str(getattr(contract,"exchange","")).upper()
+                    if len(code)==4 and code.isdigit() and exchange in ("TSE","OTC"):
+                        seen.setdefault(exchange,set()).add(code)
+                        valid+=1
+                group_stats.append({"group_type":type(group).__name__,"contracts":len(contracts),"eligible":valid})
             except Exception as exc:
-                print("HOLD:",exchange,"contract enumeration:",type(exc).__name__);return 3
-            selected=[]
-            for contract in contracts:
-                code=str(getattr(contract,"code",""))
-                if len(code)==4 and code.isdigit():
-                    selected.append(code)
-            items.append({"exchange":exchange,"total_contracts":len(contracts),"four_digit_codes":len(set(selected)),"sample":sorted(set(selected))[:5]})
+                group_stats.append({"group_type":type(group).__name__,"error":type(exc).__name__})
+        for exchange in ("TSE","OTC"):
+            selected=sorted(seen.get(exchange,set()))
+            items.append({"exchange":exchange,"four_digit_codes":len(selected),"sample":selected[:5]})
+        print("GROUP_DIAGNOSTICS",json.dumps(group_stats[:20],ensure_ascii=False))
         summary={"date_utc":datetime.now(timezone.utc).date().isoformat(),"status":"PASS_DISCOVERY_SHADOW" if all(x["four_digit_codes"]>0 for x in items) else "HOLD","markets":items,"data_exported":False,"orders_placed":False}
         Path("full_market_universe_discovery_shadow.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         print(json.dumps(summary,ensure_ascii=False))
