@@ -17,7 +17,7 @@ def audit(api,day,watchlist=WATCHLIST):
     for stock in names:
         code=stock["code"]
         try:
-            contract=api.contracts.Stocks[code]
+            contract=api.Contracts.Stocks[code]
             kb=api.kbars(contract,start=day,end=day)
             fields=(kb.ts,kb.Open,kb.High,kb.Low,kb.Close,kb.Volume)
             if len({len(a) for a in fields})!=1: raise ValueError("field_length_mismatch")
