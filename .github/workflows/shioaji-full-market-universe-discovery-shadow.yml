@@ -1,0 +1,26 @@
+name: Shioaji full-market universe discovery SHADOW
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'shioaji>=1.0,<2'
+      - name: Discover listed and OTC stock contracts without market quotes
+        env:
+          SHIOAJI_API_KEY: ${{ secrets.SHIOAJI_API_KEY }}
+          SHIOAJI_SECRET_KEY: ${{ secrets.SHIOAJI_SECRET_KEY }}
+        run: python sector-rotation/shadow_full_market_universe_discovery.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: full-market-universe-discovery-shadow
+          path: full_market_universe_discovery_shadow.json
+          if-no-files-found: ignore
