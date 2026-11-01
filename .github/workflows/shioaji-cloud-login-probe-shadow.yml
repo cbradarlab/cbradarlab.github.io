@@ -1,0 +1,21 @@
+name: Shioaji cloud login probe SHADOW
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  login-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Shioaji
+        run: python -m pip install 'shioaji>=1.0,<2'
+      - name: Test login without orders or market export
+        env:
+          SHIOAJI_API_KEY: ${{ secrets.SHIOAJI_API_KEY }}
+          SHIOAJI_SECRET_KEY: ${{ secrets.SHIOAJI_SECRET_KEY }}
+        run: python sector-rotation/shadow_shioaji_cloud_login_probe.py
