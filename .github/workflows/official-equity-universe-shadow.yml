@@ -1,0 +1,22 @@
+name: Official listed-company universe SHADOW
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch TWSE and TPEx official company lists
+        run: python sector-rotation/shadow_official_equity_universe.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-equity-universe-shadow
+          path: official_equity_universe_shadow.json
+          if-no-files-found: ignore
