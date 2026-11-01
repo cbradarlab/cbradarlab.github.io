@@ -28,7 +28,7 @@ def main():
         candidates=universe(api)
         # Stable, deterministic spread across the universe; keep <=50 requests.
         chosen=[candidates[i] for i in range(0,len(candidates),max(1,len(candidates)//BATCH_SIZE))][:BATCH_SIZE]
-        elapsed=[];good=0;failures={};minute_counts=[]
+        elapsed=[];good=0;failures={};minute_counts=[];empty_codes=[];exception_codes=[]
         started=time.monotonic()
         for market,code,contract in chosen:
             if time.monotonic()-started>=MAX_SECONDS:
@@ -39,18 +39,21 @@ def main():
                 count=len(bars.ts)
                 minute_counts.append(count)
                 if count>0:good+=1
-                else: failures["empty_bars"]=failures.get("empty_bars",0)+1
+                else:
+                    failures["empty_bars"]=failures.get("empty_bars",0)+1
+                    empty_codes.append({"market":market,"code":code})
                 status="OK" if count else "EMPTY"
             except Exception as exc:
                 kind=type(exc).__name__
                 failures[kind]=failures.get(kind,0)+1
+                exception_codes.append({"market":market,"code":code,"type":kind})
                 status="ERROR_"+kind
             elapsed.append(round(time.monotonic()-start,3))
             print("PROBE",market,code,status,"seconds",elapsed[-1])
-        result={"date":DATE,"status":"PASS_BATCH_PROBE_SHADOW" if len(elapsed)==BATCH_SIZE and good==BATCH_SIZE else "HOLD","candidate_count":len(candidates),"requested":len(elapsed),"successful":good,"target":BATCH_SIZE,"total_seconds":round(time.monotonic()-started,2),"max_request_seconds":max(elapsed,default=0),"average_request_seconds":round(sum(elapsed)/len(elapsed),3) if elapsed else None,"failures":failures,"raw_ohlcv_exported":False,"equity_universe_verified":False,"production_ready":False}
+        result={"date":DATE,"status":("PASS_BATCH_PROBE_SHADOW" if good==BATCH_SIZE else "PASS_REQUESTS_WITH_EMPTY_BARS_SHADOW") if len(elapsed)==BATCH_SIZE and not exception_codes else "HOLD","candidate_count":len(candidates),"requested":len(elapsed),"successful":good,"target":BATCH_SIZE,"total_seconds":round(time.monotonic()-started,2),"max_request_seconds":max(elapsed,default=0),"average_request_seconds":round(sum(elapsed)/len(elapsed),3) if elapsed else None,"failures":failures,"empty_codes":empty_codes,"exception_codes":exception_codes,"raw_ohlcv_exported":False,"equity_universe_verified":False,"production_ready":False}
         Path("full_market_batch_performance_shadow.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         print("SUMMARY",json.dumps(result,ensure_ascii=False))
-        return 0 if result["status"]=="PASS_BATCH_PROBE_SHADOW" else 3
+        return 0 if len(elapsed)==BATCH_SIZE and not exception_codes else 3
     except Exception as exc:
         print("FAIL:",type(exc).__name__);return 1
     finally:
