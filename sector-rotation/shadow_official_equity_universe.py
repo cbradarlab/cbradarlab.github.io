@@ -6,8 +6,8 @@ SOURCES={
  "TSE":"https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
  "OTC":"https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O",
 }
-CODE_KEYS=("公司代號","公司代碼","證券代號","Code")
-NAME_KEYS=("公司名稱","公司簡稱","Name")
+CODE_KEYS_BY_MARKET={"TSE":("公司代號",),"OTC":("SecuritiesCompanyCode",)}
+NAME_KEYS_BY_MARKET={"TSE":("公司名稱","公司簡稱"),"OTC":("CompanyName","CompanyAbbreviation")}
 def load(url):
  req=urllib.request.Request(url,headers={"User-Agent":"CBRadar-SectorRotation-Shadow/1.0","Accept":"application/json"})
  with urllib.request.urlopen(req,timeout=30) as response:
@@ -24,9 +24,9 @@ def main():
  try:
   for market,url in SOURCES.items():
    rows=load(url);codes={};excluded=0
-   if not any(k in rows[0] for k in CODE_KEYS):raise ValueError(market+": company-code field missing")
+   if not any(k in rows[0] for k in CODE_KEYS_BY_MARKET[market]):raise ValueError(market+": company-code field missing")
    for row in rows:
-    code=field(row,CODE_KEYS);name=field(row,NAME_KEYS)
+    code=field(row,CODE_KEYS_BY_MARKET[market]);name=field(row,NAME_KEYS_BY_MARKET[market])
     if code and re.fullmatch(r"[0-9]{4}",code):
      if code in codes and codes[code]!=name:raise ValueError(market+": conflicting company codes "+code)
      codes[code]=name
