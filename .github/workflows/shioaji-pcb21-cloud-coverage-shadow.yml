@@ -1,5 +1,7 @@
-name: PCB21 cloud coverage SHADOW (manual pilot)
+name: PCB21 cloud coverage SHADOW (daily audit)
 on:
+  schedule:
+    - cron: '30 7 * * 1-5' # 15:30 Taiwan, GitHub cron is UTC
   workflow_dispatch:
     inputs:
       trade_date:
