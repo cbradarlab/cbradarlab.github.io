@@ -1,0 +1,21 @@
+name: Shioaji cloud historical K-bars probe SHADOW
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  kbars-probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'shioaji>=1.0,<2'
+      - name: Verify 2 pilot stocks in cloud without exporting licensed prices
+        env:
+          SHIOAJI_API_KEY: ${{ secrets.SHIOAJI_API_KEY }}
+          SHIOAJI_SECRET_KEY: ${{ secrets.SHIOAJI_SECRET_KEY }}
+          PROBE_DATE: '2026-10-30'
+        run: python sector-rotation/shadow_shioaji_cloud_kbars_probe.py
