@@ -9,7 +9,7 @@ from shadow_full_market_batch_probe import universe
 
 def main():
     now=datetime.now(ZoneInfo("Asia/Taipei"))
-    date=os.getenv("TRADE_DATE",now.date().isoformat())
+    date=os.getenv("TRADE_DATE","").strip() or now.date().isoformat()
     count=min(30,max(1,int(os.getenv("SAMPLE_COUNT","30"))))
     api=sj.Shioaji(simulation=False)
     report={"date":date,"generated_at":now.isoformat(),"status":"HOLD",
@@ -37,6 +37,8 @@ def main():
                 report["errors"].append({"market":market,"code":code,
                                          "type":type(exc).__name__})
         report["with_bars"]=sum(bool(s["minutes"]) for s in report["stocks"])
+        print("EMPTY_CODES",json.dumps([s["code"] for s in report["stocks"] if not s["minutes"]]))
+        print("ERROR_TYPES",json.dumps(report["errors"],ensure_ascii=False))
         report["status"]="PASS_SAMPLE_FEED_SHADOW" if len(report["stocks"])==count and not report["errors"] else "HOLD"
         print("SUMMARY",json.dumps({"date":date,"requested":count,
               "with_bars":report["with_bars"],"errors":len(report["errors"]),
