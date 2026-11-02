@@ -31,11 +31,11 @@ def main():
                 # Keep per-stock timestamp, close, volume for player feed validation.
                 # Do not push this data to a public repository or Pages.
                 points=[{"t":str(t),"c":float(c),"v":float(v)}
-                        for t,c,v in zip(bars.ts,bars.close,bars.volume)]
+                        for t,c,v in zip(bars.ts,bars.Close,bars.Volume)]
                 report["stocks"].append({"market":market,"code":code,"minutes":points})
             except Exception as exc:
                 report["errors"].append({"market":market,"code":code,
-                                         "type":type(exc).__name__})
+                                         "type":type(exc).__name__,"detail":str(exc)[:160]})
         report["with_bars"]=sum(bool(s["minutes"]) for s in report["stocks"])
         report["status"]="PASS_SAMPLE_FEED_SHADOW" if len(report["stocks"])==count and not report["errors"] else "HOLD"
         print("SUMMARY",json.dumps({"date":date,"requested":count,
