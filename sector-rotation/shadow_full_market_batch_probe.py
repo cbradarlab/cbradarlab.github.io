@@ -75,7 +75,7 @@ def main():
         result={"date":DATE,"status":("PASS_BATCH_PROBE_SHADOW" if good==target else "PASS_REQUESTS_WITH_EMPTY_BARS_SHADOW") if len(elapsed)==target and not exception_codes else "HOLD","candidate_count":len(candidates),"market_stats":market_stats,"requested":len(elapsed),"successful":good,"target":target,"total_seconds":round(time.monotonic()-started,2),"max_request_seconds":max(elapsed,default=0),"average_request_seconds":round(sum(elapsed)/len(elapsed),3) if elapsed else None,"failures":failures,"empty_codes":empty_codes,"exception_codes":exception_codes,"raw_ohlcv_exported":False,"official_company_intersection_verified":True,"common_stock_only_verified":False,"production_ready":False}
         Path("full_market_batch_performance_shadow.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
         print("SUMMARY",json.dumps(result,ensure_ascii=False))
-        return 0 if len(elapsed)==BATCH_SIZE and not exception_codes else 3
+        return 0 if len(elapsed)==target and not exception_codes else 3
     except Exception as exc:
         print("FAIL:",type(exc).__name__);return 1
     finally:
