@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>產業輪動｜分鐘資料本機預覽 SHADOW</title>
+<style>
+:root{font-family:system-ui,"Microsoft JhengHei",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}body{background:#0c1522;color:#e7edf7;max-width:1160px;margin:auto;padding:20px}
+h1{font-size:25px;margin:0 0 6px}.muted{color:#a1afc5;font-size:13px}
+.panel{background:#172538;border:1px solid #304157;border-radius:14px;padding:16px;margin:14px 0}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+button,select,input[type=file]{color:inherit;background:#253950;border:1px solid #425872;border-radius:8px;padding:8px}
+button{cursor:pointer}input[type=range]{flex:1;min-width:150px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid #2c3c50}th{color:#a1afc5}
+.track{height:12px;border-radius:8px;background:#243348;overflow:hidden;min-width:100px}.fill{height:100%;background:#53c4a5}
+.down{color:#fa9c9c}.up{color:#65dbb2}.warn{color:#ffd68a}
+@media(max-width:650px){th:nth-child(4),td:nth-child(4){display:none}}
+</style>
+<h1>產業輪動｜分鐘播放器 <span class="muted">SHADOW 本機資料預覽</span></h1>
+<p class="muted">請載入從 GitHub Actions 下載並解壓縮的 intraday_player_feed_shadow.json。檔案只在此瀏覽器處理，不會上傳。此頁不是即時行情。</p>
+<div class="panel controls"><input id="file" type="file" accept=".json,application/json">
+<select id="mode"><option value="strength">價格相對強弱（%）</option><option value="activity">成交量活躍度（累計量）</option></select>
+<button id="play" disabled>▶ 播放</button><button id="reset" disabled>↺ 重頭</button>
+</div>
+<div class="panel"><div class="controls"><strong id="clock">尚未載入</strong><input id="time" type="range" min="0" max="0" value="0" disabled><span id="step">0 / 0</span></div>
+<p id="status" class="muted">等待 JSON 資料。30 檔樣本不代表全市場，尚未具備正式產業分類。</p></div>
+<div class="panel"><table><thead><tr><th>排名</th><th>股票</th><th>相對強弱</th><th>活躍度</th><th>圖示</th></tr></thead><tbody id="rows"></tbody></table></div>
+<script>
+const $=id=>document.getElementById(id);let stocks=[],times=[],timer=null;
+const stamp=x=>{const s=String(x);const m=s.match(/(\d{2}):(\d{2})/);return m?m[0]:s.slice(11,16)};
+function stop(){if(timer){clearInterval(timer);timer=null}$('play').textContent='▶ 播放'}
+function show(){
+ if(!times.length)return;
+ const idx=+$('time').value,clock=times[idx],mode=$('mode').value;
+ $('clock').textContent=clock;$('step').textContent=(idx+1)+' / '+times.length;
+ const rows=stocks.map(s=>{
+  const points=s.minutes.filter(p=>stamp(p.t)<=clock);
+  if(!points.length)return null;
+  const first=s.minutes[0],last=points.at(-1);
+  const pct=first.c?((last.c/first.c)-1)*100:0;
+  const vol=points.reduce((a,p)=>a+p.v,0);
+  return {code:s.code,market:s.market,pct,vol};
+ }).filter(Boolean).sort((a,b)=>mode==='strength'?b.pct-a.pct:b.vol-a.vol);
+ const max=Math.max(1,...rows.map(x=>mode==='strength'?Math.abs(x.pct):x.vol));
+ $('rows').replaceChildren(...rows.map((r,i)=>{
+  const tr=document.createElement('tr');
+  const vals=[String(i+1),r.code+' '+r.market,(r.pct>=0?'+':'')+r.pct.toFixed(2)+'%',Math.round(r.vol).toLocaleString()];
+  vals.forEach((v,j)=>{const td=document.createElement('td');td.textContent=v;if(j===2)td.className=r.pct>=0?'up':'down';tr.append(td)});
+  const td=document.createElement('td'),track=document.createElement('div'),fill=document.createElement('div');
+  track.className='track';fill.className='fill';fill.style.width=(100*(mode==='strength'?Math.abs(r.pct):r.vol)/max)+'%';
+  if(mode==='strength'&&r.pct<0)fill.style.background='#f19a9a';
+  track.append(fill);td.append(track);tr.append(td);return tr;
+ }));
+}
+$('file').onchange=async e=>{
+ stop();
+ try{
+  const obj=JSON.parse(await e.target.files[0].text());
+  if(!Array.isArray(obj.stocks))throw Error('找不到 stocks 陣列');
+  stocks=obj.stocks.filter(s=>Array.isArray(s.minutes)&&s.minutes.length).map(s=>({...s,minutes:s.minutes.filter(p=>Number.isFinite(+p.c)&&Number.isFinite(+p.v)).sort((a,b)=>String(a.t).localeCompare(String(b.t)))}));
+  times=[...new Set(stocks.flatMap(s=>s.minutes.map(p=>stamp(p.t))))].sort();
+  if(!times.length)throw Error('沒有可播放的分鐘資料');
+  $('time').max=times.length-1;$('time').value=0;
+  $('time').disabled=false;$('play').disabled=false;$('reset').disabled=false;
+  $('status').textContent='日期 '+obj.date+'｜有行情 '+stocks.length+' 檔｜'+times.length+' 個分鐘時間點。成交量為樣本股票原始量加總，非市場成交金額。';
+  show();
+ }catch(err){$('status').textContent='無法載入：'+err.message;$('status').className='warn'}
+};
+$('time').oninput=show;$('mode').onchange=show;
+$('play').onclick=()=>{
+ if(timer){stop();return}
+ if(+$('time').value>=times.length-1)$('time').value=0;
+ $('play').textContent='Ⅱ 暫停';
+ timer=setInterval(()=>{const n=+$('time').value+1;if(n>=times.length){stop();return}$('time').value=n;show()},600);
+};
+$('reset').onclick=()=>{stop();$('time').value=0;show()};
+</script></html>
