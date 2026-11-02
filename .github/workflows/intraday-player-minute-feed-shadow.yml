@@ -25,6 +25,8 @@ jobs:
           TRADE_DATE: ${{ inputs.trade_date }}
           SAMPLE_COUNT: '30'
         run: python sector-rotation/shadow_intraday_player_feed.py
+      - name: Validate sector-minute calculation (offline)
+        run: python sector-rotation/test_shadow_sector_aggregate.py
       - name: Build private sample sector-minute frames
         run: python sector-rotation/shadow_sector_minute_aggregate.py
       - if: always()
