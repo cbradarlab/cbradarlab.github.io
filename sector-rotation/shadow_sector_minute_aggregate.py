@@ -3,6 +3,7 @@
 import json
 from collections import defaultdict
 from pathlib import Path
+from datetime import datetime, timezone
 
 SOURCE = Path("intraday_player_feed_shadow.json")
 MASTER = Path("sector-rotation/data/stocks.json")
@@ -10,6 +11,9 @@ OUTPUT = Path("sector_minute_aggregate_shadow.json")
 
 def minute(value):
     s = str(value)
+    if s.isdigit() and len(s) >= 13:
+        # Shioaji numpy datetime64[ns] encodes Taiwan exchange wall-clock as naive datetime64.
+        return datetime.fromtimestamp(int(s) / 1_000_000_000, timezone.utc).strftime("%H:%M")
     if "T" in s:
         s = s.split("T", 1)[1]
     elif " " in s:

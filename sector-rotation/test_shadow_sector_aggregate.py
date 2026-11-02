@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Offline deterministic checks for private SHADOW sector aggregator."""
-from shadow_sector_minute_aggregate import build
+from shadow_sector_minute_aggregate import build, minute
+assert minute('1793350860000000000') == '09:01'
 
 master={"stocks":[{"id":"1101","industry":"01"},{"id":"1102","industry":"01"},{"id":"2330","industry":"24"}]}
 data={"date":"2026-11-02","generated_at":"test","stocks":[
