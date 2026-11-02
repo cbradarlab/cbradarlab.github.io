@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Daily SHADOW full-market K-bar coverage audit; metadata only, no OHLCV export."""
 import json, os, sys, time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from pathlib import Path
 from zoneinfo import ZoneInfo
 import shioaji as sj
@@ -9,20 +9,24 @@ from shadow_full_market_batch_probe import universe
 
 TZ=ZoneInfo("Asia/Taipei")
 def target_date():
-    today=datetime.now(TZ).date()
+    now=datetime.now(TZ)
+    today=now.date()
     value=os.getenv("TRADE_DATE","").strip()
     if value:
-        from datetime import date
         d=date.fromisoformat(value)
         if d>today:raise ValueError("future TRADE_DATE")
     else:
         d=today
         while d.weekday()>=5:d-=timedelta(days=1)
     if d.weekday()>=5:raise ValueError("weekend is not a trading date")
+    if d==today and (now.hour,now.minute)<(15,0):
+        raise ValueError("today is not eligible before 15:00 Asia/Taipei; select a completed prior trading day")
     return d.isoformat()
 
 def main():
-    date=target_date()
+    try:date=target_date()
+    except ValueError as exc:
+        print("HOLD_DATE:",str(exc));return 3
     if not os.getenv("SHIOAJI_API_KEY") or not os.getenv("SHIOAJI_SECRET_KEY"):
         print("HOLD: missing API credentials");return 2
     api=sj.Shioaji(simulation=False)
