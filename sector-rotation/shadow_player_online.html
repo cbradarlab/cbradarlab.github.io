@@ -1,0 +1,75 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>台股產業輪動｜線上播放器 SHADOW</title>
+<style>
+:root{font-family:system-ui,"Microsoft JhengHei",sans-serif;color-scheme:dark}*{box-sizing:border-box}
+body{background:#0b1422;color:#e7edf7;max-width:1150px;margin:auto;padding:20px}
+h1{margin:0 0 6px;font-size:25px}p{line-height:1.6}.muted{color:#9caec5;font-size:13px}
+.panel{background:#16253a;border:1px solid #32445c;border-radius:14px;padding:16px;margin:14px 0}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+button,select{background:#263b54;color:#e7edf7;border:1px solid #50627a;border-radius:9px;padding:9px;cursor:pointer}
+input[type=range]{flex:1;min-width:160px}button:disabled,input:disabled{opacity:.45}
+table{border-collapse:collapse;width:100%}td,th{padding:11px 8px;border-bottom:1px solid #304057;text-align:left}th{color:#aebed2}
+.positive{color:#70deb3}.negative{color:#ffa4a4}.bar{background:#273c54;height:12px;border-radius:8px;overflow:hidden;min-width:60px}.fill{height:100%;background:#64cba9}
+.warn{color:#f5ce82}a{color:#a3d7ff}
+</style>
+<h1>台股產業輪動 <small class="muted">線上 SHADOW</small></h1>
+<p class="muted">自動讀取雲端資料，不需下載或上傳檔案。僅在資料真實存在且日期可確認時播放；無資料不會顯示假行情。</p>
+<div class="panel row"><strong id="state">連線中…</strong><span class="muted" id="updated"></span><button id="refresh">重新讀取</button></div>
+<div class="panel">
+<div class="row"><select id="mode"><option value="strength">產業相對強弱</option><option value="activity">成交活躍度</option></select>
+<button id="play" disabled>▶ 播放</button><button id="reset" disabled>↺ 重頭</button>
+<input id="time" type="range" min="0" max="0" value="0" disabled><strong id="clock">—</strong></div>
+<p class="muted" id="detail">等待已驗證的產業分鐘資料。</p>
+</div>
+<div class="panel"><table><thead><tr><th>排名</th><th>產業</th><th>強弱</th><th>成交活躍度</th><th>比較</th></tr></thead><tbody id="rows"><tr><td colspan="5">正在讀取…</td></tr></tbody></table></div>
+<p class="muted">來源：GitHub Pages 的官方股票主檔及已發布資料。產業分類使用官方產業代碼；不等同先前規劃的 30 產業鏈＋30 概念股。非交易建議。</p>
+<script>
+const $=id=>document.getElementById(id);let series=[],timer=null,stamp='';
+const fmt=n=>(Number(n)>=0?'+':'')+Number(n).toFixed(2)+'%';
+function stop(){clearInterval(timer);timer=null;$('play').textContent='▶ 播放'}
+function message(s){$('state').textContent=s}
+function render(){
+ if(!series.length)return;
+ const idx=+$('time').value,point=series[idx],mode=$('mode').value;
+ $('clock').textContent=point.time;$('detail').textContent='資料日期 '+stamp+'｜'+(idx+1)+' / '+series.length+' 個時間點｜'+point.industries.length+' 個產業';
+ const a=[...point.industries].filter(x=>Number.isFinite(+x.strength)&&Number.isFinite(+x.activity));
+ a.sort((x,y)=>mode==='strength'?y.strength-x.strength:y.activity-x.activity);
+ const max=Math.max(1,...a.map(x=>mode==='strength'?Math.abs(x.strength):x.activity));
+ $('rows').replaceChildren(...a.map((x,i)=>{
+  const tr=document.createElement('tr');
+  [i+1,x.name||x.industry,fmt(x.strength),Number(x.activity).toLocaleString()].forEach((v,j)=>{
+   const td=document.createElement('td');td.textContent=v;
+   if(j===2)td.className=x.strength>=0?'positive':'negative';tr.append(td)});
+  const td=document.createElement('td'),bar=document.createElement('div'),fill=document.createElement('div');
+  bar.className='bar';fill.className='fill';fill.style.width=100*(mode==='strength'?Math.abs(x.strength):x.activity)/max+'%';
+  if(mode==='strength'&&x.strength<0)fill.style.background='#ffa4a4';
+  bar.append(fill);td.append(bar);tr.append(td);return tr;
+ }));
+}
+async function read(url){const r=await fetch(url+'?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()}
+async function load(){
+ stop();message('正在讀取雲端資料…');
+ try{
+  const [master,feed]=await Promise.all([read('./data/stocks.json'),read('./data/sector_minute_latest.json')]);
+  if(!Array.isArray(master.stocks)||master.stocks.length<1000)throw Error('股票主檔不完整');
+  if(!Array.isArray(feed.frames)||!feed.frames.length)throw Error('分鐘產業資料為空');
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(feed.trade_date))throw Error('資料日期不明');
+  const clean=feed.frames.filter(x=>typeof x.time==='string'&&Array.isArray(x.industries))
+    .map(x=>({time:x.time,industries:x.industries.filter(y=>Number.isFinite(+y.strength)&&Number.isFinite(+y.activity))}));
+  if(!clean.length)throw Error('沒有有效的分鐘資料');
+  series=clean;stamp=feed.trade_date;$('time').max=series.length-1;$('time').value=series.length-1;
+  for(const id of ['play','reset','time'])$(id).disabled=false;
+  message('已載入雲端產業分鐘資料');$('updated').textContent='更新：'+(feed.generated_at||'未提供');render();
+ }catch(err){
+  series=[];for(const id of ['play','reset','time'])$(id).disabled=true;
+  $('rows').innerHTML='<tr><td colspan="5">尚無可播放的產業分鐘資料</td></tr>';
+  message('雲端分鐘資料尚未接通');$('updated').textContent='';
+  $('detail').textContent='目前只確認 Shioaji 測試資料可在 GitHub Actions 私有附件產生，尚未有可合法公開的產業分鐘資料。請勿把此畫面視為即時行情。';
+ }
+}
+$('refresh').onclick=load;$('mode').onchange=render;$('time').oninput=render;
+$('play').onclick=()=>{if(timer){stop();return}if(+$('time').value===series.length-1)$('time').value=0;
+ $('play').textContent='Ⅱ 暫停';timer=setInterval(()=>{let n=+$('time').value+1;if(n>=series.length){stop();return}$('time').value=n;render()},500)};
+$('reset').onclick=()=>{stop();$('time').value=0;render()};
+load();setInterval(()=>{if(!timer)load()},60000);
+</script></html>
