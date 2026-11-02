@@ -1,0 +1,29 @@
+name: Shioaji full-market minute K-bar probe SHADOW
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'shioaji>=1.0,<2'
+      - name: Read-only full official-company intersection minute K-bar pilot
+        env:
+          SHIOAJI_API_KEY: ${{ secrets.SHIOAJI_API_KEY }}
+          SHIOAJI_SECRET_KEY: ${{ secrets.SHIOAJI_SECRET_KEY }}
+          PROBE_DATE: '2026-10-30'
+          BATCH_SIZE: '2000'
+          MAX_SECONDS: '900'
+        run: python sector-rotation/shadow_full_market_batch_probe.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shioaji-full-market-minute-probe-shadow
+          path: full_market_batch_performance_shadow.json
+          if-no-files-found: ignore
