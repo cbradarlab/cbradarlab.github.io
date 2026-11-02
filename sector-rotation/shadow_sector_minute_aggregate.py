@@ -37,7 +37,7 @@ def main():
             if price<=0 or vol<0:continue
             total_vol+=vol
             bytime[clock(p["t"])][sector].append((100*(price/first-1),total_vol))
-    # Hold last known state of each stock through minutes with no trade.
+    # Only stocks trading at this minute are included; missing bars are not filled.
     # Sample-level aggregate is not full-sector coverage.
     frames=[]
     for t in sorted(bytime):
