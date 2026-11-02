@@ -1,0 +1,33 @@
+name: Shioaji daily market coverage SHADOW
+on:
+  workflow_dispatch:
+    inputs:
+      trade_date:
+        description: 'Taiwan trading date YYYY-MM-DD; blank uses Taiwan today (or last weekday)'
+        required: false
+        type: string
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'shioaji>=1.0,<2'
+      - name: Full-market daily coverage audit (no price export)
+        env:
+          SHIOAJI_API_KEY: ${{ secrets.SHIOAJI_API_KEY }}
+          SHIOAJI_SECRET_KEY: ${{ secrets.SHIOAJI_SECRET_KEY }}
+          TRADE_DATE: ${{ inputs.trade_date }}
+          MAX_SECONDS: '900'
+        run: python sector-rotation/shadow_daily_market_coverage.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shioaji-daily-market-coverage-shadow
+          path: daily_market_coverage_shadow.json
+          if-no-files-found: ignore
