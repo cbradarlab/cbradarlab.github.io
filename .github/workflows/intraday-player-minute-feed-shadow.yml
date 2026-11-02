@@ -25,10 +25,14 @@ jobs:
           TRADE_DATE: ${{ inputs.trade_date }}
           SAMPLE_COUNT: '30'
         run: python sector-rotation/shadow_intraday_player_feed.py
+      - name: Build private sample sector-minute frames
+        run: python sector-rotation/shadow_sector_minute_aggregate.py
       - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: intraday-player-feed-shadow
-          path: intraday_player_feed_shadow.json
+          path: |
+            intraday_player_feed_shadow.json
+            sector_minute_aggregate_shadow.json
           retention-days: 1
           if-no-files-found: ignore
