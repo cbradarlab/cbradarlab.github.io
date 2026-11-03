@@ -331,5 +331,441 @@
       "share_pct": 0.001
     }
   ],
+  "panels": {
+    "industry_chain": {
+      "total_groups": 30,
+      "mapped_groups": 18,
+      "mapping_type": "official_industry_proxy",
+      "groups": [
+        {
+          "name": "半導體",
+          "ntd": 361303439446,
+          "stock_count": 207,
+          "mapped_count": 207,
+          "market_share_pct": 41.367
+        },
+        {
+          "name": "電子零組件",
+          "ntd": 220867665123,
+          "stock_count": 209,
+          "mapped_count": 210,
+          "market_share_pct": 25.288
+        },
+        {
+          "name": "電腦及週邊設備",
+          "ntd": 45716797878,
+          "stock_count": 111,
+          "mapped_count": 111,
+          "market_share_pct": 5.234
+        },
+        {
+          "name": "通信網路",
+          "ntd": 35204412350,
+          "stock_count": 91,
+          "mapped_count": 92,
+          "market_share_pct": 4.031
+        },
+        {
+          "name": "石化及塑橡膠",
+          "ntd": 28714846357,
+          "stock_count": 36,
+          "mapped_count": 36,
+          "market_share_pct": 3.288
+        },
+        {
+          "name": "金融",
+          "ntd": 23863991421,
+          "stock_count": 40,
+          "mapped_count": 40,
+          "market_share_pct": 2.732
+        },
+        {
+          "name": "電機機械",
+          "ntd": 19473264000,
+          "stock_count": 101,
+          "mapped_count": 102,
+          "market_share_pct": 2.23
+        },
+        {
+          "name": "交通運輸及航運",
+          "ntd": 8096048513,
+          "stock_count": 34,
+          "mapped_count": 34,
+          "market_share_pct": 0.927
+        },
+        {
+          "name": "軟體服務",
+          "ntd": 5108346494,
+          "stock_count": 47,
+          "mapped_count": 47,
+          "market_share_pct": 0.585
+        },
+        {
+          "name": "油電燃氣",
+          "ntd": 3423291861,
+          "stock_count": 12,
+          "mapped_count": 12,
+          "market_share_pct": 0.392
+        },
+        {
+          "name": "鋼鐵",
+          "ntd": 2453549218,
+          "stock_count": 48,
+          "mapped_count": 48,
+          "market_share_pct": 0.281
+        },
+        {
+          "name": "食品",
+          "ntd": 1599594949,
+          "stock_count": 33,
+          "mapped_count": 34,
+          "market_share_pct": 0.183
+        },
+        {
+          "name": "水泥",
+          "ntd": 1580161181,
+          "stock_count": 7,
+          "mapped_count": 7,
+          "market_share_pct": 0.181
+        },
+        {
+          "name": "汽車",
+          "ntd": 1117120603,
+          "stock_count": 44,
+          "mapped_count": 44,
+          "market_share_pct": 0.128
+        },
+        {
+          "name": "雲端運算",
+          "ntd": 1036603096,
+          "stock_count": 40,
+          "mapped_count": 40,
+          "market_share_pct": 0.119
+        },
+        {
+          "name": "建材營造",
+          "ntd": 834183543,
+          "stock_count": 88,
+          "mapped_count": 88,
+          "market_share_pct": 0.096
+        },
+        {
+          "name": "紡織",
+          "ntd": 742409305,
+          "stock_count": 52,
+          "mapped_count": 52,
+          "market_share_pct": 0.085
+        },
+        {
+          "name": "造紙",
+          "ntd": 293891493,
+          "stock_count": 7,
+          "mapped_count": 7,
+          "market_share_pct": 0.034
+        },
+        {
+          "name": "再生醫療",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "印刷電路板",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "太陽能產業",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "被動元件",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "製藥",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "資訊安全",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "醫療器材",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "金融科技",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "電動車輛產業",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "電子商務",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "風力發電",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "食品生技",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        }
+      ]
+    },
+    "concept": {
+      "total_groups": 30,
+      "mapped_groups": 6,
+      "mapping_type": "reviewed_examples_only",
+      "groups": [
+        {
+          "name": "CoWoS",
+          "ntd": 95950896264,
+          "stock_count": 1,
+          "mapped_count": 1,
+          "market_share_pct": 10.986
+        },
+        {
+          "name": "PCB",
+          "ntd": 69467118940,
+          "stock_count": 12,
+          "mapped_count": 12,
+          "market_share_pct": 7.954
+        },
+        {
+          "name": "高頻高速材料",
+          "ntd": 48471322053,
+          "stock_count": 5,
+          "mapped_count": 5,
+          "market_share_pct": 5.55
+        },
+        {
+          "name": "玻纖布",
+          "ntd": 42754900457,
+          "stock_count": 6,
+          "mapped_count": 6,
+          "market_share_pct": 4.895
+        },
+        {
+          "name": "AI 儲存",
+          "ntd": 1862663939,
+          "stock_count": 1,
+          "mapped_count": 1,
+          "market_share_pct": 0.213
+        },
+        {
+          "name": "記憶體模組",
+          "ntd": 1862663939,
+          "stock_count": 1,
+          "mapped_count": 1,
+          "market_share_pct": 0.213
+        },
+        {
+          "name": "AI PC",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "AI 伺服器",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "AI 客製化晶片",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "AI 資料中心電源",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "BBU",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "CPO／矽光子",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "FOPLP",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "GLP-1減重藥",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "HBM",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "低軌衛星",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "儲能",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "先進封裝設備",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "機器人",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "機器人視覺",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "液冷散熱",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "玻璃基板",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "第三類半導體(SiC／GaN)",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "記憶體",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "資安",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "車用半導體",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "軍工",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "邊緣AI",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "重電",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        },
+        {
+          "name": "高速連接器",
+          "ntd": null,
+          "stock_count": 0,
+          "mapped_count": 0,
+          "market_share_pct": 0.0
+        }
+      ]
+    }
+  },
   "note": "成交金額，不是淨流入；只代表已收盤交易日，不是盤中每分鐘資金流。"
 }
