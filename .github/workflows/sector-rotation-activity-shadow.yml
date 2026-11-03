@@ -1,6 +1,8 @@
 name: Sector Rotation - Official Turnover Shadow
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '35 11 * * 1-5'
   push:
     branches: [main]
     paths:
