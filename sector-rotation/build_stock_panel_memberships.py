@@ -56,6 +56,14 @@ def main():
     official=rows(OFFICIAL)
     if len(official)<1500:
         raise ValueError("Official stock registry coverage below 1500")
+    reviewed_themes=rows(OVERRIDES) if OVERRIDES.exists() else []
+    # Reuse already-verified PCB memberships for the more specific research chain.
+    pcb_verified={
+        x["code"].strip():x["evidence_url"].strip()
+        for x in reviewed_themes
+        if x["concept"].strip()=="PCB" and x["review_status"].strip()=="verified"
+        and x["evidence_url"].strip().startswith("https://")
+    }
     output=[]; review=[]; seen=set(); stats=Counter()
     for stock in official:
         code=stock["code"].strip()
@@ -64,10 +72,12 @@ def main():
         raw=stock["official_industry"].strip()
         panel=INDUSTRY_CODE.get(raw.zfill(2)) if raw.isdigit() else INDUSTRY_LABEL.get(raw)
         if panel not in panels: panel=None
+        if code in pcb_verified: panel="印刷電路板"
         if panel:
             output.append({"code":code,"name":stock["name"],"market":stock["market"],
-                "kind":"industry_chain","panel":panel,"source":"official_industry:"+raw,
-                "review_status":"official_mapping"})
+                "kind":"industry_chain","panel":panel,
+                "source":pcb_verified.get(code,"official_industry:"+raw),
+                "review_status":"verified_theme" if code in pcb_verified else "official_mapping"})
             stats["industry_mapped"]+=1
         else:
             review.append({"code":code,"name":stock["name"],"market":stock["market"],
@@ -75,7 +85,7 @@ def main():
             stats["industry_review"]+=1
     if OVERRIDES.exists():
         theme_seen=set()
-        for x in rows(OVERRIDES):
+        for x in reviewed_themes:
             code=x["code"].strip(); panel=x["concept"].strip()
             if not code or not panel: continue
             if code not in seen: raise ValueError("Concept code absent from official universe: "+code)
