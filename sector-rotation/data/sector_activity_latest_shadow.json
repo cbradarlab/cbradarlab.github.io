@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "status": "SHADOW_CLOSE_ONLY",
+  "date": "2026-11-02",
+  "source_dates": {
+    "上市": "2026-11-02",
+    "上櫃": "2026-11-02"
+  },
+  "source_urls": {
+    "上市": "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL",
+    "上櫃": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
+  },
+  "matched_stocks": 1984,
+  "master_stocks": 1990,
+  "ignored_non_master_rows": 12858,
+  "total_ntd": 873414527801,
+  "industries": [
+    {
+      "code": "24",
+      "name": "半導體業",
+      "ntd": 361303439446,
+      "stock_count": 207,
+      "twse_ntd": 291475911546,
+      "tpex_ntd": 69827527900,
+      "share_pct": 41.367
+    },
+    {
+      "code": "28",
+      "name": "電子零組件業",
+      "ntd": 220867665123,
+      "stock_count": 209,
+      "twse_ntd": 183070002486,
+      "tpex_ntd": 37797662637,
+      "share_pct": 25.288
+    },
+    {
+      "code": "26",
+      "name": "光電業",
+      "ntd": 46140190935,
+      "stock_count": 116,
+      "twse_ntd": 42334402006,
+      "tpex_ntd": 3805788929,
+      "share_pct": 5.283
+    },
+    {
+      "code": "25",
+      "name": "電腦及週邊設備業",
+      "ntd": 45716797878,
+      "stock_count": 111,
+      "twse_ntd": 40409832232,
+      "tpex_ntd": 5306965646,
+      "share_pct": 5.234
+    },
+    {
+      "code": "31",
+      "name": "其他電子業",
+      "ntd": 39512708203,
+      "stock_count": 94,
+      "twse_ntd": 29999390551,
+      "tpex_ntd": 9513317652,
+      "share_pct": 4.524
+    },
+    {
+      "code": "27",
+      "name": "通信網路業",
+      "ntd": 35204412350,
+      "stock_count": 91,
+      "twse_ntd": 17944423126,
+      "tpex_ntd": 17259989224,
+      "share_pct": 4.031
+    },
+    {
+      "code": "03",
+      "name": "塑膠工業",
+      "ntd": 28435302215,
+      "stock_count": 25,
+      "twse_ntd": 28421573281,
+      "tpex_ntd": 13728934,
+      "share_pct": 3.256
+    },
+    {
+      "code": "17",
+      "name": "金融保險",
+      "ntd": 23863991421,
+      "stock_count": 40,
+      "twse_ntd": 23671903488,
+      "tpex_ntd": 192087933,
+      "share_pct": 2.732
+    },
+    {
+      "code": "05",
+      "name": "電機機械",
+      "ntd": 19473264000,
+      "stock_count": 101,
+      "twse_ntd": 18459496098,
+      "tpex_ntd": 1013767902,
+      "share_pct": 2.23
+    },
+    {
+      "code": "15",
+      "name": "航運業",
+      "ntd": 8096048513,
+      "stock_count": 34,
+      "twse_ntd": 8078064298,
+      "tpex_ntd": 17984215,
+      "share_pct": 0.927
+    },
+    {
+      "code": "20",
+      "name": "其他",
+      "ntd": 5910496787,
+      "stock_count": 94,
+      "twse_ntd": 2128005607,
+      "tpex_ntd": 3782491180,
+      "share_pct": 0.677
+    },
+    {
+      "code": "08",
+      "name": "玻璃陶瓷",
+      "ntd": 5221492872,
+      "stock_count": 5,
+      "twse_ntd": 5221492872,
+      "tpex_ntd": 0,
+      "share_pct": 0.598
+    },
+    {
+      "code": "30",
+      "name": "資訊服務業",
+      "ntd": 5108346494,
+      "stock_count": 47,
+      "twse_ntd": 2448459004,
+      "tpex_ntd": 2659887490,
+      "share_pct": 0.585
+    },
+    {
+      "code": "22",
+      "name": "生技醫療業",
+      "ntd": 3778275963,
+      "stock_count": 160,
+      "twse_ntd": 3026498938,
+      "tpex_ntd": 751777025,
+      "share_pct": 0.433
+    },
+    {
+      "code": "29",
+      "name": "電子通路業",
+      "ntd": 3628997021,
+      "stock_count": 38,
+      "twse_ntd": 3464892617,
+      "tpex_ntd": 164104404,
+      "share_pct": 0.415
+    },
+    {
+      "code": "23",
+      "name": "油電燃氣業",
+      "ntd": 3423291861,
+      "stock_count": 12,
+      "twse_ntd": 3407320273,
+      "tpex_ntd": 15971588,
+      "share_pct": 0.392
+    },
+    {
+      "code": "21",
+      "name": "化學工業",
+      "ntd": 3050150568,
+      "stock_count": 42,
+      "twse_ntd": 2488922621,
+      "tpex_ntd": 561227947,
+      "share_pct": 0.349
+    },
+    {
+      "code": "10",
+      "name": "鋼鐵工業",
+      "ntd": 2453549218,
+      "stock_count": 48,
+      "twse_ntd": 2095121468,
+      "tpex_ntd": 358427750,
+      "share_pct": 0.281
+    },
+    {
+      "code": "02",
+      "name": "食品工業",
+      "ntd": 1599594949,
+      "stock_count": 33,
+      "twse_ntd": 1586156922,
+      "tpex_ntd": 13438027,
+      "share_pct": 0.183
+    },
+    {
+      "code": "01",
+      "name": "水泥工業",
+      "ntd": 1580161181,
+      "stock_count": 7,
+      "twse_ntd": 1580161181,
+      "tpex_ntd": 0,
+      "share_pct": 0.181
+    },
+    {
+      "code": "06",
+      "name": "電器電纜",
+      "ntd": 1241490636,
+      "stock_count": 17,
+      "twse_ntd": 1160411655,
+      "tpex_ntd": 81078981,
+      "share_pct": 0.142
+    },
+    {
+      "code": "35",
+      "name": "綠能環保",
+      "ntd": 1231304690,
+      "stock_count": 46,
+      "twse_ntd": 1047185786,
+      "tpex_ntd": 184118904,
+      "share_pct": 0.141
+    },
+    {
+      "code": "12",
+      "name": "汽車工業",
+      "ntd": 1117120603,
+      "stock_count": 44,
+      "twse_ntd": 1117120603,
+      "tpex_ntd": 0,
+      "share_pct": 0.128
+    },
+    {
+      "code": "36",
+      "name": "數位雲端",
+      "ntd": 1036603096,
+      "stock_count": 40,
+      "twse_ntd": 399119634,
+      "tpex_ntd": 637483462,
+      "share_pct": 0.119
+    },
+    {
+      "code": "14",
+      "name": "建材營造",
+      "ntd": 834183543,
+      "stock_count": 88,
+      "twse_ntd": 774775631,
+      "tpex_ntd": 59407912,
+      "share_pct": 0.096
+    },
+    {
+      "code": "04",
+      "name": "紡織纖維",
+      "ntd": 742409305,
+      "stock_count": 52,
+      "twse_ntd": 738557441,
+      "tpex_ntd": 3851864,
+      "share_pct": 0.085
+    },
+    {
+      "code": "32",
+      "name": "文化創意業",
+      "ntd": 633304821,
+      "stock_count": 26,
+      "twse_ntd": 0,
+      "tpex_ntd": 633304821,
+      "share_pct": 0.073
+    },
+    {
+      "code": "37",
+      "name": "運動休閒",
+      "ntd": 586436820,
+      "stock_count": 27,
+      "twse_ntd": 579636475,
+      "tpex_ntd": 6800345,
+      "share_pct": 0.067
+    },
+    {
+      "code": "18",
+      "name": "貿易百貨",
+      "ntd": 444611410,
+      "stock_count": 17,
+      "twse_ntd": 444611410,
+      "tpex_ntd": 0,
+      "share_pct": 0.051
+    },
+    {
+      "code": "38",
+      "name": "居家生活",
+      "ntd": 332558486,
+      "stock_count": 37,
+      "twse_ntd": 153564064,
+      "tpex_ntd": 178994422,
+      "share_pct": 0.038
+    },
+    {
+      "code": "09",
+      "name": "造紙工業",
+      "ntd": 293891493,
+      "stock_count": 7,
+      "twse_ntd": 293891493,
+      "tpex_ntd": 0,
+      "share_pct": 0.034
+    },
+    {
+      "code": "11",
+      "name": "橡膠工業",
+      "ntd": 279544142,
+      "stock_count": 11,
+      "twse_ntd": 279544142,
+      "tpex_ntd": 0,
+      "share_pct": 0.032
+    },
+    {
+      "code": "16",
+      "name": "觀光餐旅",
+      "ntd": 184165448,
+      "stock_count": 50,
+      "twse_ntd": 139140689,
+      "tpex_ntd": 45024759,
+      "share_pct": 0.021
+    },
+    {
+      "code": "91",
+      "name": "存託憑證／特殊類別",
+      "ntd": 81484440,
+      "stock_count": 4,
+      "twse_ntd": 81484440,
+      "tpex_ntd": 0,
+      "share_pct": 0.009
+    },
+    {
+      "code": "33",
+      "name": "農業科技",
+      "ntd": 7241870,
+      "stock_count": 4,
+      "twse_ntd": 0,
+      "tpex_ntd": 7241870,
+      "share_pct": 0.001
+    }
+  ],
+  "note": "成交金額，不是淨流入；只代表已收盤交易日，不是盤中每分鐘資金流。"
+}
