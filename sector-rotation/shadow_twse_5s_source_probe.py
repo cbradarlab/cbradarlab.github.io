@@ -9,11 +9,11 @@ from datetime import datetime
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-date = os.environ.get("TRADE_DATE", "20261102")
-if not re.fullmatch(r"20\d{6}", date):
-    raise SystemExit("TRADE_DATE must be YYYYMMDD")
+date = os.environ.get("TRADE_DATE") or "latest"
+if date != "latest" and not re.fullmatch(r"20\d{6}", date):
+    raise SystemExit("TRADE_DATE must be latest or YYYYMMDD")
 base = "https://www.twse.com.tw/exchangeReport/MI_5MINS_INDEX"
-url = base + "?" + urlencode({"response": "json", "date": date})
+url = base + "?" + urlencode({"response": "json", "date": "" if date == "latest" else date})
 req = Request(url, headers={
     "User-Agent": "Mozilla/5.0 (compatible; personal-sector-source-probe/0.1)",
     "Accept": "application/json",
