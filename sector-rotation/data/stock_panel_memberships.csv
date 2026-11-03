@@ -235,7 +235,7 @@
 2316,楠梓電,TWSE,industry_chain,印刷電路板,https://ic.tpex.org.tw/company_chain.php?stk_code=2316,verified_theme
 2321,東訊,TWSE,industry_chain,通信網路,official_industry:27,official_mapping
 2324,仁寶,TWSE,industry_chain,電腦及週邊設備,official_industry:25,official_mapping
-2327,國巨*,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
+2327,國巨*,TWSE,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=2327,verified_chain
 2328,廣宇,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
 2329,華泰,TWSE,industry_chain,半導體,official_industry:24,official_mapping
 2330,台積電,TWSE,industry_chain,半導體,official_industry:24,official_mapping
@@ -261,7 +261,7 @@
 2368,金像電,TWSE,industry_chain,印刷電路板,https://ic.tpex.org.tw/company_chain.php?stk_code=2368,verified_theme
 2369,菱生,TWSE,industry_chain,半導體,official_industry:24,official_mapping
 2371,大同,TWSE,industry_chain,電機機械,official_industry:05,official_mapping
-2375,凱美,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
+2375,凱美,TWSE,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=2375,verified_chain
 2376,技嘉,TWSE,industry_chain,電腦及週邊設備,official_industry:25,official_mapping
 2377,微星,TWSE,industry_chain,電腦及週邊設備,official_industry:25,official_mapping
 2379,瑞昱,TWSE,industry_chain,半導體,official_industry:24,official_mapping
@@ -313,15 +313,15 @@
 2467,志聖,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
 2468,華經,TWSE,industry_chain,軟體服務,official_industry:30,official_mapping
 2471,資通,TWSE,industry_chain,軟體服務,official_industry:30,official_mapping
-2472,立隆電,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
+2472,立隆電,TWSE,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=2472,verified_chain
 2476,鉅祥,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
 2478,大毅,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
 2480,敦陽科,TWSE,industry_chain,軟體服務,official_industry:30,official_mapping
 2481,強茂,TWSE,industry_chain,半導體,official_industry:24,official_mapping
 2483,百容,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
-2484,希華,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
+2484,希華,TWSE,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=2484,verified_chain
 2485,兆赫,TWSE,industry_chain,通信網路,official_industry:27,official_mapping
-2492,華新科,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
+2492,華新科,TWSE,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=2492,verified_chain
 2493,揚博,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
 2495,普安,TWSE,industry_chain,電腦及週邊設備,official_industry:25,official_mapping
 2497,怡利電,TWSE,industry_chain,汽車,official_industry:12,official_mapping
@@ -425,7 +425,7 @@
 3022,威強電,TWSE,industry_chain,電腦及週邊設備,official_industry:25,official_mapping
 3023,信邦,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
 3025,星通,TWSE,industry_chain,通信網路,official_industry:27,official_mapping
-3026,禾伸堂,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
+3026,禾伸堂,TWSE,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=3026,verified_chain
 3027,盛達,TWSE,industry_chain,通信網路,official_industry:27,official_mapping
 3029,零壹,TWSE,industry_chain,軟體服務,official_industry:30,official_mapping
 3032,偉訓,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
@@ -861,9 +861,9 @@
 6166,凌華,TWSE,industry_chain,電腦及週邊設備,official_industry:25,official_mapping
 6170,統振,TPEX,industry_chain,通信網路,official_industry:27,official_mapping
 6171,大城地產,TPEX,industry_chain,建材營造,official_industry:14,official_mapping
-6173,信昌電,TPEX,industry_chain,電子零組件,official_industry:28,official_mapping
+6173,信昌電,TPEX,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=6173,verified_chain
 6174,安碁,TPEX,industry_chain,電子零組件,official_industry:28,official_mapping
-6175,立敦,TPEX,industry_chain,電子零組件,official_industry:28,official_mapping
+6175,立敦,TPEX,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=6175,verified_chain
 6177,達麗,TWSE,industry_chain,建材營造,official_industry:14,official_mapping
 6182,合晶,TPEX,industry_chain,半導體,official_industry:24,official_mapping
 6183,關貿,TWSE,industry_chain,軟體服務,official_industry:30,official_mapping
@@ -1124,7 +1124,7 @@
 8038,長園科,TPEX,industry_chain,電子零組件,official_industry:28,official_mapping
 8039,台虹,TWSE,industry_chain,電子零組件,official_industry:28,official_mapping
 8040,九暘,TPEX,industry_chain,半導體,official_industry:24,official_mapping
-8042,金山電,TPEX,industry_chain,電子零組件,official_industry:28,official_mapping
+8042,金山電,TPEX,industry_chain,被動元件,https://ic.tpex.org.tw/company_chain.php?stk_code=8042,verified_chain
 8043,蜜望實,TPEX,industry_chain,電子零組件,official_industry:28,official_mapping
 8044,網家,TPEX,industry_chain,雲端運算,official_industry:36,official_mapping
 8045,達運光電,TWSE,industry_chain,通信網路,official_industry:27,official_mapping
@@ -1236,3 +1236,7 @@
 8039,台虹,TWSE,concept,高頻高速材料,https://www.taiflex.com.tw/pro_FCCL.html?pro=pro2-tab,verified
 4939,亞電,TPEX,concept,高頻高速材料,https://www.aemg.com.tw/zh-tw/products/index.php/1/28,verified
 3037,欣興,TWSE,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=3037,verified
+2353,宏碁,TWSE,concept,AI PC,https://www.acer.com/tw-zh/laptops/ai-pcs/,verified
+2357,華碩,TWSE,concept,AI PC,https://www.asus.com/tw/content/asus-ai-pc/,verified
+3231,緯創,TWSE,concept,AI 伺服器,https://www.wistron.com/ch/Newsroom/2025-08-26,verified
+6669,緯穎,TWSE,concept,AI 伺服器,https://www.wiwynn.com/zh/solutions/ai-infrastructure,verified

@@ -11,13 +11,14 @@
     "油電燃氣": 12,
     "石化及塑橡膠": 36,
     "紡織": 52,
+    "被動元件": 9,
     "軟體服務": 47,
     "通信網路": 92,
     "造紙": 7,
     "金融": 40,
     "鋼鐵": 48,
     "雲端運算": 40,
-    "電子零組件": 199,
+    "電子零組件": 190,
     "電機機械": 102,
     "電腦及週邊設備": 111,
     "食品": 34
@@ -42,6 +43,6 @@
   },
   "industry_mapped": 1211,
   "industry_review": 779,
-  "concept_mapped": 26,
+  "concept_mapped": 30,
   "note": "Concepts are not automatically inferred from official industry; incomplete panels are expected."
 }
