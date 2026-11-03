@@ -33,3 +33,19 @@ jobs:
         run: python3 sector-rotation/shadow_twse_5s_source_probe.py
       - name: Real browser loads official sector data into SHADOW player
         run: python3 sector-rotation/shadow_twse_browser_probe.py
+      - name: Verify published SHADOW page is reachable (no market data)
+        run: |
+          python3 - <<'PY'
+          from urllib.request import Request, urlopen
+          url='https://cbradarlab.github.io/sector-rotation/shadow_twse_sector_direct.html'
+          try:
+              with urlopen(Request(url,headers={'User-Agent':'Mozilla/5.0'}),timeout=20) as r:
+                  html=r.read(150000).decode('utf-8')
+                  code=r.status
+          except Exception as exc:
+              raise SystemExit('PAGES_HOLD '+type(exc).__name__+' '+str(exc)[:180])
+          ok=code==200 and 'function transform(raw)' in html and 'TWSE 官方指數' in html
+          print('PAGES_SUMMARY',{'status':code,'has_player_code':ok,'no_quote_files_published':True})
+          if not ok: raise SystemExit('PAGES_HOLD unexpected content')
+          print('PAGES_PASS_SHADOW_HTML')
+          PY
