@@ -334,22 +334,29 @@
   "panels": {
     "industry_chain": {
       "total_groups": 30,
-      "mapped_groups": 18,
+      "mapped_groups": 19,
       "mapping_type": "official_industry_proxy",
       "groups": [
         {
           "name": "半導體",
-          "ntd": 361303439446,
-          "stock_count": 207,
-          "mapped_count": 207,
-          "market_share_pct": 41.367
+          "ntd": 345568883045,
+          "stock_count": 206,
+          "mapped_count": 206,
+          "market_share_pct": 39.565
         },
         {
           "name": "電子零組件",
-          "ntd": 220867665123,
-          "stock_count": 209,
-          "mapped_count": 210,
-          "market_share_pct": 25.288
+          "ntd": 167135102584,
+          "stock_count": 198,
+          "mapped_count": 199,
+          "market_share_pct": 19.136
+        },
+        {
+          "name": "印刷電路板",
+          "ntd": 69467118940,
+          "stock_count": 12,
+          "mapped_count": 12,
+          "market_share_pct": 7.954
         },
         {
           "name": "電腦及週邊設備",
@@ -465,13 +472,6 @@
         },
         {
           "name": "再生醫療",
-          "ntd": null,
-          "stock_count": 0,
-          "mapped_count": 0,
-          "market_share_pct": 0.0
-        },
-        {
-          "name": "印刷電路板",
           "ntd": null,
           "stock_count": 0,
           "mapped_count": 0,
