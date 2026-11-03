@@ -41,11 +41,21 @@ function transform(raw){
  if(out.length<100)throw Error('可用分鐘不足');return {frames:out,sectors:names.length};
 }
 function stop(){if(timer){clearInterval(timer);timer=null}$('play').textContent='▶ 播放'}
-function capacity(){return Math.max(5,Math.min(18,Math.floor($('board').clientHeight/ROW())))}
+function layout(n){
+ const b=$('board'),two=b.clientWidth>=780,rows=Math.ceil(n/2);
+ const rh=Math.floor((b.clientHeight-10)/rows);
+ if(two&&rh>=24)return {cols:2,perCol:rows,rowH:rh,visible:n,page:0};
+ const visible=Math.max(5,Math.min(n,Math.floor((b.clientHeight-10)/ROW())));
+ return {cols:1,perCol:visible,rowH:Math.max(28,Math.floor((b.clientHeight-10)/visible)),visible,page:Math.floor(step/25)%Math.ceil(n/visible)};
+}
 function render(){
  if(!frames.length)return;
- const f=frames[step],mode=$('mode').value,ordered=[...f.industries].sort((a,b)=>mode==='strength'?b.strength-a.strength:Math.abs(b.strength)-Math.abs(a.strength));
- const show=capacity(),max=Math.max(.01,...ordered.map(x=>Math.abs(x.strength)));$('clock').textContent=f.time;$('progress').textContent=(step+1)+' / '+frames.length;
+ const f=frames[step],mode=$('mode').value;
+ const ordered=[...f.industries].sort((a,b)=>mode==='strength'?b.strength-a.strength:Math.abs(b.strength)-Math.abs(a.strength));
+ const l=layout(ordered.length),from=l.page*l.visible,to=Math.min(ordered.length,from+l.visible);
+ const max=Math.max(.01,...ordered.map(x=>Math.abs(x.strength)));
+ $('clock').textContent=f.time;$('progress').textContent=(step+1)+' / '+frames.length;
+ $('summary').textContent=frames.length+' 分鐘｜共 '+ordered.length+' 類｜'+(l.cols===2?'雙欄全部顯示':'輪播排名 '+(from+1)+'–'+to);
  $('time').value=step;
  ordered.forEach((v,rank)=>{
   let el=nodes.get(v.name);
@@ -53,7 +63,11 @@ function render(){
   el.children[0].textContent=String(rank+1).padStart(2,'0');el.children[1].textContent=v.name;
   el.children[2].textContent=(v.strength>=0?'+':'')+v.strength.toFixed(2)+'%';el.children[2].className='pct '+(v.strength>=0?'up':'down');
   el.children[3].firstElementChild.style.width=Math.min(100,100*Math.abs(v.strength)/max)+'%';el.children[3].firstElementChild.style.background=v.strength>=0?'#50c99a':'#ed7d89';
-  el.style.transform='translateY('+(rank*ROW()+5)+'px)';el.style.opacity=rank<show?'1':'0';el.style.pointerEvents=rank<show?'auto':'none';
+  const col=l.cols===2?Math.floor(rank/l.perCol):0,row=l.cols===2?rank%l.perCol:rank-from;
+  const shown=l.cols===2||(rank>=from&&rank<to);
+  el.style.left=col===0?'8px':'calc(50% + 4px)';el.style.right=col===0?(l.cols===2?'calc(50% + 4px)':'8px'):'8px';
+  el.style.height=(l.rowH-2)+'px';el.style.transform='translateY('+(row*l.rowH+5)+'px)';
+  el.style.opacity=shown?'1':'0';el.style.pointerEvents=shown?'auto':'none';
  });
 }
 function play(){if(!frames.length)return;if(timer){stop();return}if(step>=frames.length-1)step=0;
