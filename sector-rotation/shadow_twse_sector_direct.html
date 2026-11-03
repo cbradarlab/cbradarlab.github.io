@@ -15,7 +15,7 @@ input[type=range]{flex:1;min-width:100px;accent-color:#48cbab}#clock{font-size:2
 @media(max-width:700px){main{padding:8px;gap:8px}.controls{gap:6px;padding:8px}button,select,input[type=date]{padding:7px;font-size:12px}.title-row,.item{grid-template-columns:29px minmax(0,1fr) 70px 22%;gap:5px}.item{height:40px;left:4px;right:4px;padding:0 5px}.sector{font-size:13px}.stats{font-size:11px}footer{font-size:10px}}
 </style></head><body><main>
 <header><h1>產業輪動 <span class="hint">TWSE 官方指數｜盤後回放 SHADOW</span></h1><button id="full">⛶ 全螢幕</button></header>
-<div class="controls"><input id="date" type="date" aria-label="交易日（清空代表最新）"><button id="load">最新盤後資料</button><select id="mode"><option value="strength">類股相對強弱</option><option value="range">漲跌變動幅度</option></select><button id="play" disabled>▶ 播放</button><button id="restart" disabled>↺ 重頭</button><select id="speed" aria-label="回放速度"><option value="850">慢</option><option value="450" selected>正常</option><option value="220">快</option></select></div>
+<div class="controls"><input id="date" type="date" aria-label="交易日（清空代表最新）"><button id="load">最新盤後資料</button><select id="mode"><option value="strength">類股相對強弱</option><option value="range">漲跌變動幅度</option><option value="activity">成交資金活躍度（盤後）</option></select><button id="play" disabled>▶ 播放</button><button id="restart" disabled>↺ 重頭</button><select id="speed" aria-label="回放速度"><option value="850">慢</option><option value="450" selected>正常</option><option value="220">快</option></select></div>
 <div class="controls"><strong id="clock">--:--</strong><input id="time" type="range" min="0" max="0" value="0" disabled><span id="progress" class="hint">0 / 0</span></div>
 <div class="stats"><span id="status">向證交所讀取資料中…</span><span id="summary">—</span></div>
 <div class="title-row"><span>排名</span><span>上市產業類指數</span><span style="text-align:right">漲跌幅</span><span>幅度</span></div>
@@ -23,7 +23,8 @@ input[type=range]{flex:1;min-width:100px;accent-color:#48cbab}#clock{font-size:2
 <footer id="note">來源：臺灣證券交易所每5秒指數統計。僅在本瀏覽器直接讀取、計算及回放，網站不儲存行情；不是盤中即時行情，也不是產業成交金額。僅上市官方產業指數，不包含上櫃及概念股。</footer>
 </main><script>
 const $=s=>document.getElementById(s),API='https://www.twse.com.tw/exchangeReport/MI_5MINS_INDEX',ROW=()=>innerWidth<700?42:46;
-let frames=[],nodes=new Map(),step=0,timer=null,day='';
+let frames=[],nodes=new Map(),step=0,timer=null,day='',activity=null,activityError='資料讀取中';
+const INDEX_NOTE=$('note').textContent,ACTIVITY_NOTE='來源：臺灣證券交易所、櫃買中心官方每日個股成交資訊，並依官方產業代碼加總。成交金額不是淨流入，不代表買賣超；僅盤後更新，不提供盤中每分鐘資金流。概念股及產業鏈仍在查證分類。';
 const num=x=>Number(String(x).replaceAll(',','').trim());
 function transform(raw){
  const fields=raw?.fields,rows=raw?.data;
@@ -49,20 +50,47 @@ function layout(n){
  return {cols:1,perCol:visible,rowH:Math.max(28,Math.floor((b.clientHeight-10)/visible)),visible,page:Math.floor(step/25)%Math.ceil(n/visible)};
 }
 function render(){
- if(!frames.length)return;
- const f=frames[step],mode=$('mode').value;
- const ordered=[...f.industries].sort((a,b)=>mode==='strength'?b.strength-a.strength:Math.abs(b.strength)-Math.abs(a.strength));
+ const mode=$('mode').value,activityMode=mode==='activity';
+ if(activityMode&&!activity){
+  $('clock').textContent='盤後';$('progress').textContent='—';
+  $('status').textContent='成交資料：'+activityError;$('summary').textContent='尚未取得已驗證的官方資料';
+  $('time').disabled=true;$('play').disabled=true;$('restart').disabled=true;
+  $('note').textContent=ACTIVITY_NOTE;return;
+ }
+ if(!activityMode&&!frames.length)return;
+ const f=activityMode?null:frames[step];
+ const ordered=activityMode
+  ?activity.industries.map(x=>({name:x.name,strength:x.ntd/1e8,share:x.share_pct,stock_count:x.stock_count}))
+  :[...f.industries].sort((a,b)=>mode==='strength'?b.strength-a.strength:Math.abs(b.strength)-Math.abs(a.strength));
  const l=layout(ordered.length),from=l.page*l.visible,to=Math.min(ordered.length,from+l.visible);
  const max=Math.max(.01,...ordered.map(x=>Math.abs(x.strength)));
- $('clock').textContent=f.time;$('progress').textContent=(step+1)+' / '+frames.length;
- $('summary').textContent=frames.length+' 分鐘｜共 '+ordered.length+' 類｜'+(l.cols===2?'雙欄全部顯示':'輪播排名 '+(from+1)+'–'+to);
- $('time').value=step;
+ const suffix=l.cols===2?'雙欄全部顯示':'輪播排名 '+(from+1)+'–'+to;
+ const title=document.querySelector('.title-row').children;
+ title[1].textContent=activityMode?'上市＋上櫃官方產業':'上市產業類指數';
+ title[2].textContent=activityMode?'成交金額':'漲跌幅';
+ title[3].textContent=activityMode?'金額比例':'幅度';
+ $('note').textContent=activityMode?ACTIVITY_NOTE:INDEX_NOTE;
+ if(activityMode){
+  $('clock').textContent=activity.date.slice(5)+' 盤後';
+  $('progress').textContent=activity.industries.length+' 類';
+  $('status').textContent='已驗證 '+activity.date+'｜'+activity.matched_stocks+'/'+activity.master_stocks+' 檔股票';
+  $('summary').textContent='總成交 '+(activity.total_ntd/1e8).toFixed(1)+' 億｜'+suffix;
+ }else{
+  $('clock').textContent=f.time;$('progress').textContent=(step+1)+' / '+frames.length;
+  $('status').textContent='已載入 '+day+'｜'+ordered.length+' 類指數';
+  $('summary').textContent=frames.length+' 分鐘｜共 '+ordered.length+' 類｜'+suffix;
+  $('time').value=step;
+ }
+ $('time').disabled=activityMode;$('play').disabled=activityMode;$('restart').disabled=activityMode;
  ordered.forEach((v,rank)=>{
   let el=nodes.get(v.name);
   if(!el){el=document.createElement('div');el.className='item';el.innerHTML='<span class="number"></span><span class="sector"></span><span class="pct"></span><div class="track"><div class="fill"></div></div>';nodes.set(v.name,el);$('board').append(el)}
   el.children[0].textContent=String(rank+1).padStart(2,'0');el.children[1].textContent=v.name;
-  el.children[2].textContent=(v.strength>=0?'+':'')+v.strength.toFixed(2)+'%';el.children[2].className='pct '+(v.strength>=0?'up':'down');
-  el.children[3].firstElementChild.style.width=Math.min(100,100*Math.abs(v.strength)/max)+'%';el.children[3].firstElementChild.style.background=v.strength>=0?'#50c99a':'#ed7d89';
+  el.children[2].textContent=activityMode?v.strength.toFixed(1)+'億':(v.strength>=0?'+':'')+v.strength.toFixed(2)+'%';
+  el.children[2].className='pct '+(activityMode?'up':(v.strength>=0?'up':'down'));
+  el.title=activityMode?'股票 '+v.stock_count+' 檔｜占全市場 '+v.share.toFixed(2)+'%':'';
+  el.children[3].firstElementChild.style.width=Math.min(100,100*Math.abs(v.strength)/max)+'%';
+  el.children[3].firstElementChild.style.background=activityMode?'#4fb7eb':(v.strength>=0?'#50c99a':'#ed7d89');
   const col=l.cols===2?Math.floor(rank/l.perCol):0,row=l.cols===2?rank%l.perCol:rank-from;
   const shown=l.cols===2||(rank>=from&&rank<to);
   el.style.left=col===0?'8px':'calc(50% + 4px)';el.style.right=col===0?(l.cols===2?'calc(50% + 4px)':'8px'):'8px';
@@ -70,7 +98,7 @@ function render(){
   el.style.opacity=shown?'1':'0';el.style.pointerEvents=shown?'auto':'none';
  });
 }
-function play(){if(!frames.length)return;if(timer){stop();return}if(step>=frames.length-1)step=0;
+function play(){if(!frames.length||$('mode').value==='activity')return;if(timer){stop();return}if(step>=frames.length-1)step=0;
  $('play').textContent='Ⅱ 暫停';timer=setInterval(()=>{if(step>=frames.length-1){stop();return}step++;render()},Number($('speed').value));render()}
 async function load(){stop();frames=[];nodes.clear();$('board').replaceChildren();$('status').textContent='連線中…';
  const date=$('date').value.replaceAll('-','');const url=API+'?response=json&date='+encodeURIComponent(date);
@@ -80,11 +108,12 @@ async function load(){stop();frames=[];nodes.clear();$('board').replaceChildren(
   const title=String(raw.title||'');const match=title.match(/(\d{3})年(\d{1,2})月(\d{1,2})日/);
   day=match?(Number(match[1])+1911)+'-'+match[2].padStart(2,'0')+'-'+match[3].padStart(2,'0'):(date?date:'官方最新資料');
   $('status').textContent='已載入 '+day+'｜'+out.sectors+' 類指數';$('summary').textContent=frames.length+' 分鐘｜以 09:00:05 為比較基準';
-  $('time').max=frames.length-1;$('time').disabled=false;$('play').disabled=false;$('restart').disabled=false;render();play();
+  $('time').max=frames.length-1;$('time').disabled=false;$('play').disabled=false;$('restart').disabled=false;render();if($('mode').value!=='activity')play();
  }catch(err){$('status').textContent='資料未接通：'+err.message;$('summary').textContent='請查看證交所官方原始報表';$('note').textContent='此網頁不轉存資料。如官方跨站限制、休市或資料尚未產出，請直接在證交所網站查詢：https://www.twse.com.tw/exchangeReport/MI_5MINS_INDEX?date=&response=html';}
 }
-$('load').onclick=()=>{$('date').value='';load()};$('date').onchange=load;$('mode').onchange=render;$('play').onclick=play;
+$('load').onclick=()=>{$('date').value='';load()};$('date').onchange=load;$('mode').onchange=()=>{stop();step=0;nodes.clear();$('board').replaceChildren();render()};$('play').onclick=play;
 $('restart').onclick=()=>{stop();step=0;render()};$('time').oninput=()=>{step=Number($('time').value);render()};
 $('speed').onchange=()=>{if(timer){stop();play()}};$('full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
-addEventListener('resize',render);load();
+async function loadActivity(){try{const r=await fetch('data/sector_activity_latest_shadow.json',{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const d=await r.json();if(d.status!=='SHADOW_CLOSE_ONLY'||!Array.isArray(d.industries)||d.industries.length<20||d.matched_stocks<1000)throw Error('資料不完整');activity=d;activityError='';}catch(e){activityError=e.message;}if($('mode').value==='activity')render()}
+addEventListener('resize',render);setInterval(()=>{if($('mode').value==='activity'&&activity){step+=25;render()}},4000);load();loadActivity();
 </script></body></html>
