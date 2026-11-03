@@ -8,6 +8,7 @@ on:
       - 'sector-rotation/validate_stock_panels.py'
       - 'sector-rotation/data/sector_taxonomy.json'
       - 'sector-rotation/data/reviewed_stock_themes.csv'
+      - 'sector-rotation/data/reviewed_stock_chains.csv'
   workflow_dispatch:
   schedule:
     - cron: '30 11 * * 1-5'
