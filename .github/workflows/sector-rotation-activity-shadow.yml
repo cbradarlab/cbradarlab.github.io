@@ -1,0 +1,29 @@
+name: Sector Rotation - Official Turnover Shadow
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'sector-rotation/sync_activity_shadow.py'
+      - '.github/workflows/sector-rotation-activity-shadow.yml'
+permissions:
+  contents: write
+concurrency:
+  group: sector-rotation-activity-shadow
+  cancel-in-progress: false
+jobs:
+  daily-close-shadow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Read two official cash-market datasets
+        run: python sector-rotation/sync_activity_shadow.py
+      - name: Save validated turnover data
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add sector-rotation/data/sector_activity_latest_shadow.json sector-rotation/data/sector_activity_history_shadow.json
+          git diff --cached --quiet || (git commit -m 'data: sector turnover shadow snapshot' && git push)
