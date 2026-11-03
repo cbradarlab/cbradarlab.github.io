@@ -1,0 +1,21 @@
+name: TWSE 5-second sector source probe SHADOW
+on:
+  workflow_dispatch:
+    inputs:
+      trade_date:
+        description: 'One known closed market day, YYYYMMDD'
+        required: false
+        default: '20261102'
+        type: string
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check TWSE source and cross-site response headers (read-only)
+        env:
+          TRADE_DATE: ${{ inputs.trade_date }}
+        run: python3 sector-rotation/shadow_twse_5s_source_probe.py
