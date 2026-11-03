@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Official TWSE + TPEx close turnover, separate SHADOW research snapshot."""
+import csv
 import json
 import re
 import urllib.request
@@ -95,6 +96,49 @@ def main():
         for code, g in groups.items() if g["stocks"]
     ]
     industries.sort(key=lambda g: g["ntd"], reverse=True)
+    # Existing reviewed memberships are user-project data, not scraped directory copies.
+    taxonomy = json.loads((DATA / "sector_taxonomy.json").read_text(encoding="utf-8"))
+    panel_names = {"industry_chain": taxonomy["industry_chain"],
+                   "concept": taxonomy["concepts"]}
+    panel_values = {kind: {name: {"ntd": 0, "stock_count": 0, "mapped_count": 0}
+                           for name in names} for kind, names in panel_names.items()}
+    seen_memberships = set()
+    with (DATA / "stock_panel_memberships.csv").open(encoding="utf-8-sig",
+                                                     newline="") as handle:
+        for row in csv.DictReader(handle):
+            kind, panel = row["kind"], row["panel"]
+            if kind not in panel_values or panel not in panel_values[kind]:
+                raise ValueError(f"Unrecognized reviewed panel: {kind}/{panel}")
+            key = (row["market"], row["code"], kind, panel)
+            if key in seen_memberships:
+                raise ValueError(f"Duplicate membership: {key}")
+            seen_memberships.add(key)
+            p = panel_values[kind][panel]
+            p["mapped_count"] += 1
+            market = {"TWSE": "上市", "TPEX": "上櫃"}.get(row["market"])
+            if market is None:
+                raise ValueError(f"Unrecognized member market: {row['market']}")
+            quote = found.get((market, row["code"]))
+            if quote is not None:
+                p["ntd"] += quote[1]
+                p["stock_count"] += 1
+    panels = {}
+    for kind, groups in panel_values.items():
+        values = [
+            {"name": name, "ntd": (p["ntd"] if p["stock_count"] else None),
+             "stock_count": p["stock_count"], "mapped_count": p["mapped_count"],
+             "market_share_pct": round(100 * p["ntd"] / total, 3)}
+            for name, p in groups.items()
+        ]
+        values.sort(key=lambda r: (r["ntd"] is None,
+                                   -(r["ntd"] or 0), r["name"]))
+        panels[kind] = {
+            "total_groups": len(groups),
+            "mapped_groups": sum(p["mapped_count"] > 0 for p in groups.values()),
+            "mapping_type": "official_industry_proxy" if kind == "industry_chain"
+                            else "reviewed_examples_only",
+            "groups": values,
+        }
     day = next(iter(dates.values()))
     result = {
         "schema_version": 1, "status": "SHADOW_CLOSE_ONLY",
@@ -102,7 +146,7 @@ def main():
         "source_urls": {"上市": TWSE, "上櫃": TPEX},
         "matched_stocks": len(found), "master_stocks": len(stocks),
         "ignored_non_master_rows": ignored, "total_ntd": total,
-        "industries": industries,
+        "industries": industries, "panels": panels,
         "note": "成交金額，不是淨流入；只代表已收盤交易日，不是盤中每分鐘資金流。"
     }
     history = []
