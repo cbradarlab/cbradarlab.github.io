@@ -15,6 +15,7 @@ DATA = ROOT / "data"
 OFFICIAL = DATA / "official_stock_industries.csv"
 TAXONOMY = DATA / "sector_taxonomy.json"
 OVERRIDES = DATA / "reviewed_stock_themes.csv"
+REVIEWED_CHAINS = DATA / "reviewed_stock_chains.csv"
 OUT = DATA / "stock_panel_memberships.csv"
 UNMATCHED = DATA / "stock_panel_review.csv"
 REPORT = DATA / "stock_panel_report.json"
@@ -64,6 +65,18 @@ def main():
         if x["concept"].strip()=="PCB" and x["review_status"].strip()=="verified"
         and x["evidence_url"].strip().startswith("https://")
     }
+    # Individual verified industry-chain overrides; never infer all code 28 stocks.
+    reviewed_chains=rows(REVIEWED_CHAINS) if REVIEWED_CHAINS.exists() else []
+    chain_verified={}
+    official_codes={s["code"].strip() for s in official}
+    for x in reviewed_chains:
+        code=x["code"].strip(); chain=x["industry_chain"].strip()
+        evidence=x["evidence_url"].strip()
+        if code not in official_codes or chain not in panels or x["review_status"].strip()!="verified" or not evidence.startswith("https://"):
+            raise ValueError("Invalid reviewed industry chain: "+code+" / "+chain)
+        if code in chain_verified or (code in pcb_verified and chain!="印刷電路板"):
+            raise ValueError("Conflicting reviewed industry chain: "+code)
+        chain_verified[code]=(chain,evidence)
     output=[]; review=[]; seen=set(); stats=Counter()
     for stock in official:
         code=stock["code"].strip()
@@ -72,12 +85,15 @@ def main():
         raw=stock["official_industry"].strip()
         panel=INDUSTRY_CODE.get(raw.zfill(2)) if raw.isdigit() else INDUSTRY_LABEL.get(raw)
         if panel not in panels: panel=None
-        if code in pcb_verified: panel="印刷電路板"
+        source="official_industry:"+raw; review_status="official_mapping"
+        if code in pcb_verified:
+            panel="印刷電路板"; source=pcb_verified[code]; review_status="verified_theme"
+        if code in chain_verified:
+            panel,source=chain_verified[code]; review_status="verified_chain"
         if panel:
             output.append({"code":code,"name":stock["name"],"market":stock["market"],
                 "kind":"industry_chain","panel":panel,
-                "source":pcb_verified.get(code,"official_industry:"+raw),
-                "review_status":"verified_theme" if code in pcb_verified else "official_mapping"})
+                "source":source,"review_status":review_status})
             stats["industry_mapped"]+=1
         else:
             review.append({"code":code,"name":stock["name"],"market":stock["market"],
