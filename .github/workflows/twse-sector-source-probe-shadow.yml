@@ -3,10 +3,14 @@ on:
   push:
     paths:
       - sector-rotation/shadow_twse_5s_source_probe.py
+      - sector-rotation/shadow_twse_browser_probe.py
+      - sector-rotation/shadow_twse_sector_direct.html
       - .github/workflows/twse-sector-source-probe-shadow.yml
   pull_request:
     paths:
       - sector-rotation/shadow_twse_5s_source_probe.py
+      - sector-rotation/shadow_twse_browser_probe.py
+      - sector-rotation/shadow_twse_sector_direct.html
       - .github/workflows/twse-sector-source-probe-shadow.yml
   workflow_dispatch:
     inputs:
@@ -27,3 +31,5 @@ jobs:
         env:
           TRADE_DATE: ${{ inputs.trade_date || 'latest' }}
         run: python3 sector-rotation/shadow_twse_5s_source_probe.py
+      - name: Real browser loads official sector data into SHADOW player
+        run: python3 sector-rotation/shadow_twse_browser_probe.py
