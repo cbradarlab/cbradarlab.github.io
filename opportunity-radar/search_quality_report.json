@@ -1,16 +1,16 @@
 {
   "version": "SEARCH_QUALITY_AUDIT_V2_PRODUCTION",
   "override_version": "SEARCH_RULE_OVERRIDES_V2_INTENT_SEPARATION",
-  "events": 107,
+  "events": 112,
   "queries": 60,
   "zero_result_count": 1,
   "zero_result_rate": 0.0167,
   "zero_queries": [
     "射出機"
   ],
-  "median_result_count": 24.0,
-  "mean_result_count": 25.37,
-  "max_result_count": 77,
+  "median_result_count": 25.0,
+  "mean_result_count": 26.45,
+  "max_result_count": 81,
   "broad_over_60pct_count": 1,
   "broad_over_60pct_queries": [
     "太陽能"
@@ -32,27 +32,27 @@
       "b": "包裝機",
       "profile_a": "cold_chain",
       "profile_b": "packaging",
-      "jaccard": 0.8889,
-      "a_count": 8,
-      "b_count": 9
+      "jaccard": 0.9,
+      "a_count": 9,
+      "b_count": 10
     },
     {
       "a": "冷凍庫",
       "b": "包裝設備",
       "profile_a": "cold_chain",
       "profile_b": "packaging",
-      "jaccard": 0.8889,
-      "a_count": 8,
-      "b_count": 9
+      "jaccard": 0.9,
+      "a_count": 9,
+      "b_count": 10
     },
     {
       "a": "純水",
       "b": "特氣系統",
       "profile_a": "clean_process",
       "profile_b": "clean_process",
-      "jaccard": 0.9444,
-      "a_count": 36,
-      "b_count": 34
+      "jaccard": 0.9459,
+      "a_count": 37,
+      "b_count": 35
     },
     {
       "a": "CNC刀具",
@@ -77,9 +77,9 @@
       "b": "冷藏庫",
       "profile_a": "packaging",
       "profile_b": "cold_chain",
-      "jaccard": 0.8889,
-      "a_count": 9,
-      "b_count": 8
+      "jaccard": 0.9,
+      "a_count": 10,
+      "b_count": 9
     },
     {
       "a": "保全",
@@ -123,17 +123,17 @@
       "profile_a": "clean_process",
       "profile_b": "clean_process",
       "jaccard": 1.0,
-      "a_count": 34,
-      "b_count": 34
+      "a_count": 35,
+      "b_count": 35
     },
     {
       "a": "包裝設備",
       "b": "冷藏庫",
       "profile_a": "packaging",
       "profile_b": "cold_chain",
-      "jaccard": 0.8889,
-      "a_count": 9,
-      "b_count": 8
+      "jaccard": 0.9,
+      "a_count": 10,
+      "b_count": 9
     }
   ],
   "query_rows": [
@@ -143,11 +143,11 @@
       "intent": "fire_safety",
       "profile": "new_factory_core",
       "A": 0,
-      "B": 21,
+      "B": 22,
       "C": 3,
-      "total": 24,
-      "match_rate": 0.2243,
-      "high_confidence_rate": 0.1963
+      "total": 25,
+      "match_rate": 0.2232,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "工業地坪",
@@ -155,11 +155,11 @@
       "intent": "industrial_flooring",
       "profile": "new_factory_core",
       "A": 0,
-      "B": 21,
+      "B": 22,
       "C": 3,
-      "total": 24,
-      "match_rate": 0.2243,
-      "high_confidence_rate": 0.1963
+      "total": 25,
+      "match_rate": 0.2232,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "配電盤",
@@ -167,11 +167,11 @@
       "intent": "electrical_distribution",
       "profile": "new_factory_power",
       "A": 0,
-      "B": 21,
-      "C": 8,
-      "total": 29,
-      "match_rate": 0.271,
-      "high_confidence_rate": 0.1963
+      "B": 22,
+      "C": 9,
+      "total": 31,
+      "match_rate": 0.2768,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "UPS",
@@ -179,11 +179,11 @@
       "intent": "ups",
       "profile": "new_factory_power",
       "A": 0,
-      "B": 21,
-      "C": 8,
-      "total": 29,
-      "match_rate": 0.271,
-      "high_confidence_rate": 0.1963
+      "B": 22,
+      "C": 9,
+      "total": 31,
+      "match_rate": 0.2768,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "堆高機",
@@ -194,8 +194,8 @@
       "B": 13,
       "C": 0,
       "total": 13,
-      "match_rate": 0.1215,
-      "high_confidence_rate": 0.1215
+      "match_rate": 0.1161,
+      "high_confidence_rate": 0.1161
     },
     {
       "query": "冷凍庫",
@@ -204,10 +204,10 @@
       "profile": "cold_chain",
       "A": 1,
       "B": 1,
-      "C": 6,
-      "total": 8,
-      "match_rate": 0.0748,
-      "high_confidence_rate": 0.0187
+      "C": 7,
+      "total": 9,
+      "match_rate": 0.0804,
+      "high_confidence_rate": 0.0179
     },
     {
       "query": "門禁",
@@ -215,11 +215,11 @@
       "intent": "access_control",
       "profile": "new_factory_core",
       "A": 0,
-      "B": 21,
+      "B": 22,
       "C": 3,
-      "total": 24,
-      "match_rate": 0.2243,
-      "high_confidence_rate": 0.1963
+      "total": 25,
+      "match_rate": 0.2232,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "監視器",
@@ -227,11 +227,11 @@
       "intent": "cctv",
       "profile": "new_factory_core",
       "A": 0,
-      "B": 21,
+      "B": 22,
       "C": 3,
-      "total": 24,
-      "match_rate": 0.2243,
-      "high_confidence_rate": 0.1963
+      "total": 25,
+      "match_rate": 0.2232,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "弱電",
@@ -239,11 +239,11 @@
       "intent": "low_voltage",
       "profile": "new_factory_core",
       "A": 0,
-      "B": 22,
+      "B": 23,
       "C": 3,
-      "total": 25,
-      "match_rate": 0.2336,
-      "high_confidence_rate": 0.2056
+      "total": 26,
+      "match_rate": 0.2321,
+      "high_confidence_rate": 0.2054
     },
     {
       "query": "ERP",
@@ -252,10 +252,10 @@
       "profile": "digital_factory",
       "A": 0,
       "B": 31,
-      "C": 3,
-      "total": 34,
-      "match_rate": 0.3178,
-      "high_confidence_rate": 0.2897
+      "C": 4,
+      "total": 35,
+      "match_rate": 0.3125,
+      "high_confidence_rate": 0.2768
     },
     {
       "query": "MES",
@@ -264,10 +264,10 @@
       "profile": "digital_factory",
       "A": 7,
       "B": 24,
-      "C": 3,
-      "total": 34,
-      "match_rate": 0.3178,
-      "high_confidence_rate": 0.2897
+      "C": 4,
+      "total": 35,
+      "match_rate": 0.3125,
+      "high_confidence_rate": 0.2768
     },
     {
       "query": "WMS",
@@ -278,20 +278,20 @@
       "B": 12,
       "C": 5,
       "total": 17,
-      "match_rate": 0.1589,
-      "high_confidence_rate": 0.1121
+      "match_rate": 0.1518,
+      "high_confidence_rate": 0.1071
     },
     {
       "query": "AOI",
       "family": "automation",
       "intent": "aoi",
       "profile": "machine_vision",
-      "A": 11,
+      "A": 12,
       "B": 18,
-      "C": 22,
-      "total": 51,
-      "match_rate": 0.4766,
-      "high_confidence_rate": 0.271
+      "C": 23,
+      "total": 53,
+      "match_rate": 0.4732,
+      "high_confidence_rate": 0.2679
     },
     {
       "query": "機器手臂",
@@ -299,11 +299,11 @@
       "intent": "robot",
       "profile": "smart_factory",
       "A": 4,
-      "B": 47,
-      "C": 10,
-      "total": 61,
-      "match_rate": 0.5701,
-      "high_confidence_rate": 0.4766
+      "B": 49,
+      "C": 11,
+      "total": 64,
+      "match_rate": 0.5714,
+      "high_confidence_rate": 0.4732
     },
     {
       "query": "空壓機",
@@ -311,11 +311,11 @@
       "intent": "air_compressor",
       "profile": "industrial_utilities",
       "A": 3,
-      "B": 30,
-      "C": 6,
-      "total": 39,
-      "match_rate": 0.3645,
-      "high_confidence_rate": 0.3084
+      "B": 31,
+      "C": 7,
+      "total": 41,
+      "match_rate": 0.3661,
+      "high_confidence_rate": 0.3036
     },
     {
       "query": "冰水主機",
@@ -323,11 +323,11 @@
       "intent": "chiller",
       "profile": "industrial_utilities",
       "A": 9,
-      "B": 34,
-      "C": 5,
-      "total": 48,
-      "match_rate": 0.4486,
-      "high_confidence_rate": 0.4019
+      "B": 36,
+      "C": 6,
+      "total": 51,
+      "match_rate": 0.4554,
+      "high_confidence_rate": 0.4018
     },
     {
       "query": "廢水處理",
@@ -335,11 +335,11 @@
       "intent": "wastewater",
       "profile": "wet_process",
       "A": 2,
-      "B": 16,
+      "B": 17,
       "C": 4,
-      "total": 22,
-      "match_rate": 0.2056,
-      "high_confidence_rate": 0.1682
+      "total": 23,
+      "match_rate": 0.2054,
+      "high_confidence_rate": 0.1696
     },
     {
       "query": "純水",
@@ -347,11 +347,11 @@
       "intent": "pure_water",
       "profile": "clean_process",
       "A": 4,
-      "B": 23,
+      "B": 24,
       "C": 9,
-      "total": 36,
-      "match_rate": 0.3364,
-      "high_confidence_rate": 0.2523
+      "total": 37,
+      "match_rate": 0.3304,
+      "high_confidence_rate": 0.25
     },
     {
       "query": "CNC刀具",
@@ -362,8 +362,8 @@
       "B": 11,
       "C": 0,
       "total": 11,
-      "match_rate": 0.1028,
-      "high_confidence_rate": 0.1028
+      "match_rate": 0.0982,
+      "high_confidence_rate": 0.0982
     },
     {
       "query": "治具",
@@ -371,11 +371,11 @@
       "intent": "fixture",
       "profile": "fixture",
       "A": 0,
-      "B": 9,
-      "C": 24,
-      "total": 33,
-      "match_rate": 0.3084,
-      "high_confidence_rate": 0.0841
+      "B": 10,
+      "C": 25,
+      "total": 35,
+      "match_rate": 0.3125,
+      "high_confidence_rate": 0.0893
     },
     {
       "query": "量測儀器",
@@ -383,11 +383,11 @@
       "intent": "metrology",
       "profile": "quality_precision",
       "A": 0,
-      "B": 18,
+      "B": 19,
       "C": 1,
-      "total": 19,
-      "match_rate": 0.1776,
-      "high_confidence_rate": 0.1682
+      "total": 20,
+      "match_rate": 0.1786,
+      "high_confidence_rate": 0.1696
     },
     {
       "query": "包裝機",
@@ -395,11 +395,11 @@
       "intent": "packaging_machine",
       "profile": "packaging",
       "A": 0,
-      "B": 8,
+      "B": 9,
       "C": 1,
-      "total": 9,
-      "match_rate": 0.0841,
-      "high_confidence_rate": 0.0748
+      "total": 10,
+      "match_rate": 0.0893,
+      "high_confidence_rate": 0.0804
     },
     {
       "query": "保全",
@@ -410,8 +410,8 @@
       "B": 3,
       "C": 0,
       "total": 3,
-      "match_rate": 0.028,
-      "high_confidence_rate": 0.028
+      "match_rate": 0.0268,
+      "high_confidence_rate": 0.0268
     },
     {
       "query": "清潔",
@@ -422,8 +422,8 @@
       "B": 3,
       "C": 0,
       "total": 3,
-      "match_rate": 0.028,
-      "high_confidence_rate": 0.028
+      "match_rate": 0.0268,
+      "high_confidence_rate": 0.0268
     },
     {
       "query": "人力派遣",
@@ -434,7 +434,7 @@
       "B": 0,
       "C": 3,
       "total": 3,
-      "match_rate": 0.028,
+      "match_rate": 0.0268,
       "high_confidence_rate": 0.0
     },
     {
@@ -446,8 +446,8 @@
       "B": 3,
       "C": 0,
       "total": 3,
-      "match_rate": 0.028,
-      "high_confidence_rate": 0.028
+      "match_rate": 0.0268,
+      "high_confidence_rate": 0.0268
     },
     {
       "query": "消防設備",
@@ -455,11 +455,11 @@
       "intent": "fire_safety",
       "profile": "new_factory_core",
       "A": 0,
-      "B": 21,
+      "B": 22,
       "C": 3,
-      "total": 24,
-      "match_rate": 0.2243,
-      "high_confidence_rate": 0.1963
+      "total": 25,
+      "match_rate": 0.2232,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "高低壓配電",
@@ -467,11 +467,11 @@
       "intent": "electrical_distribution",
       "profile": "new_factory_power",
       "A": 0,
-      "B": 21,
-      "C": 8,
-      "total": 29,
-      "match_rate": 0.271,
-      "high_confidence_rate": 0.1963
+      "B": 22,
+      "C": 9,
+      "total": 31,
+      "match_rate": 0.2768,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "發電機",
@@ -479,11 +479,11 @@
       "intent": "generator",
       "profile": "new_factory_power",
       "A": 0,
-      "B": 21,
-      "C": 8,
-      "total": 29,
-      "match_rate": 0.271,
-      "high_confidence_rate": 0.1963
+      "B": 22,
+      "C": 9,
+      "total": 31,
+      "match_rate": 0.2768,
+      "high_confidence_rate": 0.1964
     },
     {
       "query": "冷卻水塔",
@@ -491,11 +491,11 @@
       "intent": "cooling_tower",
       "profile": "industrial_utilities",
       "A": 0,
-      "B": 30,
-      "C": 6,
-      "total": 36,
-      "match_rate": 0.3364,
-      "high_confidence_rate": 0.2804
+      "B": 31,
+      "C": 7,
+      "total": 38,
+      "match_rate": 0.3393,
+      "high_confidence_rate": 0.2768
     },
     {
       "query": "集塵設備",
@@ -503,11 +503,11 @@
       "intent": "dust_collection",
       "profile": "air_environment",
       "A": 0,
-      "B": 23,
+      "B": 24,
       "C": 2,
-      "total": 25,
-      "match_rate": 0.2336,
-      "high_confidence_rate": 0.215
+      "total": 26,
+      "match_rate": 0.2321,
+      "high_confidence_rate": 0.2143
     },
     {
       "query": "特氣系統",
@@ -515,11 +515,11 @@
       "intent": "special_gas",
       "profile": "clean_process",
       "A": 0,
-      "B": 23,
+      "B": 24,
       "C": 11,
-      "total": 34,
-      "match_rate": 0.3178,
-      "high_confidence_rate": 0.215
+      "total": 35,
+      "match_rate": 0.3125,
+      "high_confidence_rate": 0.2143
     },
     {
       "query": "無塵室",
@@ -527,11 +527,11 @@
       "intent": "cleanroom",
       "profile": "clean_process",
       "A": 3,
-      "B": 22,
+      "B": 23,
       "C": 9,
-      "total": 34,
-      "match_rate": 0.3178,
-      "high_confidence_rate": 0.2336
+      "total": 35,
+      "match_rate": 0.3125,
+      "high_confidence_rate": 0.2321
     },
     {
       "query": "機械手臂",
@@ -539,11 +539,11 @@
       "intent": "robot",
       "profile": "smart_factory",
       "A": 4,
-      "B": 47,
-      "C": 10,
-      "total": 61,
-      "match_rate": 0.5701,
-      "high_confidence_rate": 0.4766
+      "B": 49,
+      "C": 11,
+      "total": 64,
+      "match_rate": 0.5714,
+      "high_confidence_rate": 0.4732
     },
     {
       "query": "PLC",
@@ -551,11 +551,11 @@
       "intent": "plc_control",
       "profile": "smart_factory",
       "A": 4,
-      "B": 45,
-      "C": 11,
-      "total": 60,
-      "match_rate": 0.5607,
-      "high_confidence_rate": 0.4579
+      "B": 47,
+      "C": 12,
+      "total": 63,
+      "match_rate": 0.5625,
+      "high_confidence_rate": 0.4554
     },
     {
       "query": "SCADA",
@@ -564,22 +564,22 @@
       "profile": "scada_control_v2",
       "A": 0,
       "B": 18,
-      "C": 18,
-      "total": 36,
-      "match_rate": 0.3364,
-      "high_confidence_rate": 0.1682
+      "C": 19,
+      "total": 37,
+      "match_rate": 0.3304,
+      "high_confidence_rate": 0.1607
     },
     {
       "query": "機器視覺",
       "family": "automation",
       "intent": "machine_vision",
       "profile": "machine_vision",
-      "A": 11,
+      "A": 12,
       "B": 18,
-      "C": 22,
-      "total": 51,
-      "match_rate": 0.4766,
-      "high_confidence_rate": 0.271
+      "C": 23,
+      "total": 53,
+      "match_rate": 0.4732,
+      "high_confidence_rate": 0.2679
     },
     {
       "query": "AGV",
@@ -590,8 +590,8 @@
       "B": 13,
       "C": 0,
       "total": 13,
-      "match_rate": 0.1215,
-      "high_confidence_rate": 0.1215
+      "match_rate": 0.1161,
+      "high_confidence_rate": 0.1161
     },
     {
       "query": "AMR",
@@ -602,8 +602,8 @@
       "B": 13,
       "C": 0,
       "total": 13,
-      "match_rate": 0.1215,
-      "high_confidence_rate": 0.1215
+      "match_rate": 0.1161,
+      "high_confidence_rate": 0.1161
     },
     {
       "query": "自動倉儲",
@@ -614,8 +614,8 @@
       "B": 2,
       "C": 0,
       "total": 13,
-      "match_rate": 0.1215,
-      "high_confidence_rate": 0.1215
+      "match_rate": 0.1161,
+      "high_confidence_rate": 0.1161
     },
     {
       "query": "QMS",
@@ -623,11 +623,11 @@
       "intent": "qms",
       "profile": "quality_system",
       "A": 0,
-      "B": 12,
+      "B": 13,
       "C": 15,
-      "total": 27,
-      "match_rate": 0.2523,
-      "high_confidence_rate": 0.1121
+      "total": 28,
+      "match_rate": 0.25,
+      "high_confidence_rate": 0.1161
     },
     {
       "query": "CMMS",
@@ -638,8 +638,8 @@
       "B": 15,
       "C": 4,
       "total": 19,
-      "match_rate": 0.1776,
-      "high_confidence_rate": 0.1402
+      "match_rate": 0.1696,
+      "high_confidence_rate": 0.1339
     },
     {
       "query": "APS",
@@ -650,8 +650,8 @@
       "B": 7,
       "C": 0,
       "total": 7,
-      "match_rate": 0.0654,
-      "high_confidence_rate": 0.0654
+      "match_rate": 0.0625,
+      "high_confidence_rate": 0.0625
     },
     {
       "query": "資安",
@@ -662,32 +662,32 @@
       "B": 25,
       "C": 2,
       "total": 27,
-      "match_rate": 0.2523,
-      "high_confidence_rate": 0.2336
+      "match_rate": 0.2411,
+      "high_confidence_rate": 0.2232
     },
     {
       "query": "太陽能",
       "family": "energy_esg",
       "intent": "solar",
       "profile": "energy_project",
-      "A": 62,
-      "B": 15,
+      "A": 65,
+      "B": 16,
       "C": 0,
-      "total": 77,
-      "match_rate": 0.7196,
-      "high_confidence_rate": 0.7196
+      "total": 81,
+      "match_rate": 0.7232,
+      "high_confidence_rate": 0.7232
     },
     {
       "query": "儲能",
       "family": "energy_esg",
       "intent": "energy_storage",
       "profile": "storage_project_v2",
-      "A": 3,
+      "A": 4,
       "B": 0,
       "C": 7,
-      "total": 10,
-      "match_rate": 0.0935,
-      "high_confidence_rate": 0.028
+      "total": 11,
+      "match_rate": 0.0982,
+      "high_confidence_rate": 0.0357
     },
     {
       "query": "能源管理",
@@ -698,8 +698,8 @@
       "B": 4,
       "C": 0,
       "total": 29,
-      "match_rate": 0.271,
-      "high_confidence_rate": 0.271
+      "match_rate": 0.2589,
+      "high_confidence_rate": 0.2589
     },
     {
       "query": "CNC",
@@ -710,8 +710,8 @@
       "B": 11,
       "C": 0,
       "total": 11,
-      "match_rate": 0.1028,
-      "high_confidence_rate": 0.1028
+      "match_rate": 0.0982,
+      "high_confidence_rate": 0.0982
     },
     {
       "query": "雷射切割機",
@@ -722,8 +722,8 @@
       "B": 11,
       "C": 0,
       "total": 11,
-      "match_rate": 0.1028,
-      "high_confidence_rate": 0.1028
+      "match_rate": 0.0982,
+      "high_confidence_rate": 0.0982
     },
     {
       "query": "射出機",
@@ -743,11 +743,11 @@
       "intent": "metrology",
       "profile": "quality_precision",
       "A": 0,
-      "B": 18,
+      "B": 19,
       "C": 1,
-      "total": 19,
-      "match_rate": 0.1776,
-      "high_confidence_rate": 0.1682
+      "total": 20,
+      "match_rate": 0.1786,
+      "high_confidence_rate": 0.1696
     },
     {
       "query": "馬達",
@@ -755,11 +755,11 @@
       "intent": "motor_gearbox",
       "profile": "industrial_parts",
       "A": 0,
-      "B": 41,
+      "B": 43,
       "C": 0,
-      "total": 41,
-      "match_rate": 0.3832,
-      "high_confidence_rate": 0.3832
+      "total": 43,
+      "match_rate": 0.3839,
+      "high_confidence_rate": 0.3839
     },
     {
       "query": "軸承",
@@ -767,11 +767,11 @@
       "intent": "bearing_drive",
       "profile": "industrial_parts",
       "A": 0,
-      "B": 41,
+      "B": 43,
       "C": 0,
-      "total": 41,
-      "match_rate": 0.3832,
-      "high_confidence_rate": 0.3832
+      "total": 43,
+      "match_rate": 0.3839,
+      "high_confidence_rate": 0.3839
     },
     {
       "query": "氣動元件",
@@ -779,11 +779,11 @@
       "intent": "pneumatic",
       "profile": "industrial_parts",
       "A": 0,
-      "B": 41,
+      "B": 43,
       "C": 0,
-      "total": 41,
-      "match_rate": 0.3832,
-      "high_confidence_rate": 0.3832
+      "total": 43,
+      "match_rate": 0.3839,
+      "high_confidence_rate": 0.3839
     },
     {
       "query": "工業閥門",
@@ -791,11 +791,11 @@
       "intent": "valves",
       "profile": "industrial_parts",
       "A": 0,
-      "B": 41,
+      "B": 43,
       "C": 0,
-      "total": 41,
-      "match_rate": 0.3832,
-      "high_confidence_rate": 0.3832
+      "total": 43,
+      "match_rate": 0.3839,
+      "high_confidence_rate": 0.3839
     },
     {
       "query": "安全鞋",
@@ -806,8 +806,8 @@
       "B": 3,
       "C": 0,
       "total": 3,
-      "match_rate": 0.028,
-      "high_confidence_rate": 0.028
+      "match_rate": 0.0268,
+      "high_confidence_rate": 0.0268
     },
     {
       "query": "職安訓練",
@@ -816,9 +816,9 @@
       "profile": "ehs_training",
       "A": 0,
       "B": 0,
-      "C": 16,
-      "total": 16,
-      "match_rate": 0.1495,
+      "C": 17,
+      "total": 17,
+      "match_rate": 0.1518,
       "high_confidence_rate": 0.0
     },
     {
@@ -830,7 +830,7 @@
       "B": 0,
       "C": 1,
       "total": 1,
-      "match_rate": 0.0093,
+      "match_rate": 0.0089,
       "high_confidence_rate": 0.0
     },
     {
@@ -839,11 +839,11 @@
       "intent": "packaging_machine",
       "profile": "packaging",
       "A": 0,
-      "B": 8,
+      "B": 9,
       "C": 1,
-      "total": 9,
-      "match_rate": 0.0841,
-      "high_confidence_rate": 0.0748
+      "total": 10,
+      "match_rate": 0.0893,
+      "high_confidence_rate": 0.0804
     },
     {
       "query": "冷藏庫",
@@ -852,10 +852,10 @@
       "profile": "cold_chain",
       "A": 1,
       "B": 1,
-      "C": 6,
-      "total": 8,
-      "match_rate": 0.0748,
-      "high_confidence_rate": 0.0187
+      "C": 7,
+      "total": 9,
+      "match_rate": 0.0804,
+      "high_confidence_rate": 0.0179
     }
   ],
   "checks": {

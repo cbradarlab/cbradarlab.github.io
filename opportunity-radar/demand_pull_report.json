@@ -1,10 +1,19 @@
 {
   "version": "DEMAND_PULL_AUDIT_V1",
-  "events": 107,
-  "flagged": 8,
+  "events": 112,
+  "flagged": 9,
   "bad_count": 0,
   "bad": [],
   "rows": [
+    {
+      "company": "南茂科技股份有限公司",
+      "stock_code": "8150",
+      "date": "2026-10-30",
+      "grade": "AUTO",
+      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
+      "demand_term": "因應市場需求",
+      "action_term": "新廠"
+    },
     {
       "company": "合晶科技",
       "stock_code": "6182",
