@@ -4,6 +4,10 @@ on:
     paths:
       - sector-rotation/shadow_twse_5s_source_probe.py
       - .github/workflows/twse-sector-source-probe-shadow.yml
+  pull_request:
+    paths:
+      - sector-rotation/shadow_twse_5s_source_probe.py
+      - .github/workflows/twse-sector-source-probe-shadow.yml
   workflow_dispatch:
     inputs:
       trade_date:
