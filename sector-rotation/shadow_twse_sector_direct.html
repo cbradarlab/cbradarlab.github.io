@@ -1,0 +1,76 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>台股產業輪動｜證交所原始指數回放 SHADOW</title>
+<style>
+:root{font-family:system-ui,"Microsoft JhengHei",sans-serif;color-scheme:dark;background:#071320;color:#ebf6ff}*{box-sizing:border-box}body{margin:0;overflow:hidden}
+main{height:100dvh;max-width:1400px;margin:auto;display:flex;flex-direction:column;padding:14px;gap:10px}
+header,.controls,.stats{display:flex;gap:10px;align-items:center;flex-wrap:wrap}header{justify-content:space-between}
+h1{font-size:clamp(20px,2.8vw,30px);margin:0}.hint{color:#a5b4c8;font-size:12px}.strong{font-weight:750}
+button,select,input[type=date]{background:#152b40;color:#e6f4ff;border:1px solid #395574;border-radius:8px;padding:8px 12px;font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}
+.controls{background:#10253a;border:1px solid #25445e;border-radius:12px;padding:10px}
+input[type=range]{flex:1;min-width:100px;accent-color:#48cbab}#clock{font-size:20px;min-width:64px;font-variant-numeric:tabular-nums}
+.stats{justify-content:space-between;color:#b5c9da;font-size:13px}#status{color:#7fe3ba}
+.title-row{display:grid;grid-template-columns:48px minmax(0,1fr) 88px 32%;gap:10px;color:#9db0c8;padding:0 14px;font-size:12px}
+#board{flex:1;min-height:0;background:#10243a;border:1px solid #2d445b;border-radius:12px;overflow:hidden;position:relative}
+.item{position:absolute;left:8px;right:8px;height:44px;display:grid;grid-template-columns:48px minmax(0,1fr) 88px 32%;gap:10px;align-items:center;padding:0 8px;border:1px solid #28445b;background:#172f46;border-radius:9px;transition:transform .32s ease,opacity .25s ease}
+.number{font-variant-numeric:tabular-nums;color:#9aacc0}.sector{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:650}.pct{font-variant-numeric:tabular-nums;text-align:right}.up{color:#68ddad}.down{color:#ff969e}.track{height:10px;background:#264057;border-radius:10px;overflow:hidden}.fill{height:100%;width:0%;background:#50c99a;transition:width .3s ease}footer{font-size:11px;color:#829ab2;line-height:1.4}
+@media(max-width:700px){main{padding:8px;gap:8px}.controls{gap:6px;padding:8px}button,select,input[type=date]{padding:7px;font-size:12px}.title-row,.item{grid-template-columns:29px minmax(0,1fr) 70px 22%;gap:5px}.item{height:40px;left:4px;right:4px;padding:0 5px}.sector{font-size:13px}.stats{font-size:11px}footer{font-size:10px}}
+</style></head><body><main>
+<header><h1>產業輪動 <span class="hint">TWSE 官方指數｜盤後回放 SHADOW</span></h1><button id="full">⛶ 全螢幕</button></header>
+<div class="controls"><input id="date" type="date" aria-label="交易日（清空代表最新）"><button id="load">最新盤後資料</button><select id="mode"><option value="strength">類股相對強弱</option><option value="range">漲跌變動幅度</option></select><button id="play" disabled>▶ 播放</button><button id="restart" disabled>↺ 重頭</button><select id="speed" aria-label="回放速度"><option value="850">慢</option><option value="450" selected>正常</option><option value="220">快</option></select></div>
+<div class="controls"><strong id="clock">--:--</strong><input id="time" type="range" min="0" max="0" value="0" disabled><span id="progress" class="hint">0 / 0</span></div>
+<div class="stats"><span id="status">向證交所讀取資料中…</span><span id="summary">—</span></div>
+<div class="title-row"><span>排名</span><span>上市產業類指數</span><span style="text-align:right">漲跌幅</span><span>幅度</span></div>
+<section id="board" aria-label="產業強弱排行榜"></section>
+<footer id="note">來源：臺灣證券交易所每5秒指數統計。僅在本瀏覽器直接讀取、計算及回放，網站不儲存行情；不是盤中即時行情，也不是產業成交金額。僅上市官方產業指數，不包含上櫃及概念股。</footer>
+</main><script>
+const $=s=>document.getElementById(s),API='https://www.twse.com.tw/exchangeReport/MI_5MINS_INDEX',ROW=()=>innerWidth<700?42:46;
+let frames=[],nodes=new Map(),step=0,timer=null,day='';
+const num=x=>Number(String(x).replaceAll(',','').trim());
+function transform(raw){
+ const fields=raw?.fields,rows=raw?.data;
+ if(raw?.stat!=='OK'||!Array.isArray(fields)||!Array.isArray(rows))throw Error('官方回覆缺少欄位或資料');
+ const names=fields.map((name,i)=>({name:String(name).replace(/指數$/,'').trim(),i})).filter(x=>String(fields[x.i]).includes('類指數'));
+ if(names.length<15)throw Error('找不到足夠的產業指數');
+ const valid=rows.filter(r=>Array.isArray(r)&&r.length===fields.length&&/^\d{2}:\d{2}:\d{2}$/.test(String(r[0])));
+ if(valid.length<100)throw Error('官方日內時間資料不完整');
+ const base=valid.find(r=>r[0]==='09:00:05')||valid[0];
+ const byMinute=new Map();for(const r of valid)byMinute.set(String(r[0]).slice(0,5),r);
+ const out=[...byMinute.entries()].sort(([a],[b])=>a.localeCompare(b)).map(([time,r])=>({time,industries:names.flatMap(n=>{
+   const current=num(r[n.i]),first=num(base[n.i]);if(!(current>0&&first>0))return [];
+   return [{name:n.name,strength:100*(current/first-1)}];
+ })}));
+ if(out.length<100)throw Error('可用分鐘不足');return {frames:out,sectors:names.length};
+}
+function stop(){if(timer){clearInterval(timer);timer=null}$('play').textContent='▶ 播放'}
+function capacity(){return Math.max(5,Math.min(18,Math.floor($('board').clientHeight/ROW())))}
+function render(){
+ if(!frames.length)return;
+ const f=frames[step],mode=$('mode').value,ordered=[...f.industries].sort((a,b)=>mode==='strength'?b.strength-a.strength:Math.abs(b.strength)-Math.abs(a.strength));
+ const show=capacity(),max=Math.max(.01,...ordered.map(x=>Math.abs(x.strength)));$('clock').textContent=f.time;$('progress').textContent=(step+1)+' / '+frames.length;
+ $('time').value=step;
+ ordered.forEach((v,rank)=>{
+  let el=nodes.get(v.name);
+  if(!el){el=document.createElement('div');el.className='item';el.innerHTML='<span class="number"></span><span class="sector"></span><span class="pct"></span><div class="track"><div class="fill"></div></div>';nodes.set(v.name,el);$('board').append(el)}
+  el.children[0].textContent=String(rank+1).padStart(2,'0');el.children[1].textContent=v.name;
+  el.children[2].textContent=(v.strength>=0?'+':'')+v.strength.toFixed(2)+'%';el.children[2].className='pct '+(v.strength>=0?'up':'down');
+  el.children[3].firstElementChild.style.width=Math.min(100,100*Math.abs(v.strength)/max)+'%';el.children[3].firstElementChild.style.background=v.strength>=0?'#50c99a':'#ed7d89';
+  el.style.transform='translateY('+(rank*ROW()+5)+'px)';el.style.opacity=rank<show?'1':'0';el.style.pointerEvents=rank<show?'auto':'none';
+ });
+}
+function play(){if(!frames.length)return;if(timer){stop();return}if(step>=frames.length-1)step=0;
+ $('play').textContent='Ⅱ 暫停';timer=setInterval(()=>{if(step>=frames.length-1){stop();return}step++;render()},Number($('speed').value));render()}
+async function load(){stop();frames=[];nodes.clear();$('board').replaceChildren();$('status').textContent='連線中…';
+ const date=$('date').value.replaceAll('-','');const url=API+'?response=json&date='+encodeURIComponent(date);
+ try{
+  const resp=await fetch(url,{cache:'no-store',mode:'cors'});if(!resp.ok)throw Error('HTTP '+resp.status);
+  const raw=await resp.json(),out=transform(raw);frames=out.frames;step=0;
+  const title=String(raw.title||'');const match=title.match(/(\d{3})年(\d{1,2})月(\d{1,2})日/);
+  day=match?(Number(match[1])+1911)+'-'+match[2].padStart(2,'0')+'-'+match[3].padStart(2,'0'):(date?date:'官方最新資料');
+  $('status').textContent='已載入 '+day+'｜'+out.sectors+' 類指數';$('summary').textContent=frames.length+' 分鐘｜以 09:00:05 為比較基準';
+  $('time').max=frames.length-1;$('time').disabled=false;$('play').disabled=false;$('restart').disabled=false;render();play();
+ }catch(err){$('status').textContent='資料未接通：'+err.message;$('summary').textContent='請查看證交所官方原始報表';$('note').textContent='此網頁不轉存資料。如官方跨站限制、休市或資料尚未產出，請直接在證交所網站查詢：https://www.twse.com.tw/exchangeReport/MI_5MINS_INDEX?date=&response=html';}
+}
+$('load').onclick=()=>{$('date').value='';load()};$('date').onchange=load;$('mode').onchange=render;$('play').onclick=play;
+$('restart').onclick=()=>{stop();step=0;render()};$('time').oninput=()=>{step=Number($('time').value);render()};
+$('speed').onchange=()=>{if(timer){stop();play()}};$('full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+addEventListener('resize',render);load();
+</script></body></html>
