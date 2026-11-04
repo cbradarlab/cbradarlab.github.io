@@ -1,6 +1,6 @@
 {
   "version": "OPPORTUNITY_ACTIONABILITY_AUDIT_V1_2_ENRICHED_ROUTE_FIELDS",
-  "generated_at": "2026-11-03T15:02:40+08:00",
+  "generated_at": "2026-11-04T14:45:11+08:00",
   "events": 112,
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "metrics": {
