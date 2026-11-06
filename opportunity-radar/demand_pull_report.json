@@ -1,7 +1,7 @@
 {
   "version": "DEMAND_PULL_AUDIT_V1",
-  "events": 112,
-  "flagged": 9,
+  "events": 114,
+  "flagged": 8,
   "bad_count": 0,
   "bad": [],
   "rows": [
@@ -49,15 +49,6 @@
       "basis": "RESEARCH_VALIDATED_V1",
       "demand_term": "",
       "action_term": ""
-    },
-    {
-      "company": "鴻勁精密",
-      "stock_code": "7769",
-      "date": "2026-05-26",
-      "grade": "AUTO",
-      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
-      "demand_term": "訂單需求",
-      "action_term": "新建廠房"
     },
     {
       "company": "中國砂輪",
