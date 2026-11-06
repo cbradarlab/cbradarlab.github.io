@@ -1,0 +1,32 @@
+name: CBAS Official Closing Prices SHADOW
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/cbas-official-prices-shadow.yml'
+      - 'cbas-data/sync_official_prices.py'
+  schedule:
+    - cron: '15 11 * * 1-5' # 19:15 Taiwan
+permissions:
+  contents: write
+concurrency:
+  group: cbas-official-prices-shadow
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch and verify official TPEx closing report
+        run: python cbas-data/sync_official_prices.py
+      - name: Publish official prices only (no personal holdings)
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@users.noreply.github.com
+          git add cbas-data/official_prices_latest.json
+          git diff --cached --quiet || (git commit -m 'data: CBAS shadow official closing prices' && git push)
