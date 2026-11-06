@@ -1,13 +1,7 @@
 name: CBAS Official Closing Prices SHADOW
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/cbas-official-prices-shadow.yml'
-      - 'cbas-data/sync_official_prices.py'
-  schedule:
-    - cron: '15 11 * * 1-5' # 19:15 Taiwan
+# HOLD: official daily source returned non-CSV; no unattended runs until verified.
 permissions:
   contents: write
 concurrency:
