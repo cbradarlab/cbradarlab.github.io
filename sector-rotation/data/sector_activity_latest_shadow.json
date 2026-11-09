@@ -1,474 +1,481 @@
 {
   "schema_version": 1,
   "status": "SHADOW_CLOSE_ONLY",
-  "date": "2026-11-02",
+  "date": "2026-11-09",
   "source_dates": {
-    "上市": "2026-11-02",
-    "上櫃": "2026-11-02"
+    "上市": "2026-11-09",
+    "上櫃": "2026-11-09"
   },
   "source_urls": {
     "上市": "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL",
     "上櫃": "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
   },
-  "matched_stocks": 1984,
+  "matched_stocks": 1986,
   "master_stocks": 1990,
-  "ignored_non_master_rows": 12858,
-  "total_ntd": 873414527801,
+  "ignored_non_master_rows": 13077,
+  "total_ntd": 889082185606,
   "industries": [
     {
       "code": "24",
       "name": "半導體業",
-      "ntd": 361303439446,
+      "ntd": 359891824233,
       "stock_count": 207,
-      "twse_ntd": 291475911546,
-      "tpex_ntd": 69827527900,
-      "share_pct": 41.367
+      "twse_ntd": 311112810922,
+      "tpex_ntd": 48779013311,
+      "share_pct": 40.479
     },
     {
       "code": "28",
       "name": "電子零組件業",
-      "ntd": 220867665123,
-      "stock_count": 209,
-      "twse_ntd": 183070002486,
-      "tpex_ntd": 37797662637,
-      "share_pct": 25.288
-    },
-    {
-      "code": "26",
-      "name": "光電業",
-      "ntd": 46140190935,
-      "stock_count": 116,
-      "twse_ntd": 42334402006,
-      "tpex_ntd": 3805788929,
-      "share_pct": 5.283
+      "ntd": 225169015647,
+      "stock_count": 210,
+      "twse_ntd": 184331004530,
+      "tpex_ntd": 40838011117,
+      "share_pct": 25.326
     },
     {
       "code": "25",
       "name": "電腦及週邊設備業",
-      "ntd": 45716797878,
+      "ntd": 51808989514,
       "stock_count": 111,
-      "twse_ntd": 40409832232,
-      "tpex_ntd": 5306965646,
-      "share_pct": 5.234
+      "twse_ntd": 45897859644,
+      "tpex_ntd": 5911129870,
+      "share_pct": 5.827
+    },
+    {
+      "code": "26",
+      "name": "光電業",
+      "ntd": 45505951200,
+      "stock_count": 115,
+      "twse_ntd": 41604469036,
+      "tpex_ntd": 3901482164,
+      "share_pct": 5.118
     },
     {
       "code": "31",
       "name": "其他電子業",
-      "ntd": 39512708203,
+      "ntd": 41209386846,
       "stock_count": 94,
-      "twse_ntd": 29999390551,
-      "tpex_ntd": 9513317652,
-      "share_pct": 4.524
-    },
-    {
-      "code": "27",
-      "name": "通信網路業",
-      "ntd": 35204412350,
-      "stock_count": 91,
-      "twse_ntd": 17944423126,
-      "tpex_ntd": 17259989224,
-      "share_pct": 4.031
-    },
-    {
-      "code": "03",
-      "name": "塑膠工業",
-      "ntd": 28435302215,
-      "stock_count": 25,
-      "twse_ntd": 28421573281,
-      "tpex_ntd": 13728934,
-      "share_pct": 3.256
+      "twse_ntd": 31428405169,
+      "tpex_ntd": 9780981677,
+      "share_pct": 4.635
     },
     {
       "code": "17",
       "name": "金融保險",
-      "ntd": 23863991421,
+      "ntd": 29834695395,
       "stock_count": 40,
-      "twse_ntd": 23671903488,
-      "tpex_ntd": 192087933,
-      "share_pct": 2.732
+      "twse_ntd": 29610484844,
+      "tpex_ntd": 224210551,
+      "share_pct": 3.356
+    },
+    {
+      "code": "27",
+      "name": "通信網路業",
+      "ntd": 26264627802,
+      "stock_count": 92,
+      "twse_ntd": 18077703958,
+      "tpex_ntd": 8186923844,
+      "share_pct": 2.954
+    },
+    {
+      "code": "03",
+      "name": "塑膠工業",
+      "ntd": 18175396633,
+      "stock_count": 25,
+      "twse_ntd": 18157652287,
+      "tpex_ntd": 17744346,
+      "share_pct": 2.044
     },
     {
       "code": "05",
       "name": "電機機械",
-      "ntd": 19473264000,
-      "stock_count": 101,
-      "twse_ntd": 18459496098,
-      "tpex_ntd": 1013767902,
-      "share_pct": 2.23
-    },
-    {
-      "code": "15",
-      "name": "航運業",
-      "ntd": 8096048513,
-      "stock_count": 34,
-      "twse_ntd": 8078064298,
-      "tpex_ntd": 17984215,
-      "share_pct": 0.927
-    },
-    {
-      "code": "20",
-      "name": "其他",
-      "ntd": 5910496787,
-      "stock_count": 94,
-      "twse_ntd": 2128005607,
-      "tpex_ntd": 3782491180,
-      "share_pct": 0.677
-    },
-    {
-      "code": "08",
-      "name": "玻璃陶瓷",
-      "ntd": 5221492872,
-      "stock_count": 5,
-      "twse_ntd": 5221492872,
-      "tpex_ntd": 0,
-      "share_pct": 0.598
-    },
-    {
-      "code": "30",
-      "name": "資訊服務業",
-      "ntd": 5108346494,
-      "stock_count": 47,
-      "twse_ntd": 2448459004,
-      "tpex_ntd": 2659887490,
-      "share_pct": 0.585
+      "ntd": 17762282621,
+      "stock_count": 100,
+      "twse_ntd": 17010993520,
+      "tpex_ntd": 751289101,
+      "share_pct": 1.998
     },
     {
       "code": "22",
       "name": "生技醫療業",
-      "ntd": 3778275963,
+      "ntd": 11843493974,
       "stock_count": 160,
-      "twse_ntd": 3026498938,
-      "tpex_ntd": 751777025,
-      "share_pct": 0.433
+      "twse_ntd": 10435535866,
+      "tpex_ntd": 1407958108,
+      "share_pct": 1.332
+    },
+    {
+      "code": "15",
+      "name": "航運業",
+      "ntd": 8617837844,
+      "stock_count": 34,
+      "twse_ntd": 8577450107,
+      "tpex_ntd": 40387737,
+      "share_pct": 0.969
+    },
+    {
+      "code": "30",
+      "name": "資訊服務業",
+      "ntd": 7336955726,
+      "stock_count": 47,
+      "twse_ntd": 4867617490,
+      "tpex_ntd": 2469338236,
+      "share_pct": 0.825
+    },
+    {
+      "code": "20",
+      "name": "其他",
+      "ntd": 7305562949,
+      "stock_count": 94,
+      "twse_ntd": 3104579778,
+      "tpex_ntd": 4200983171,
+      "share_pct": 0.822
     },
     {
       "code": "29",
       "name": "電子通路業",
-      "ntd": 3628997021,
+      "ntd": 6828363790,
       "stock_count": 38,
-      "twse_ntd": 3464892617,
-      "tpex_ntd": 164104404,
-      "share_pct": 0.415
+      "twse_ntd": 6565839080,
+      "tpex_ntd": 262524710,
+      "share_pct": 0.768
     },
     {
-      "code": "23",
-      "name": "油電燃氣業",
-      "ntd": 3423291861,
-      "stock_count": 12,
-      "twse_ntd": 3407320273,
-      "tpex_ntd": 15971588,
-      "share_pct": 0.392
+      "code": "08",
+      "name": "玻璃陶瓷",
+      "ntd": 4110281000,
+      "stock_count": 5,
+      "twse_ntd": 4110281000,
+      "tpex_ntd": 0,
+      "share_pct": 0.462
     },
     {
       "code": "21",
       "name": "化學工業",
-      "ntd": 3050150568,
+      "ntd": 3624471452,
       "stock_count": 42,
-      "twse_ntd": 2488922621,
-      "tpex_ntd": 561227947,
-      "share_pct": 0.349
+      "twse_ntd": 2999392794,
+      "tpex_ntd": 625078658,
+      "share_pct": 0.408
     },
     {
       "code": "10",
       "name": "鋼鐵工業",
-      "ntd": 2453549218,
+      "ntd": 3194192099,
       "stock_count": 48,
-      "twse_ntd": 2095121468,
-      "tpex_ntd": 358427750,
-      "share_pct": 0.281
+      "twse_ntd": 2889867143,
+      "tpex_ntd": 304324956,
+      "share_pct": 0.359
     },
     {
-      "code": "02",
-      "name": "食品工業",
-      "ntd": 1599594949,
-      "stock_count": 33,
-      "twse_ntd": 1586156922,
-      "tpex_ntd": 13438027,
-      "share_pct": 0.183
-    },
-    {
-      "code": "01",
-      "name": "水泥工業",
-      "ntd": 1580161181,
-      "stock_count": 7,
-      "twse_ntd": 1580161181,
-      "tpex_ntd": 0,
-      "share_pct": 0.181
-    },
-    {
-      "code": "06",
-      "name": "電器電纜",
-      "ntd": 1241490636,
-      "stock_count": 17,
-      "twse_ntd": 1160411655,
-      "tpex_ntd": 81078981,
-      "share_pct": 0.142
-    },
-    {
-      "code": "35",
-      "name": "綠能環保",
-      "ntd": 1231304690,
-      "stock_count": 46,
-      "twse_ntd": 1047185786,
-      "tpex_ntd": 184118904,
-      "share_pct": 0.141
-    },
-    {
-      "code": "12",
-      "name": "汽車工業",
-      "ntd": 1117120603,
-      "stock_count": 44,
-      "twse_ntd": 1117120603,
-      "tpex_ntd": 0,
-      "share_pct": 0.128
-    },
-    {
-      "code": "36",
-      "name": "數位雲端",
-      "ntd": 1036603096,
-      "stock_count": 40,
-      "twse_ntd": 399119634,
-      "tpex_ntd": 637483462,
-      "share_pct": 0.119
-    },
-    {
-      "code": "14",
-      "name": "建材營造",
-      "ntd": 834183543,
-      "stock_count": 88,
-      "twse_ntd": 774775631,
-      "tpex_ntd": 59407912,
-      "share_pct": 0.096
+      "code": "23",
+      "name": "油電燃氣業",
+      "ntd": 2930004193,
+      "stock_count": 12,
+      "twse_ntd": 2922413080,
+      "tpex_ntd": 7591113,
+      "share_pct": 0.33
     },
     {
       "code": "04",
       "name": "紡織纖維",
-      "ntd": 742409305,
+      "ntd": 2748512601,
       "stock_count": 52,
-      "twse_ntd": 738557441,
-      "tpex_ntd": 3851864,
-      "share_pct": 0.085
+      "twse_ntd": 2738291750,
+      "tpex_ntd": 10220851,
+      "share_pct": 0.309
     },
     {
-      "code": "32",
-      "name": "文化創意業",
-      "ntd": 633304821,
-      "stock_count": 26,
-      "twse_ntd": 0,
-      "tpex_ntd": 633304821,
-      "share_pct": 0.073
+      "code": "02",
+      "name": "食品工業",
+      "ntd": 2025266173,
+      "stock_count": 34,
+      "twse_ntd": 2001665090,
+      "tpex_ntd": 23601083,
+      "share_pct": 0.228
+    },
+    {
+      "code": "35",
+      "name": "綠能環保",
+      "ntd": 1599651001,
+      "stock_count": 46,
+      "twse_ntd": 1434764552,
+      "tpex_ntd": 164886449,
+      "share_pct": 0.18
+    },
+    {
+      "code": "12",
+      "name": "汽車工業",
+      "ntd": 1497050639,
+      "stock_count": 44,
+      "twse_ntd": 1497050639,
+      "tpex_ntd": 0,
+      "share_pct": 0.168
+    },
+    {
+      "code": "36",
+      "name": "數位雲端",
+      "ntd": 1468769478,
+      "stock_count": 40,
+      "twse_ntd": 364952114,
+      "tpex_ntd": 1103817364,
+      "share_pct": 0.165
+    },
+    {
+      "code": "14",
+      "name": "建材營造",
+      "ntd": 1419661569,
+      "stock_count": 88,
+      "twse_ntd": 1344272171,
+      "tpex_ntd": 75389398,
+      "share_pct": 0.16
+    },
+    {
+      "code": "06",
+      "name": "電器電纜",
+      "ntd": 1174383138,
+      "stock_count": 17,
+      "twse_ntd": 1091494235,
+      "tpex_ntd": 82888903,
+      "share_pct": 0.132
+    },
+    {
+      "code": "01",
+      "name": "水泥工業",
+      "ntd": 1150739706,
+      "stock_count": 7,
+      "twse_ntd": 1150739706,
+      "tpex_ntd": 0,
+      "share_pct": 0.129
     },
     {
       "code": "37",
       "name": "運動休閒",
-      "ntd": 586436820,
+      "ntd": 914863197,
       "stock_count": 27,
-      "twse_ntd": 579636475,
-      "tpex_ntd": 6800345,
-      "share_pct": 0.067
+      "twse_ntd": 903903721,
+      "tpex_ntd": 10959476,
+      "share_pct": 0.103
     },
     {
-      "code": "18",
-      "name": "貿易百貨",
-      "ntd": 444611410,
-      "stock_count": 17,
-      "twse_ntd": 444611410,
-      "tpex_ntd": 0,
-      "share_pct": 0.051
+      "code": "32",
+      "name": "文化創意業",
+      "ntd": 844402662,
+      "stock_count": 26,
+      "twse_ntd": 0,
+      "tpex_ntd": 844402662,
+      "share_pct": 0.095
     },
     {
       "code": "38",
       "name": "居家生活",
-      "ntd": 332558486,
+      "ntd": 817633400,
       "stock_count": 37,
-      "twse_ntd": 153564064,
-      "tpex_ntd": 178994422,
-      "share_pct": 0.038
-    },
-    {
-      "code": "09",
-      "name": "造紙工業",
-      "ntd": 293891493,
-      "stock_count": 7,
-      "twse_ntd": 293891493,
-      "tpex_ntd": 0,
-      "share_pct": 0.034
+      "twse_ntd": 215677776,
+      "tpex_ntd": 601955624,
+      "share_pct": 0.092
     },
     {
       "code": "11",
       "name": "橡膠工業",
-      "ntd": 279544142,
+      "ntd": 652710051,
       "stock_count": 11,
-      "twse_ntd": 279544142,
+      "twse_ntd": 652710051,
       "tpex_ntd": 0,
-      "share_pct": 0.032
+      "share_pct": 0.073
+    },
+    {
+      "code": "18",
+      "name": "貿易百貨",
+      "ntd": 649798417,
+      "stock_count": 18,
+      "twse_ntd": 649798417,
+      "tpex_ntd": 0,
+      "share_pct": 0.073
     },
     {
       "code": "16",
       "name": "觀光餐旅",
-      "ntd": 184165448,
+      "ntd": 406973066,
       "stock_count": 50,
-      "twse_ntd": 139140689,
-      "tpex_ntd": 45024759,
-      "share_pct": 0.021
+      "twse_ntd": 359835865,
+      "tpex_ntd": 47137201,
+      "share_pct": 0.046
+    },
+    {
+      "code": "09",
+      "name": "造紙工業",
+      "ntd": 148084900,
+      "stock_count": 7,
+      "twse_ntd": 148084900,
+      "tpex_ntd": 0,
+      "share_pct": 0.017
     },
     {
       "code": "91",
       "name": "存託憑證／特殊類別",
-      "ntd": 81484440,
+      "ntd": 146752008,
       "stock_count": 4,
-      "twse_ntd": 81484440,
+      "twse_ntd": 146752008,
       "tpex_ntd": 0,
-      "share_pct": 0.009
+      "share_pct": 0.017
     },
     {
       "code": "33",
       "name": "農業科技",
-      "ntd": 7241870,
+      "ntd": 3600682,
       "stock_count": 4,
       "twse_ntd": 0,
-      "tpex_ntd": 7241870,
-      "share_pct": 0.001
+      "tpex_ntd": 3600682,
+      "share_pct": 0.0
     }
   ],
   "panels": {
     "industry_chain": {
       "total_groups": 30,
-      "mapped_groups": 19,
+      "mapped_groups": 20,
       "mapping_type": "official_industry_proxy",
       "groups": [
         {
           "name": "半導體",
-          "ntd": 345568883045,
+          "ntd": 328711898334,
           "stock_count": 206,
           "mapped_count": 206,
-          "market_share_pct": 39.565
+          "market_share_pct": 36.972
         },
         {
           "name": "電子零組件",
-          "ntd": 167135102584,
-          "stock_count": 198,
-          "mapped_count": 199,
-          "market_share_pct": 19.136
+          "ntd": 131904450033,
+          "stock_count": 190,
+          "mapped_count": 190,
+          "market_share_pct": 14.836
         },
         {
           "name": "印刷電路板",
-          "ntd": 69467118940,
+          "ntd": 102466349263,
           "stock_count": 12,
           "mapped_count": 12,
-          "market_share_pct": 7.954
+          "market_share_pct": 11.525
         },
         {
           "name": "電腦及週邊設備",
-          "ntd": 45716797878,
+          "ntd": 51808989514,
           "stock_count": 111,
           "mapped_count": 111,
-          "market_share_pct": 5.234
-        },
-        {
-          "name": "通信網路",
-          "ntd": 35204412350,
-          "stock_count": 91,
-          "mapped_count": 92,
-          "market_share_pct": 4.031
-        },
-        {
-          "name": "石化及塑橡膠",
-          "ntd": 28714846357,
-          "stock_count": 36,
-          "mapped_count": 36,
-          "market_share_pct": 3.288
+          "market_share_pct": 5.827
         },
         {
           "name": "金融",
-          "ntd": 23863991421,
+          "ntd": 29834695395,
           "stock_count": 40,
           "mapped_count": 40,
-          "market_share_pct": 2.732
+          "market_share_pct": 3.356
+        },
+        {
+          "name": "通信網路",
+          "ntd": 26264627802,
+          "stock_count": 92,
+          "mapped_count": 92,
+          "market_share_pct": 2.954
+        },
+        {
+          "name": "被動元件",
+          "ntd": 21978142250,
+          "stock_count": 9,
+          "mapped_count": 9,
+          "market_share_pct": 2.472
+        },
+        {
+          "name": "石化及塑橡膠",
+          "ntd": 18828106684,
+          "stock_count": 36,
+          "mapped_count": 36,
+          "market_share_pct": 2.118
         },
         {
           "name": "電機機械",
-          "ntd": 19473264000,
-          "stock_count": 101,
+          "ntd": 17762282621,
+          "stock_count": 100,
           "mapped_count": 102,
-          "market_share_pct": 2.23
+          "market_share_pct": 1.998
         },
         {
           "name": "交通運輸及航運",
-          "ntd": 8096048513,
+          "ntd": 8617837844,
           "stock_count": 34,
           "mapped_count": 34,
-          "market_share_pct": 0.927
+          "market_share_pct": 0.969
         },
         {
           "name": "軟體服務",
-          "ntd": 5108346494,
+          "ntd": 7336955726,
           "stock_count": 47,
           "mapped_count": 47,
-          "market_share_pct": 0.585
-        },
-        {
-          "name": "油電燃氣",
-          "ntd": 3423291861,
-          "stock_count": 12,
-          "mapped_count": 12,
-          "market_share_pct": 0.392
+          "market_share_pct": 0.825
         },
         {
           "name": "鋼鐵",
-          "ntd": 2453549218,
+          "ntd": 3194192099,
           "stock_count": 48,
           "mapped_count": 48,
-          "market_share_pct": 0.281
+          "market_share_pct": 0.359
         },
         {
-          "name": "食品",
-          "ntd": 1599594949,
-          "stock_count": 33,
-          "mapped_count": 34,
-          "market_share_pct": 0.183
-        },
-        {
-          "name": "水泥",
-          "ntd": 1580161181,
-          "stock_count": 7,
-          "mapped_count": 7,
-          "market_share_pct": 0.181
-        },
-        {
-          "name": "汽車",
-          "ntd": 1117120603,
-          "stock_count": 44,
-          "mapped_count": 44,
-          "market_share_pct": 0.128
-        },
-        {
-          "name": "雲端運算",
-          "ntd": 1036603096,
-          "stock_count": 40,
-          "mapped_count": 40,
-          "market_share_pct": 0.119
-        },
-        {
-          "name": "建材營造",
-          "ntd": 834183543,
-          "stock_count": 88,
-          "mapped_count": 88,
-          "market_share_pct": 0.096
+          "name": "油電燃氣",
+          "ntd": 2930004193,
+          "stock_count": 12,
+          "mapped_count": 12,
+          "market_share_pct": 0.33
         },
         {
           "name": "紡織",
-          "ntd": 742409305,
+          "ntd": 2748512601,
           "stock_count": 52,
           "mapped_count": 52,
-          "market_share_pct": 0.085
+          "market_share_pct": 0.309
+        },
+        {
+          "name": "食品",
+          "ntd": 2025266173,
+          "stock_count": 34,
+          "mapped_count": 34,
+          "market_share_pct": 0.228
+        },
+        {
+          "name": "汽車",
+          "ntd": 1497050639,
+          "stock_count": 44,
+          "mapped_count": 44,
+          "market_share_pct": 0.168
+        },
+        {
+          "name": "雲端運算",
+          "ntd": 1468769478,
+          "stock_count": 40,
+          "mapped_count": 40,
+          "market_share_pct": 0.165
+        },
+        {
+          "name": "建材營造",
+          "ntd": 1419661569,
+          "stock_count": 88,
+          "mapped_count": 88,
+          "market_share_pct": 0.16
+        },
+        {
+          "name": "水泥",
+          "ntd": 1150739706,
+          "stock_count": 7,
+          "mapped_count": 7,
+          "market_share_pct": 0.129
         },
         {
           "name": "造紙",
-          "ntd": 293891493,
+          "ntd": 148084900,
           "stock_count": 7,
           "mapped_count": 7,
-          "market_share_pct": 0.034
+          "market_share_pct": 0.017
         },
         {
           "name": "再生醫療",
@@ -479,13 +486,6 @@
         },
         {
           "name": "太陽能產業",
-          "ntd": null,
-          "stock_count": 0,
-          "mapped_count": 0,
-          "market_share_pct": 0.0
-        },
-        {
-          "name": "被動元件",
           "ntd": null,
           "stock_count": 0,
           "mapped_count": 0,
@@ -551,64 +551,64 @@
     },
     "concept": {
       "total_groups": 30,
-      "mapped_groups": 6,
+      "mapped_groups": 8,
       "mapping_type": "reviewed_examples_only",
       "groups": [
         {
           "name": "CoWoS",
-          "ntd": 95950896264,
+          "ntd": 102581042177,
           "stock_count": 1,
           "mapped_count": 1,
-          "market_share_pct": 10.986
+          "market_share_pct": 11.538
         },
         {
           "name": "PCB",
-          "ntd": 69467118940,
+          "ntd": 102466349263,
           "stock_count": 12,
           "mapped_count": 12,
-          "market_share_pct": 7.954
+          "market_share_pct": 11.525
         },
         {
           "name": "高頻高速材料",
-          "ntd": 48471322053,
+          "ntd": 40776775127,
           "stock_count": 5,
           "mapped_count": 5,
-          "market_share_pct": 5.55
+          "market_share_pct": 4.586
         },
         {
           "name": "玻纖布",
-          "ntd": 42754900457,
+          "ntd": 29083697265,
           "stock_count": 6,
           "mapped_count": 6,
-          "market_share_pct": 4.895
-        },
-        {
-          "name": "AI 儲存",
-          "ntd": 1862663939,
-          "stock_count": 1,
-          "mapped_count": 1,
-          "market_share_pct": 0.213
-        },
-        {
-          "name": "記憶體模組",
-          "ntd": 1862663939,
-          "stock_count": 1,
-          "mapped_count": 1,
-          "market_share_pct": 0.213
-        },
-        {
-          "name": "AI PC",
-          "ntd": null,
-          "stock_count": 0,
-          "mapped_count": 0,
-          "market_share_pct": 0.0
+          "market_share_pct": 3.271
         },
         {
           "name": "AI 伺服器",
-          "ntd": null,
-          "stock_count": 0,
-          "mapped_count": 0,
-          "market_share_pct": 0.0
+          "ntd": 14204691189,
+          "stock_count": 2,
+          "mapped_count": 2,
+          "market_share_pct": 1.598
+        },
+        {
+          "name": "AI PC",
+          "ntd": 3705004486,
+          "stock_count": 2,
+          "mapped_count": 2,
+          "market_share_pct": 0.417
+        },
+        {
+          "name": "AI 儲存",
+          "ntd": 2466697606,
+          "stock_count": 1,
+          "mapped_count": 1,
+          "market_share_pct": 0.277
+        },
+        {
+          "name": "記憶體模組",
+          "ntd": 2466697606,
+          "stock_count": 1,
+          "mapped_count": 1,
+          "market_share_pct": 0.277
         },
         {
           "name": "AI 客製化晶片",
