@@ -1,7 +1,7 @@
 {
   "version": "DEMAND_PULL_AUDIT_V1",
   "events": 114,
-  "flagged": 8,
+  "flagged": 9,
   "bad_count": 0,
   "bad": [],
   "rows": [
@@ -58,6 +58,15 @@
       "basis": "AUTO_OFFICIAL_CAUSAL_V1",
       "demand_term": "訂單需求",
       "action_term": "新建廠房"
+    },
+    {
+      "company": "中國砂輪",
+      "stock_code": "1560",
+      "date": "2026-05-08",
+      "grade": "AUTO",
+      "basis": "AUTO_OFFICIAL_CAUSAL_V1",
+      "demand_term": "市場需求",
+      "action_term": "增設產線"
     },
     {
       "company": "聚和國際",
