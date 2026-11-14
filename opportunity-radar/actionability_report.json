@@ -1,6 +1,6 @@
 {
   "version": "OPPORTUNITY_ACTIONABILITY_AUDIT_V1_2_ENRICHED_ROUTE_FIELDS",
-  "generated_at": "2026-11-13T14:59:55+08:00",
+  "generated_at": "2026-11-14T14:48:00+08:00",
   "events": 114,
   "source_status": "PASS_MULTI_SOURCE_LIVE_REFRESH_V2",
   "metrics": {
@@ -15,7 +15,7 @@
     "verified_outreach_route_present": 26,
     "fresh_90d": 31,
     "fresh_180d": 74,
-    "fresh_365d": 114,
+    "fresh_365d": 113,
     "research_actionable": 114,
     "outreach_ready": 26
   },
@@ -31,7 +31,7 @@
     "verified_outreach_route_present_rate": 0.2281,
     "fresh_90d_rate": 0.2719,
     "fresh_180d_rate": 0.6491,
-    "fresh_365d_rate": 1.0,
+    "fresh_365d_rate": 0.9912,
     "research_actionable_rate": 1.0,
     "outreach_ready_rate": 0.2281
   },
