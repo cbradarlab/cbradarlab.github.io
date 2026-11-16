@@ -3,11 +3,11 @@
     "TWSE": "https://mopsfin.twse.com.tw/opendata/t187ap03_L.csv",
     "TPEX": "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv"
   },
-  "generated_at_utc": "2026-11-13T18:39:17.588163+00:00",
-  "stocks": 1990,
+  "generated_at_utc": "2026-11-16T21:10:23.375972+00:00",
+  "stocks": 1991,
   "market_counts": {
     "TWSE": 1093,
-    "TPEX": 897
+    "TPEX": 898
   },
   "industry_counts": {
     "01": 7,
@@ -37,7 +37,7 @@
     "28": 210,
     "29": 38,
     "30": 47,
-    "31": 94,
+    "31": 95,
     "32": 26,
     "33": 4,
     "35": 46,

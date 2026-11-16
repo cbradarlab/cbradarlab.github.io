@@ -1,5 +1,5 @@
 {
-  "official_stocks": 1990,
+  "official_stocks": 1991,
   "panel_count": 60,
   "industry_panel_counts": {
     "交通運輸及航運": 34,
@@ -26,8 +26,8 @@
   "review_by_official_industry": {
     "22": 160,
     "26": 116,
+    "31": 95,
     "20": 94,
-    "31": 94,
     "16": 51,
     "35": 46,
     "21": 42,
@@ -42,7 +42,7 @@
     "91": 4
   },
   "industry_mapped": 1211,
-  "industry_review": 779,
+  "industry_review": 780,
   "concept_mapped": 30,
   "note": "Concepts are not automatically inferred from official industry; incomplete panels are expected."
 }
