@@ -1156,7 +1156,7 @@
 8131,福懋科,TWSE,industry_chain,半導體,official_industry:24,official_mapping
 8147,正淩,TPEX,industry_chain,電子零組件,official_industry:28,official_mapping
 8150,南茂,TWSE,industry_chain,半導體,official_industry:24,official_mapping
-8155,博智,TPEX,industry_chain,印刷電路板,https://ic.tpex.org.tw/company_chain.php?stk_code=8155,verified_theme
+8155,博智電子,TPEX,industry_chain,印刷電路板,https://ic.tpex.org.tw/company_chain.php?stk_code=8155,verified_theme
 8162,微矽電子-創,TWSE,industry_chain,半導體,official_industry:24,official_mapping
 8163,達方,TWSE,industry_chain,電腦及週邊設備,official_industry:25,official_mapping
 8176,智捷,TPEX,industry_chain,通信網路,official_industry:27,official_mapping
@@ -1218,7 +1218,7 @@
 3189,景碩,TWSE,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=3189,verified
 5439,高技,TPEX,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=5439,verified
 8046,南電,TWSE,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=8046,verified
-8155,博智,TPEX,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=8155,verified
+8155,博智電子,TPEX,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=8155,verified
 2316,楠梓電,TWSE,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=2316,verified
 2355,敬鵬,TWSE,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=2355,verified
 2367,燿華,TWSE,concept,PCB,https://ic.tpex.org.tw/company_chain.php?stk_code=2367,verified
