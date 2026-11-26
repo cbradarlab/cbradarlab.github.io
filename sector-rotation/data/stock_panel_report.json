@@ -1,5 +1,5 @@
 {
-  "official_stocks": 1990,
+  "official_stocks": 1991,
   "panel_count": 60,
   "industry_panel_counts": {
     "交通運輸及航運": 34,
@@ -19,7 +19,7 @@
     "鋼鐵": 48,
     "雲端運算": 40,
     "電子零組件": 190,
-    "電機機械": 101,
+    "電機機械": 102,
     "電腦及週邊設備": 111,
     "食品": 34
   },
@@ -41,7 +41,7 @@
     "33": 4,
     "91": 4
   },
-  "industry_mapped": 1210,
+  "industry_mapped": 1211,
   "industry_review": 780,
   "concept_mapped": 30,
   "note": "Concepts are not automatically inferred from official industry; incomplete panels are expected."
