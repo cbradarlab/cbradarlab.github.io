@@ -3,7 +3,7 @@
     "TWSE": "https://mopsfin.twse.com.tw/opendata/t187ap03_L.csv",
     "TPEX": "https://mopsfin.twse.com.tw/opendata/t187ap03_O.csv"
   },
-  "generated_at_utc": "2026-11-26T20:23:07.181857+00:00",
+  "generated_at_utc": "2026-11-27T20:09:08.112185+00:00",
   "stocks": 1991,
   "market_counts": {
     "TWSE": 1092,
